@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (isset($_SESSION["Error"])) {
+    $error_message = $_SESSION["Error"];
+    unset($_SESSION["Error"]);
+}
+// var_dump($_SESSION);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
