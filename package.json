@@ -4,5 +4,15 @@
   },
   "dependencies": {
     "flowbite": "^2.3.0"
-  }
+  },
+  "name": "classmanagementsystem",
+  "description": "",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
