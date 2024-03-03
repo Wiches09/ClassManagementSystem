@@ -13,7 +13,7 @@
 <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
 <div>
   <nav class="w-full fixed">
-<div class="absolute top-20 hidden w-60 bg-[#136C94] shadow-xl" id="navbar-hamburger">
+<div class="absolute top-20 hidden w-60 dark:bg-gray-900 shadow-xl" id="navbar-hamburger">
   <ul class="font-medium mt-4 rounded-lg">
     <li>
       <a
@@ -118,7 +118,7 @@
     </li>
   </ul>
 </div>
-    <div class="bg-[#136C94] shadow-xl absolute w-full">
+    <div class="dark:bg-gray-900 shadow-xl absolute w-full">
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-5"
     >
@@ -210,15 +210,15 @@
 
     <!-- assignment tabs -->
     <nav>
-      <div class="mb-4 border-b border-gray-200 dark:border-gray-700 mt-20 bg-[#136C94]">
+      <div class="mb-4 border-b border-gray-200 dark:border-gray-700 mt-20 dark:bg-gray-900 w-full flex justify-center">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
-            <li class="me-2" role="presentation">
+            <li class="me-40" role="presentation">
                 <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
             </li>
-            <li class="me-2" role="presentation">
+            <li class="me-40" role="presentation">
                 <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Dashboard</button>
             </li>
-            <li class="me-2" role="presentation">
+            <li class="me-40" role="presentation">
                 <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
             </li>
             <li role="presentation">
