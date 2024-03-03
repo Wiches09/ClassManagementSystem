@@ -1,11 +1,11 @@
-<!-- <?php
+<?php
 session_start();
 if (isset($_SESSION["Error"])) {
     $error_message = $_SESSION["Error"];
     unset($_SESSION["Error"]);
 }
 // var_dump($_SESSION);
-?> -->
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -54,7 +54,7 @@ if (isset($_SESSION["Error"])) {
         </li>
         <li>
           <a
-            href="#"
+            href="assignment.php"
             class="flex py-4 px-4 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
           >
             <label class="px-4">
@@ -212,7 +212,7 @@ if (isset($_SESSION["Error"])) {
         </div>
         
       </nav>
-    </div> -->
+    </div>
     <!-- end nav -->
 
 
