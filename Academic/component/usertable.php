@@ -21,32 +21,33 @@ include 'connectdatabase.php';
                         ?>
                     </span>
                 </div>
+                <div class="flex flex-col justify-center items-center text-xs md:text-sm">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="border p-2">User ID</th>
+                                <th class="border p-2">First Name</th>
+                                <th class="border p-2">Last Name</th>
+                                <th class="border p-2">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = "SELECT * FROM `user` WHERE `role`  = 'student'";
+                            $result = mysqli_query($conn, $sql);
 
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="border p-2">User ID</th>
-                            <th class="border p-2">First Name</th>
-                            <th class="border p-2">Last Name</th>
-                            <th class="border p-2">Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT * FROM `user` WHERE `role`  = 'student'";
-                        $result = mysqli_query($conn, $sql);
-
-                        while ($row = mysqli_fetch_array($result)) {
-                            echo "<tr>";
-                            echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['firstname'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['lastname'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['role'] . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<tr>";
+                                echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
+                                echo "<td class='border p-2'>" . $row['firstname'] . "</td>";
+                                echo "<td class='border p-2'>" . $row['lastname'] . "</td>";
+                                echo "<td class='border p-2 font-bold text-blue-500'>" . $row['role'] . "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="rounded-md border border-dashed border-gray-200 p-4">
@@ -61,32 +62,33 @@ include 'connectdatabase.php';
                         ?>
                     </span>
                 </div>
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="border p-2">User ID</th>
-                            <th class="border p-2">First Name</th>
-                            <th class="border p-2">Last Name</th>
-                            <th class="border p-2">Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT * FROM `user` WHERE `role`  = 'teacher'";
-                        $result = mysqli_query($conn, $sql);
+                <div class="flex flex-col justify-center items-center text-xs md:text-sm">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="border p-2">User ID</th>
+                                <th class="border p-2">First Name</th>
+                                <th class="border p-2">Last Name</th>
+                                <th class="border p-2">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = "SELECT * FROM `user` WHERE `role`  = 'teacher'";
+                            $result = mysqli_query($conn, $sql);
 
-                        while ($row = mysqli_fetch_array($result)) {
-                            echo "<tr>";
-                            echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['firstname'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['lastname'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['role'] . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<tr>";
+                                echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
+                                echo "<td class='border p-2'>" . $row['firstname'] . "</td>";
+                                echo "<td class='border p-2'>" . $row['lastname'] . "</td>";
+                                echo "<td class='border p-2 font-bold text-red-500'>" . $row['role'] . "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
             <div class="rounded-md border border-dashed border-gray-200 p-4">
@@ -101,31 +103,33 @@ include 'connectdatabase.php';
                         ?>
                     </span>
                 </div>
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="border p-2">User ID</th>
-                            <th class="border p-2">First Name</th>
-                            <th class="border p-2">Last Name</th>
-                            <th class="border p-2">Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT * FROM `user` WHERE `role` = 'user'";
-                        $result = mysqli_query($conn, $sql);
+                <div class="flex flex-col justify-center items-center text-xs md:text-sm">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="border p-2">User ID</th>
+                                <th class="border p-2">First Name</th>
+                                <th class="border p-2">Last Name</th>
+                                <th class="border p-2">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = "SELECT * FROM `user` WHERE `role` = 'user'";
+                            $result = mysqli_query($conn, $sql);
 
-                        while ($row = mysqli_fetch_array($result)) {
-                            echo "<tr>";
-                            echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['firstname'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['lastname'] . "</td>";
-                            echo "<td class='border p-2'>" . $row['role'] . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<tr>";
+                                echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
+                                echo "<td class='border p-2'>" . $row['firstname'] . "</td>";
+                                echo "<td class='border p-2'>" . $row['lastname'] . "</td>";
+                                echo "<td class='border p-2 font-bold text-green-500'>" . $row['role'] . "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div>
