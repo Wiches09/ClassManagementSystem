@@ -122,7 +122,7 @@ if (isset($_SESSION["Error"])) {
         class="flex py-4 px-4 text-gray-900 rounded hover:bg-gray-100 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
       >
         <label class="px-4">
-            <svg class="w-10 h-10 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg class="w-10 h-10 text-gray-800 dark:text-white" aria-hidden="true" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.1 1.9-.7-.7m5.6 5.6-.7-.7m-4.2 0-.7.7m5.6-5.6-.7.7M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
             </svg>
         </label>
@@ -256,25 +256,52 @@ if (isset($_SESSION["Error"])) {
 
             <!-- class -->
             <div class="w-full h-full">
-                <h1 class="text-3xl text-gray-900">ชั้นเรียนของฉัน</h1>
+                <div class="grid grid-cols-2">
+                  
+                  <div><h1 class="text-3xl text-gray-900">ชั้นเรียนของฉัน</h1></div>
+                  
+                  <div class="flex justify-end">
+                    <a href="classes.php" class="flex text-2xl text-[#136C94]">ดูชั้นเรียนทั้งหมด
+                      <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 16 4-4-4-4m6 8 4-4-4-4"/>
+                      </svg>
+                    </a>
+                  </div>
+                  
+                </div>
+                
 
                 <div class="grid grid-cols-2 grid-rows-2 py-4 gap-5">
-                    <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
+
+                    <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">     
+                      <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
                         <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
                         <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-                    </div>
-                    <div id="class2" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
+                      </div>
+                    </a>
+                    <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
+                      <div id="class2" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
                         <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
                         <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-                    </div>
-                    <div id="class3" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
+                      </div>
+                    </a>
+                    
+
+                    <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
+                      <div id="class3" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
                         <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
                         <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-                    </div>
-                    <div id="class4" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
+                      </div>
+                    </a>
+                    
+
+                    <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
+                      <div id="class4" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
                         <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
                         <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-                    </div>
+                      </div>
+                    </a>
+                    
                 </div>
             </div>
 
@@ -282,6 +309,9 @@ if (isset($_SESSION["Error"])) {
             <div class="w-full h-full">
                 <div class="p-4 pb-10">
                     <hr class="border-gray-800">
+                </div>
+                <div>
+                  <h1 class="text-3xl text-gray-900 pb-5">ตารางเรียน</h1>
                 </div>
 
                 <div class="p-4 bg-white">calendar</div>
