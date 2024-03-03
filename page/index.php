@@ -26,7 +26,7 @@ if (isset($_SESSION["Error"])) {
       <script type="module" src="../components.js"></script> -->
     <div>
       <nav class="w-full fixed">
-    <div class="absolute top-20 hidden w-60 bg-[#136C94] shadow-xl" id="navbar-hamburger">
+    <div class="absolute top-20 hidden w-60 dark:bg-gray-900 shadow-xl" id="navbar-hamburger">
       <ul class="font-medium mt-4 rounded-lg">
         <li>
           <a
@@ -131,7 +131,7 @@ if (isset($_SESSION["Error"])) {
         </li>
       </ul>
     </div>
-        <div class="bg-[#136C94] shadow-xl absolute w-full">
+        <div class="dark:bg-gray-900 shadow-xl absolute w-full">
         <div
           class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-5"
         >
@@ -222,7 +222,7 @@ if (isset($_SESSION["Error"])) {
     <div class="grid grid-cols-2 gap-10 p-10 mt-20">
 
         <!-- profile -->
-        <div class="bg-[#17A7CE] w-full h-full rounded-2xl">
+        <div class="bg-[#136C94] w-full h-full rounded-2xl">
             <div class="flex justify-center mt-10">
                 <!-- user img -->
                 <div class="py-4 w-80 h-80">
@@ -235,9 +235,9 @@ if (isset($_SESSION["Error"])) {
             
             <div class="text-center mb-10">
                 <h1 class="text-3xl text-[#FEFF86] py-2">ชื่อ</h1>
-                <h2 class="text-2xl text-[#136C94] py-2">รหัสนักเรียน</h2>
-                <h3 class="text-xl text-[#136C94] py-2">อีเมล</h2>
-                <h4 class="text-lg text-[#136C94] py-2">ข้อมูลอื่นๆ</h2>
+                <h2 class="text-2xl text-white py-2">รหัสนักเรียน</h2>
+                <h3 class="text-xl text-white py-2">อีเมล</h2>
+                <h4 class="text-lg text-white py-2">ข้อมูลอื่นๆ</h2>
             </div>
 
             <div class="">
@@ -255,7 +255,7 @@ if (isset($_SESSION["Error"])) {
 
             <!-- class -->
             <div class="w-full h-full">
-                <h1 class="text-3xl text-[#136C94]">ชั้นเรียนของฉัน</h1>
+                <h1 class="text-3xl text-gray-900">ชั้นเรียนของฉัน</h1>
 
                 <div class="grid grid-cols-2 grid-rows-2 py-4 gap-5">
                     <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
