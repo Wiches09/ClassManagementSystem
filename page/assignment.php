@@ -408,7 +408,7 @@
                       <h1 class="text-3xl text-[#FEFF86] text-center py-4">ชื่องาน</h1>
                       <h1 class="text-2xl text-white text-center py-4">ชื่อชั้นเรียน</h1>
                       <h1 class="text-2xl text-white text-center py-4">due date</h1>
-                      <h1 class="text-2xl text-gray-300 text-right pt-20 pb-5 px-10">คะแนน</h1>
+                      <h1 class="text-2xl text-red-500 text-right pt-20 pb-5 px-10">คะแนน</h1>
                     </div>
                   </div>
                 </a>
@@ -427,7 +427,7 @@
                       <h1 class="text-3xl text-[#FEFF86] text-center py-4">ชื่องาน</h1>
                       <h1 class="text-2xl text-white text-center py-4">ชื่อชั้นเรียน</h1>
                       <h1 class="text-2xl text-white text-center py-4">due date</h1>
-                      <h1 class="text-2xl text-gray-300 text-right pt-20 pb-5 px-10">คะแนน</h1>
+                      <h1 class="text-2xl text-red-500 text-right pt-20 pb-5 px-10">คะแนน</h1>
                     </div>
                   </div>
                 </a>
@@ -446,7 +446,7 @@
                       <h1 class="text-3xl text-[#FEFF86] text-center py-4">ชื่องาน</h1>
                       <h1 class="text-2xl text-white text-center py-4">ชื่อชั้นเรียน</h1>
                       <h1 class="text-2xl text-white text-center py-4">due date</h1>
-                      <h1 class="text-2xl text-gray-300 text-right pt-20 pb-5 px-10">คะแนน</h1>
+                      <h1 class="text-2xl text-red-500 text-right pt-20 pb-5 px-10">คะแนน</h1>
                     </div>
                   </div>
                 </a>
@@ -465,7 +465,7 @@
                       <h1 class="text-3xl text-[#FEFF86] text-center py-4">ชื่องาน</h1>
                       <h1 class="text-2xl text-white text-center py-4">ชื่อชั้นเรียน</h1>
                       <h1 class="text-2xl text-white text-center py-4">due date</h1>
-                      <h1 class="text-2xl text-gray-300 text-right pt-20 pb-5 px-10">คะแนน</h1>
+                      <h1 class="text-2xl text-red-500 text-right pt-20 pb-5 px-10">คะแนน</h1>
                     </div>
                   </div>
                 </a>
