@@ -55,20 +55,7 @@
                                         <th class="border p-2">Status</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th class="border p-2">User_id</th>
-                                        <th class="border p-2">Firstname</th>
-                                        <th class="border p-2">Lastname</th>
-                                        <th class="border p-2">Email</th>
-                                        <th class="border p-2">DOB</th>
-                                        <th class="border p-2">Gender</th>
-                                        <th class="border p-2">Phone Number</th>
-                                        <!-- Uncomment the following line to display the Profile Image -->
-                                        <!-- <th class="border p-2">Profile Image</th> -->
-                                        <th class="border p-2">Status</th>
-                                    </tr>
-                                </tfoot>
+
                                 <tbody>
                                     <?php
                                     $sql = "SELECT * FROM `user` WHERE `role` = 'user'";
@@ -151,10 +138,8 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    </script>
-    <script>
         function pro(mypage) {
-            var agree = confirm('คุณต้องการยืนยันหนังสือหรือไม่');
+            var agree = confirm('คุณต้องการยืนยันหรือไม่');
             if (agree) {
                 window.location = mypage1;
             }
