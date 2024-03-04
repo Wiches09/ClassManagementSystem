@@ -1,30 +1,17 @@
-<?php
-session_start();
-if (isset($_SESSION["Error"])) {
-    $error_message = $_SESSION["Error"];
-    unset($_SESSION["Error"]);
-}
-// var_dump($_SESSION);
-?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
       rel="stylesheet"
     />
-  </head>
-
-  <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
-    <!-- <div class="bg-[#161A30] shadow w-full mt-auto">
-        <div id="header-container"></div>
-    </div>
-      <script type="module" src="../components.js"></script> -->
-      <div class="pb-20">
+</head>
+<body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
+<div class="pb-20">
   <nav class="w-full fixed text-3xl">
 <div class="absolute top-20 hidden w-60 dark:bg-gray-900 shadow-xl z-50" id="navbar-hamburger">
   <ul class="font-medium mt-4 rounded-lg">
@@ -215,112 +202,68 @@ if (isset($_SESSION["Error"])) {
 </div>
 <!-- end nav -->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 
+
+<!-- main page -->
+  <div class="flex justify-center p-20">
     
+    <!-- assignment description -->
+    <div class="flex p-4 bg-white rounded-3xl w-[1200px] h-[1200px]">
+      <!-- icon -->
+      <div class="bg-[#136C94] rounded-full w-[100px] h-[100px] flex justify-center">
+        <svg class="w-20 h-20 text-white pt-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13c-2.8-.8-4.7-1-8-1a1 1 0 0 0-1 1v11c0 .6.5 1 1 1 3.2 0 5 .2 8 1m0-13c2.8-.8 4.7-1 8-1 .6 0 1 .5 1 1v11c0 .6-.5 1-1 1-3.2 0-5 .2-8 1"/>
+        </svg>
+      </div>
 
-    <!-- main page -->
-    <div class="grid grid-cols-2 gap-10 p-10 pt-20">
+      <!-- assignment name -->
+      <div class="w-full">
+        <div><h1 class="text-[#136C94] text-4xl px-10 py-7">ชื่อการบ้าน</h1></div>
+        <div><h2 class="text-gray-600 text-3xl px-10 py-2">ชืออาจารย์ที่มอบหมายงานให้</h2></div>
+        <div><hr class="border-[#17A7CE] py-5 mt-5"></div>
 
-        <!-- profile -->
-        <div class="bg-[#136C94] w-full h-full rounded-2xl">
-            <div class="flex justify-center mt-10">
-                <!-- user img -->
-                <div class="py-4 w-80 h-80">
-                    <img
-                        class="w-max h-max rounded-full"
-                        src="../images/profile.jpg"
-                        alt="user photo"/> 
-                </div>
-            </div>
-            
-            <div class="text-center mb-10">
-                <h1 class="text-3xl text-[#FEFF86] py-2">ชื่อ</h1>
-                <h2 class="text-2xl text-white py-2">รหัสนักเรียน</h2>
-                <h3 class="text-xl text-white py-2">อีเมล</h2>
-                <h4 class="text-lg text-white py-2">ข้อมูลอื่นๆ</h2>
-            </div>
-
-            <div class="">
-
-            </div>
-
-            
-            
-                
-            
+        <!-- assignment description -->
+        <div>
+          <p class="text-2xl text-gray-900 px-10">โย่วๆ วอทซับโบร๋ (รายละเอียดงาน)</p>
         </div>
-
-        <!-- classes & calendar -->
-        <div class="grid grid-rows-3 gap-2 w-full h-full rounded-2xl">
-
-            <!-- class -->
-            <div class="w-full h-full">
-                <div class="grid grid-cols-2">
-                  
-                  <div><h1 class="text-3xl text-gray-900">ชั้นเรียนของฉัน</h1></div>
-                  
-                  <div class="flex justify-end">
-                    <a href="classes.php" class="flex text-2xl text-[#136C94]">ดูชั้นเรียนทั้งหมด
-                      <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 16 4-4-4-4m6 8 4-4-4-4"/>
-                      </svg>
-                    </a>
-                  </div>
-                  
-                </div>
-                
-
-                <div class="grid grid-cols-2 grid-rows-2 py-4 gap-5">
-
-                    <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">     
-                      <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                        <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
-                        <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-                      </div>
-                    </a>
-                    <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-                      <div id="class2" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                        <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
-                        <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-                      </div>
-                    </a>
-                    
-
-                    <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-                      <div id="class3" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                        <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
-                        <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-                      </div>
-                    </a>
-                    
-
-                    <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-                      <div id="class4" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                        <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
-                        <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-                      </div>
-                    </a>
-                    
-                </div>
-            </div>
-
-            <!-- calendar -->
-            <div class="w-full h-full">
-                <div class="p-4 pb-10">
-                    <hr class="border-gray-800">
-                </div>
-                <div>
-                  <h1 class="text-3xl text-gray-900 pb-5">ตารางเรียน</h1>
-                </div>
-
-                <div class="p-4 bg-white">calendar</div>
-                
-            </div>
-
-        </div>
+      </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-  </body>
+    <!-- classwork -->
+    <div class="bg-white shadow-lg flex rounded-3xl px-10 ml-10 w-[550px] h-[330px]">
+
+      <div class="w-full">
+        <div class="grid grid-cols-2"><h1 class="text-[#17A7CE] text-left text-4xl py-10">งานของฉัน</h1>
+        
+        <!-- สถานะ -> ยังไม่ได้ส่ง/ส่งแล้ว/ขาดส่ง -->
+          <div class="flex justify-end w-full">
+            <h3 class="text-gray-400 text-right text-2xl py-[45px]">สถานะ</h1>
+          </div>
+        </div>
+
+
+        <div class="flex w-full px-4">
+          <button class="bg-[#136C94] rounded-lg w-full h-20 flex justify-center text-3xl text-white hover:opacity-90 hover:ring-4 ring-[#17A7CE]">
+            <svg class="w-10 h-10 text-gray-800 dark:text-white mt-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1h-2M8 9l4-5 4 5m1 8h0"/>
+            </svg>
+            <h1 class="mt-5 px-4">เพิ่มงาน<h1>
+          </button>
+        </div>
+
+        <!-- cancle work -->
+        <div class="flex w-full px-4 py-5">
+          <button class="w-full border-4 h-[50px] border-gray-200 rounded-lg hover:bg-gray-200">
+            <h1 class="text-gray-400 text-2xl ">ยกเลิกการส่ง</h1>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</body>
 </html>
