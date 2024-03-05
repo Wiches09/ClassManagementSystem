@@ -15,8 +15,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="style.css" rel="stylesheet">
     <title>Admin Panel</title>
-
-
 </head>
 
 <body class="text-gray-800 font-inter">
@@ -33,53 +31,49 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                     <div class="bg-white border border-gray-100 shadow-md p-6 rounded-md lg:col-span-2 w-full">
                         <div class="flex flex-col lg:flex-row justify-between mb-4 items-start">
-                            <div class="mx-auto bg-white p-8 border rounded-md shadow-md w-full">
-                                <h2 class="text-2xl font-semibold mb-6">Course Registration</h2>
+                            <div class="mx-auto bg-white p-8 border rounded-md shadow-md w-full justify-center">
+                                <h2 class="text-2xl font-semibold mb-6">Course</h2>
 
-                                <form action="../Academic/system/addcourse.php" method="POST" class="space-y-4" enctype="multipart/form-data">
-                                    <div class="mb-4">
-                                        <label for="courseName" class="block text-sm font-medium text-gray-600">Course Name</label>
-                                        <input type="text" id="courseName" name="courseName" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
-                                    </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 mx-auto">
+                                    <?php
+                                    $sql = "SELECT * FROM course ORDER BY course_id DESC";
+                                    $result = mysqli_query($conn, $sql);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                            <a href="coursepage.php?course_id=<?= $row['course_id'] ?>">
+                                                <img src="../Academic/system/imagecourse/<?= $row['course_image'] ?>" class="w-full max-w-96 max-h-96 h-60">
+                                            </a>
+                                            <div class="p-5 flex flex-col">
+                                                <div>
+                                                    <a href="#">
+                                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                                            <?= $row['course_name'] ?>
+                                                        </h5>
+                                                    </a>
+                                                    <p class="mb-3 font-normal md:text-base text-xs text-gray-700 dark:text-gray-400">
+                                                        <?= $row['course_description'] ?>
+                                                    </p>
+                                                </div>
 
-                                    <div class="mb-4">
-                                        <label for="description" class="block text-sm font-medium text-gray-600">Description</label>
-                                        <textarea id="description" name="description" rows="3" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required></textarea>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="courseimage" class="block text-sm font-medium text-gray-600">Course Image:</label>
-                                        <div class="mt-1 flex items-center">
-                                            <input type="file" name="courseimage" id="courseimage" accept=".pdf, .epub" class="hidden">
-                                            <label for="courseimage" class="cursor-pointer bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">
-                                                Choose File
-                                            </label>
-                                            <span class="ml-2" id="file-name">No file selected</span>
+                                                <div class="items-end">
+                                                    <!-- Use JavaScript to navigate to the URL with course_id -->
+                                                    <button onclick="redirectTocoursepage(<?= $row['course_id'] ?>)" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                                        Readmore
+                                                    </button>
+
+                                                    <!-- Main modal -->
+
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php
 
+                                    }
+                                    mysqli_close($conn);
 
-                                    <div class="mb-4">
-                                        <label for="section" class="block text-sm font-medium text-gray-600">Section</label>
-                                        <input type="text" id="section" name="section" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="credits" class="block text-sm font-medium text-gray-600">Credits</label>
-                                        <input type="number" id="credits" name="credits" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="term" class="block text-sm font-medium text-gray-600">Term</label>
-                                        <input type="text" id="term" name="term" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
-                                    </div>
-
-                                    <div class="mb-6">
-                                        <label for="year" class="block text-sm font-medium text-gray-600">Year</label>
-                                        <input type="number" id="year" name="year" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
-                                    </div>
-
-                                    <button type="submit" class="w-full bg-[#f84525] text-white p-2 rounded-md hover:bg-[#f82525] focus:outline-none">Register</button>
-                                </form>
+                                    ?>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,7 +85,39 @@
     </main>
     <script type="module" src="component.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var toggleFormsInitialized = false;
+
+        function toggleForms() {
+            var role = document.getElementById('role').value;
+            var studentFields = document.getElementById('studentFields');
+            var teacherFields = document.getElementById('teacherFields');
+            console.log(role);
+
+            if (role === 'empty') {
+                studentFields.style.display = 'none';
+                teacherFields.style.display = 'none';
+            } else if (role === 'student') {
+                studentFields.style.display = 'block';
+                teacherFields.style.display = 'none';
+            } else if (role === 'teacher') {
+                studentFields.style.display = 'none';
+                teacherFields.style.display = 'block';
+            }
+        }
+
+        function redirectTocoursepage(courseId) {
+
+            var url = 'coursepage.php?course_id=' + courseId;
+
+            window.location.href = url;
+        }
+    </script>
+
+
+
 </body>
 
 </html>
