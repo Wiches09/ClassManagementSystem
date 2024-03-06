@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_query($conn, $updateUserSql);
         } else {
             echo "<script>alert('User is already a student');</script>";
-            header("Location: ../addrole.php");
+            header("Location: ../role.php");
             exit();
         }
     } elseif ($role === 'teacher') {
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_query($conn, $updateUserSql);
         } else {
             echo "<script>alert('User is already a teacher');</script>";
-            header("Location: ../addrole.php");
+            header("Location: ../role.php");
             exit();
         }
     } else {
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    header("Location: ../addrole.php");
+    header("Location: ../role.php");
     exit();
 } else {
     echo "<script>alert('Invalid request');</script>";
