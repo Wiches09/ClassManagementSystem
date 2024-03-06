@@ -10,7 +10,7 @@ $year = $_POST['year'];
 
 if (is_uploaded_file($_FILES['courseimage']['tmp_name'])) {
     $courseimage = 'course_' . uniqid() . "." . pathinfo(basename($_FILES['courseimage']['name']), PATHINFO_EXTENSION);
-    $image_upload_path = "../Academic/system/courseimage/" . $courseimage;
+    $image_upload_path = "../system/imagecourse/" . $courseimage;
     move_uploaded_file($_FILES['courseimage']['tmp_name'], $image_upload_path);
 } else {
     $courseimage = "";
@@ -23,7 +23,7 @@ $result = mysqli_query($conn, $sql);
 
 if ($result) {
     echo "<script>alert('Data saved successfully.');</script>";
-    echo "<script> window.location = '../course.php'; </script>";
+    echo "<script> window.location = '../regcourse.php'; </script>";
 } else {
     echo "<script>alert('Failed to save data.');</script>";
     echo mysqli_error($conn);
