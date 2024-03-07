@@ -3,37 +3,30 @@ include 'connectdatabase.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $role = isset($_POST["category"]) ? $_POST["category"] : null;
-    $courseId = isset($_GET["course_id"]) ? $_GET["course_id"] : null;
+    $courseId = isset($_POST["course"]) ? $_POST["course"] : null;
 
     if ($role !== null && $courseId !== null) {
         $secId = isset($_POST["section"]) ? $_POST["section"] : null;
         $year = isset($_POST["year"]) ? $_POST["year"] : null;
         $semester = isset($_POST["semester"]) ? $_POST["semester"] : null;
 
-
         if ($role === "teacher") {
             $teacherIds = isset($_POST["teacher_id"]) ? $_POST["teacher_id"] : null;
 
             if ($teacherIds !== null && is_array($teacherIds) && !empty($teacherIds)) {
                 foreach ($teacherIds as $teacherId) {
-                    $checkTeachesQuery = "SELECT * FROM teaches WHERE teacher_id = '$teacherId' AND course_id = '$courseId'";
-                    $checkTeachesResult = mysqli_query($conn, $checkTeachesQuery);
+                    $teachesQuery = "INSERT INTO teaches (teacher_id, course_id, sec, year) 
+                            VALUES ('$teacherId', '$courseId', '$secId', '$year')";
+                    $result = mysqli_query($conn, $teachesQuery);
 
-                    if (mysqli_num_rows($checkTeachesResult) == 0) {
-                        // If the teacher is not assigned, insert the assignment
-                        $teachesQuery = "INSERT INTO teaches (teacher_id, course_id, sec, year) 
-                                VALUES ('$teacherId', '$courseId', '$secID', '$year')";
-                        $result = mysqli_query($conn, $teachesQuery);
-
-                        if (!$result) {
-                            echo '<script>alert("Error inserting teacher with ID ' . $teacherId . ': ' . mysqli_error($conn) . '");</script>';
-                        }
-                    } else {
-                        echo '<script>alert("Teacher with ID ' . $teacherId . ' is already assigned to this course.");</script>';
+                    if (!$result) {
+                        echo '<script>alert("Error inserting teacher with ID ' . $teacherId . ': ' . mysqli_error($conn) . '");</script>';
+                        echo "<script> window.location = '../rolecourse.php'; </script>";
                     }
                 }
             } else {
                 echo '<script>alert("Error: Teacher IDs are not set!");</script>';
+                echo "<script> window.location = '../rolecourse.php'; </script>";
             }
         } elseif ($role === "student") {
             $faculty = isset($_POST["faculty"]) ? $_POST["faculty"] : null;
@@ -50,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         if (mysqli_num_rows($enrollmentResult) == 0) {
                             $attendQuery = "INSERT INTO attend (student_id, course_id, sec, year, semester, grade ) 
-                                VALUES ('$studentId', '$courseId', '$secId', '$year', '$semester', '0')";
+                            VALUES ('$studentId', '$courseId', '$secId', '$year', '$semester', '0')";
                             $result = mysqli_query($conn, $attendQuery);
 
                             if (!$result) {
@@ -58,24 +51,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                         } else {
                             echo '<script>alert("Student ID ' . $studentId . ' is already enrolled in this course.");</script>';
+                            echo "<script> window.location = '../rolecourse.php'; </script>";
                         }
                     }
                 } else {
-
                     echo '<script>alert("No students found for the selected faculty.");</script>';
+                    echo "<script> window.location = '../rolecourse.php'; </script>";
                 }
-                // echo '<script>alert("Data inserted successfully!");</script>';
-                echo "<script>window.location = '../coursepage.php?course_id=$courseId';</script>";
             } else {
                 echo '<script>alert("Error: Faculty is not set!");</script>';
+                echo "<script> window.location = '../rolecourse.php'; </script>";
             }
         }
 
         if (isset($result) && $result) {
             echo '<script>alert("Data inserted successfully!");</script>';
-            echo "<script> window.location = '../coursepage.php?course_id=$courseId'; </script>";
-        } elseif (isset($result) && strpos(mysqli_error($conn), "Duplicate entry") !== false) {
-            echo '<script>alert("Error: Duplicate entry. The data already exists.");</script>';
+            echo "<script> window.location = '../rolecourse.php'; </script>";
         } elseif (isset($result)) {
             echo '<script>alert("Error: ' . mysqli_error($conn) . '");</script>';
         }
@@ -83,3 +74,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo '<script>alert("Error: Role or Course ID is not set!");</script>';
     }
 }
+
