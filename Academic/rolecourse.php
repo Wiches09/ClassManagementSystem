@@ -35,38 +35,104 @@
                         <div class="flex flex-col lg:flex-row justify-between mb-4 items-start">
                             <div class="mx-auto bg-white p-8 border rounded-md shadow-md w-full">
                                 <h2 class="text-2xl font-semibold mb-6">Add Role</h2>
-
                                 <div class="flex flex-col justify-center items-center">
                                     <ol class="flex items-center w-full text-xs md:text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
-                                        <li class="flex md:w-full items-center text-blue-600 dark:text-blue-500 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+                                        <li class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                                             <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                                                </svg>
-                                                Personal <span class="hidden sm:inline-flex sm:ms-2">Info</span>
+                                                <span class="me-1">1</span>
+                                                วิชา <span class="hidden sm:inline-flex sm:ms-2"></span>
                                             </span>
                                         </li>
                                         <li class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                                             <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                                                <span class="me-2">2</span>
-                                                Account <span class="hidden sm:inline-flex sm:ms-2">Info</span>
+                                                <span class="me-1">2</span>
+                                                สถานะ <span class="hidden sm:inline-flex sm:ms-2"></span>
                                             </span>
                                         </li>
                                         <li class="flex items-center">
-                                            <span class="me-2">3</span>
-                                            Confirmation
+                                            <span class="me-1">3</span>
+                                            เซ็ค , อาจารย์
                                         </li>
                                     </ol>
-                                </div class="flex flex-col justify-center items-center">
-                                    <?php
-                                    
-                                    ?>
-                                <div>
+                                </div>
+                                <div class="flex flex-col justify-center items-center mt-16">
+
+                                    <form action="your_action_page.php" method="post" class="w-full lg:col-span-1">
+                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                                            <div class="mb-4 flex">
+                                                <label for="courseName" class="block text-sm font-medium text-gray-600">Course Name</label>
+                                                <select id="courseName" name="courseName" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
+                                                    <?php
+                                                    $sql = "SELECT * FROM course";
+                                                    $result = mysqli_query($conn, $sql);
+                                                    while ($row = mysqli_fetch_array($result)) {
+                                                    ?>
+                                                        <option value="<?= $row['course_name'] ?>">
+                                                            <?= $row['course_name'] ?>
+                                                        </option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="mb-4 flex">
+                                                <label for="role" class="block text-sm font-medium text-gray-600">role</label>
+                                                <select id="role" name="role" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
+                                                    <?php
+                                                    $sql = "SELECT * FROM role";
+                                                    $result = mysqli_query($conn, $sql);
+                                                    while ($row = mysqli_fetch_array($result)) {
+                                                    ?>
+                                                        <option value="<?= $row['role_name'] ?>">
+                                                            <?= $row['role_name'] ?>
+                                                        </option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="mb-4 flex">
+                                                <label for="teacher" class="block text-sm font-medium text-gray-600">Teachers</label>
+                                                <select id="teacher" name="teacher[]" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" multiple required>
+                                                    <?php
+                                                    $sql = "SELECT * FROM teacher 
+                                                    INNER JOIN user ON teacher.user_id = user.user_id
+                                                    WHERE teacher.role = user.role";
+                                                    $result = mysqli_query($conn, $sql);
+
+                                                    while ($row = mysqli_fetch_array($result)) {
+                                                    ?>
+                                                        <option value="<?= $row['firstname'] . $row['lastname'] ?>">
+                                                            <?= $row['firstname'] . $row['lastname'] ?>
+                                                        </option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-4 flex">
+                                                <label for="student" class="block text-sm font-medium text-gray-600">student</label>
+                                                <select id="student" name="student" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
+                                                    <option value=" "> เลือกเซ็คของนักเรียน</option>
+                                                    <option value=" 1"> 1</option>
+                                                    <option value=" 2"> 2</option>
+                                                    <option value=" 3"> 3</option>
+
+                                                </select>
+                                            </div>
+
+                                            <!-- Add other form fields or buttons as needed -->
+
+                                            <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Submit</button>
+                                    </form>
+
+                                    <!-- Add other form fields or buttons for the remaining columns (lg:col-span-2) if needed -->
 
                                 </div>
-
-
                             </div>
+
+
                         </div>
                     </div>
                 </div>
