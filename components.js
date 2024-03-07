@@ -1,7 +1,7 @@
 async function componentHeader() {
-  const response = await fetch("header.html");
+  const response = await fetch("../page/component/header.php");
   const htmlContent = await response.text();
-  document.getElementById("header-container").innerHTML = htmlContent;
+  document.getElementById("nav-side-container").innerHTML = htmlContent;
 }
 
 componentHeader(); 
