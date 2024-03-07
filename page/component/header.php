@@ -5,7 +5,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 </head> -->
-<div class="grid grid-cols-3 dark:bg-gray-900 shadow-xl absolute w-full h-20">
+<div class="fixed grid grid-cols-3 dark:bg-gray-900 shadow-xl w-full h-20">
   <!-- <div
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto"
   > -->
@@ -63,14 +63,14 @@
   </a>
   <ul class="mt-4">
     <li class="mb-1 group">
-      <a href=".././index.php"
+      <a href="./index.php"
         class="flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="m4 12 8-8 8 8M6 10.5V19c0 .6.4 1 1 1h3v-3c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v3h3c.6 0 1-.4 1-1v-8.5" />
         </svg>
         <i class="ri-home-2-line mr-3 text-lg"></i>
-        <span class="text-sm">หน้าแรก</span>
+        <span class="text-base">หน้าแรก</span>
       </a>
     </li>
     <li class="mb-1 group">
@@ -81,7 +81,7 @@
             d="m10.8 17.8-6.4 2.1 2.1-6.4m4.3 4.3L19 9a3 3 0 0 0-4-4l-8.4 8.6m4.3 4.3-4.3-4.3m2.1 2.1L15 9.1m-2.1-2 4.2 4.2" />
         </svg>
         <i class="bx bx-user mr-3 text-lg"></i>
-        <span class="text-sm">การบ้าน</span>
+        <span class="text-base">การบ้าน</span>
 
         <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
       </a>
@@ -95,12 +95,12 @@
       <ul class="pl-7 mt-2 hidden group-[.selected]:block">
         <li class="mb-4">
           <a href="role.php"
-            class="text-gray-700 text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">View
+            class="text-gray-700 text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">View
             user</a>
         </li>
         <li class="mb-4">
           <a href="reg.php"
-            class="text-sky-700 text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Register
+            class="text-sky-700 text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Register
             user</a>
         </li>
       </ul>
@@ -115,24 +115,24 @@
           </svg>
         </i>
 
-        <span class="text-sm pl-1">Course</span>
+        <span class="text-base pl-1">Course</span>
         <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
       </a>
       <ul class="pl-7 mt-2 hidden group-[.selected]:block">
         <li class="mb-4">
           <a href="course.php"
-            class="text-sky-700 text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Create
+            class="text-sky-700 text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Create
             Course</a>
           <a href="course.php"
-            class="text-white text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">All</a>
+            class="text-white text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">All</a>
         </li>
         <li class="mb-4">
           <a href="regcourse.php"
-            class="text-white text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Course</a>
+            class="text-white text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Course</a>
         </li>
         <li class="mb-4">
           <a href="rolecourse.php"
-            class="text-white text-sm flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Add
+            class="text-white text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Add
             Role</a>
         </li>
       </ul>
@@ -141,7 +141,7 @@
       <a href=""
         class="flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
         <i class="bx bx-list-ul mr-3 text-lg"></i>
-        <span class="text-sm">Activities</span>
+        <span class="text-base">Activities</span>
       </a>
     </li>
 
@@ -153,7 +153,7 @@
       <a href=""
         class="flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
         <i class="bx bx-bell mr-3 text-lg"></i>
-        <span class="text-sm">การตั้งค่า</span>
+        <span class="text-base">การตั้งค่า</span>
       </a>
     </li>
   </ul>

@@ -7,7 +7,7 @@
   <title>Document</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-  <script type="module" src="../components.js"></script>
+  <script type="module" src="./components.js"></script>
 </head>
 
 <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
@@ -65,7 +65,7 @@
 
             <!-- สถานะ -> ยังไม่ได้ส่ง/ส่งแล้ว/ขาดส่ง -->
             <div class="flex justify-end w-full">
-              <h3 class="text-gray-400 text-right text-md pt-11">สถานะ</h1>
+              <h3 class="text-gray-400 text-right text-md pt-11">สถานะ</h3>
             </div>
           </div>
 
@@ -78,7 +78,7 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1h-2M8 9l4-5 4 5m1 8h0" />
               </svg>
-              <h1 class="mt-3 px-4">เพิ่มงาน<h1>
+              <h1 class="mt-3 px-4">เพิ่มงาน</h1>
             </button>
           </div>
 
