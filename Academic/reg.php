@@ -39,8 +39,8 @@
                                 <form action="../Academic/system/adduser.php" method="POST" class="space-y-4" enctype="multipart/form-data">
 
                                     <div class="mb-4">
-                                        <label for="role" class="block text-sm font-medium text-gray-600">Select role</label>
-                                        <select id="role" name="role" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
+                                        <label for="role" class="block text-sm font-medium text-gray-600">Select Role</label>
+                                        <select id="role" name="role" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" onchange="toggleFaculty()">
                                             <option value="empty" selected>Choose Role</option>
                                             <option value="teacher">Teacher</option>
                                             <option value="student">Student</option>
@@ -74,10 +74,26 @@
                                         <label for="phonenum" class="block text-sm font-medium text-gray-600">Phone Number</label>
                                         <input type="tel" id="phonenum" name="phonenum" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required>
                                     </div>
+                                    <div class="mb-4 hidden" id="facultyContainer">
+                                        <label for="faculty" class="block text-sm font-medium text-gray-600">Select Faculty</label>
+                                        <select id="faculty" name="faculty" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+                                            <option value="empty" selected>Select Faculty</option>
+                                            <?php
+                                            $sql = "SELECT * FROM faculty";
+                                            $result = mysqli_query($conn, $sql);
+
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo '<option value="' . $row['faculty_id'] . '">' . $row['faculty_name'] . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+
                                     <div class="mb-4">
                                         <label for="profile_picture" class="block text-sm font-medium text-gray-600">User Image:</label>
                                         <div class="mt-1 flex items-center">
-                                            <input type="file" name="profile_picture" id="profile_picture" accept=".pdf, .epub" class="hidden">
+                                            <input type="file" name="profile_picture" id="profile_picture" class="hidden">
                                             <label for="profile_picture" id="file-label" class="cursor-pointer bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">
                                                 Choose File
                                             </label>
@@ -113,6 +129,17 @@
                 fileText.innerText = 'No file selected';
             }
         });
+
+        function toggleFaculty() {
+            var roleSelect = document.getElementById("role");
+            var facultyContainer = document.getElementById("facultyContainer");
+
+            if (roleSelect.value === "student") {
+                facultyContainer.classList.remove("hidden");
+            } else {
+                facultyContainer.classList.add("hidden");
+            }
+        }
     </script>
 </body>
 

@@ -52,8 +52,6 @@
                                             <input type="file" name="courseimage" id="courseimage">
                                         </div>
                                     </div>
-
-
                                     <div class="mb-4">
                                         <label for="section" class="block text-sm font-medium text-gray-600">Section</label>
                                         <input type="text" id="section" name="section" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
@@ -73,6 +71,7 @@
                                         <label for="year" class="block text-sm font-medium text-gray-600">Year</label>
                                         <input type="number" id="year" name="year" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
                                     </div>
+                                    
 
                                     <button type="submit" class="w-full bg-[#f84525] text-white p-2 rounded-md hover:bg-[#f82525] focus:outline-none">Register</button>
                                 </form>

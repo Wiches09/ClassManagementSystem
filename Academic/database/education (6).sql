@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2024 at 04:53 PM
+-- Generation Time: Mar 07, 2024 at 09:21 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -93,13 +93,46 @@ CREATE TABLE `attend` (
 
 CREATE TABLE `course` (
   `course_id` int(10) UNSIGNED ZEROFILL NOT NULL,
-  `course_title` varchar(200) NOT NULL,
-  `course_desciption` varchar(200) NOT NULL,
+  `course_name` varchar(200) NOT NULL,
+  `course_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_thai_520_w2 NOT NULL,
   `sec_id` int(1) NOT NULL,
   `credits` int(1) NOT NULL,
   `semester` int(1) NOT NULL,
-  `year` int(4) NOT NULL
+  `year` int(4) NOT NULL,
+  `course_image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`course_id`, `course_name`, `course_description`, `sec_id`, `credits`, `semester`, `year`, `course_image`) VALUES
+(0000000022, 'Science', 'วิทยาศาสตร์ (Science) เป็นการศึกษาและทำค้นคว้าทางวิทยาศาสตร์ที่เน้นการเรียนรู้และเข้าใจเกี่ยวกับโลกและสิ่งต่าง ๆ ในทางทั่วไป โดยการใช้วิธีการทางวิทยาศาสตร์ เป็นกลุ่มวิชาที่แตกต่างกันออกไปอย่างมากและมีหลายสาขาที่ศึกษาเนื้อหาที่แตกต่างกันไป', 1, 1, 1, 1, 'course_65e6be86e1dc8.jpg'),
+(0000000024, 'Math', 'คณิตศาสตร์ (Mathematics) เป็นวิชาที่ศึกษาเกี่ยวกับจำนวน, โครงสร้าง, และการเปลี่ยนแปลงของสิ่งต่าง ๆ ภายใต้หลาย ๆ แขนงที่ทำให้คณิตศาสตร์กว้างไปทั่ว ภายในคณิตศาสตร์, ความรู้นี้ถูกแบ่งออกเป็นหลายสาขา, ได้แก่:', 2, 3, 1, 2567, 'course_65e6bf46c7df0.jpg'),
+(0000000025, 'Thai', 'ภาษาไทยซึ่งใช้เพื่ออธิบายเนื้อหาหรือรายละเอียดของวิชานั้น ๆ ซึ่งส่วนมากจะปรากฏในเอกสารหรือเว็บไซต์ที่มีการเสนอวิชานั้น ๆ เพื่อให้ผู้เรียนหรือบุคคลทั่วไปทราบถึงรายละเอียดเกี่ยวกับวัตถุประสงค์ของวิชานั้น ๆ และเนื้อหาที่จะถูกเรียนรู้ในระหว่างการเรียนวิชานั้น', 2, 3, 1, 2567, 'course_65e6dc8b74f1d.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faculty`
+--
+
+CREATE TABLE `faculty` (
+  `faculty_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_thai_520_w2 NOT NULL,
+  `faculty_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_thai_520_w2 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `faculty`
+--
+
+INSERT INTO `faculty` (`faculty_id`, `faculty_name`) VALUES
+('china', 'ศิลป์-จีน\r\n'),
+('com', 'การงานคอม'),
+('gifted', 'กิฟเต็ด'),
+('japan', 'ศิลป์-ญี่ปุ่น'),
+('math', 'ศิลป์-คำนวน'),
+('sma', 'วิทย์-คณิต');
 
 -- --------------------------------------------------------
 
@@ -175,31 +208,12 @@ INSERT INTO `role` (`role_id`, `role_name`) VALUES
 CREATE TABLE `student` (
   `student_id` int(6) UNSIGNED ZEROFILL NOT NULL,
   `user_id` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `faculty` varchar(200) NOT NULL,
+  `faculty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_thai_520_w2 NOT NULL,
   `year` int(5) NOT NULL,
   `gpa` float NOT NULL,
   `total_credit` int(10) NOT NULL,
   `role` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`student_id`, `user_id`, `faculty`, `year`, `gpa`, `total_credit`, `role`) VALUES
-(000003, 000004, '', 0, 0, 0, 'student'),
-(000004, 000004, '', 0, 0, 0, 'student'),
-(000005, 000006, '', 0, 0, 0, 'student'),
-(000006, 000006, '', 0, 0, 0, 'student'),
-(000007, 000006, '', 0, 0, 0, 'student'),
-(000008, 000006, '', 0, 0, 0, 'student'),
-(000009, 000007, '', 0, 0, 0, 'student'),
-(000010, 000007, '', 0, 0, 0, 'student'),
-(000011, 000007, '', 0, 0, 0, 'student'),
-(000012, 000008, '', 0, 0, 0, 'student'),
-(000013, 000008, '', 0, 0, 0, 'student'),
-(000014, 000009, '', 0, 0, 0, 'student'),
-(000015, 000010, '', 0, 0, 0, 'student');
 
 -- --------------------------------------------------------
 
@@ -234,7 +248,12 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`teacher_id`, `user_id`, `faculty`, `role`) VALUES
-(000002, 000011, '', 'teacher');
+(000002, 000011, '', 'teacher'),
+(000003, 000012, '', 'teacher'),
+(000004, 000019, '', 'teacher'),
+(000005, 000021, '', 'teacher'),
+(000006, 000022, '', 'teacher'),
+(000007, 000024, '', 'teacher');
 
 -- --------------------------------------------------------
 
@@ -243,12 +262,25 @@ INSERT INTO `teacher` (`teacher_id`, `user_id`, `faculty`, `role`) VALUES
 --
 
 CREATE TABLE `teaches` (
+  `teaches_id` int(6) NOT NULL,
   `teacher_id` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `course_id` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `sec_id` int(6) NOT NULL,
-  `semester` int(5) NOT NULL,
-  `year` int(5) NOT NULL
+  `course_id` int(10) UNSIGNED ZEROFILL NOT NULL,
+  `sec` int(2) NOT NULL,
+  `year` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teaches`
+--
+
+INSERT INTO `teaches` (`teaches_id`, `teacher_id`, `course_id`, `sec`, `year`) VALUES
+(56, 000006, 0000000024, 0, 0),
+(57, 000005, 0000000024, 1, 1),
+(58, 000004, 0000000024, 1, 1),
+(59, 000004, 0000000024, 1, 1),
+(60, 000002, 0000000024, 1, 1),
+(61, 000003, 0000000024, 1, 1),
+(62, 000005, 0000000024, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -288,16 +320,28 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `email`, `password`, `dob`, `gender`, `phonenum`, `profile_picture`, `role`) VALUES
-(000001, 'test', 'test', 'test@gmail.com', 'test', '2024-02-01', 'male', '083', '\r\n\r\n', 'student'),
-(000002, 'teacher', 'teacher', 'teacher@gmail.com', 'teacher', '2024-03-05', 'male', '083', '', 'teacher'),
-(000003, 'rain', 'rain', 'rain', 'rain', '2024-03-05', 'male', '083', '', 'student'),
-(000004, 'earth', 'earth', 'earth', 'earth', '2024-03-13', 'male', '083', '', 'student'),
-(000006, 'rain', 'rain', 'rain', 'rain', '2024-03-05', 'rain', 'rain', 'rain', 'student'),
-(000007, 'ku', 'ku', 'ku', 'ku', '2024-03-18', 'ku', 'ku', 'ku', 'student'),
-(000008, 'iasd', 'asd', 'asd', 'asd', '2024-03-18', 'asd', 'asd', 'asd', 'student'),
 (000009, '111', '11', '111', '111', '2024-03-11', '111', '111', '111', 'student'),
 (000010, 'eee', 'eee', 'eee', 'eee', '2024-02-01', 'eee', 'eee', 'eee', 'student'),
-(000011, 'teacher', 'teacher', 'teacher', 'teacher', '2024-02-01', 'teacher', 'teacher', '', 'teacher');
+(000011, 'teacher', 'teacher', 'teacher', 'teacher', '2024-02-01', 'teacher', 'teacher', '', 'teacher'),
+(000012, 'phu', 'phu', '123', '213', '2024-03-06', 'male', '084', '', 'teacher'),
+(000013, 'wachi', 'wachi', 'acsa', 'bd6hLVYvau', '2024-03-11', 'male', '0830942407', 'profile_65e8a043185be.jpg', 'teacher'),
+(000014, 'rain', 'asd', 'asd', 'o83tSUcvN8', '2024-03-12', 'male', '0830942407', 'profile_65e8a0c0bf17c.jpg', 'teacher'),
+(000015, 'rain', 'asd', 'asd', '7vZUuA9E4h', '2024-03-12', 'male', '0830942407', 'profile_65e8a0d5d31a0.jpg', 'teacher'),
+(000016, 'rain', 'asd', 'asd', 'OU58N5EGFB', '2024-03-12', 'male', '0830942407', 'profile_65e8a0f285cea.jpg', 'teacher'),
+(000017, 'rain', 'asd', 'asd', 'eGqL49SILz', '2024-03-12', 'male', '0830942407', 'profile_65e8a0fb9f593.jpg', 'teacher'),
+(000018, 'rain', 'asd', 'asd', 'HbCjgA4apn', '2024-03-12', 'male', '0830942407', 'profile_65e8a1108cdb6.jpg', 'teacher'),
+(000019, 'aaaaa', 'aaaaa', 'aaaaa', 'aaaaa', '2024-03-05', 'male', 'aaa', '', 'teacher'),
+(000020, 'rain', 'rain', 'rain', 'yedhZpZUYu', '2024-03-15', 'male', '0830942407', 'profile_65e8a3b24b647.jpg', 'student'),
+(000021, 'kuy', 'kuy', '123', 'fntGlKBkXl', '2024-03-08', 'male', '0830942407', 'profile_65e8a409d1309.jpg', 'teacher'),
+(000022, 'Rain Gamer', 'TH', 'rainandrain3@gmail.com', '3pL4lyVZQz', '2024-03-04', 'female', '0830942407', 'profile_65e8a4d153ffe.jpg', 'teacher'),
+(000023, 'rain', 'rain', 'rain', 'creRMOFs8Y', '1222-12-12', 'male', '0830942407', '', 'student'),
+(000024, '2', '2', '2', 'db17xZOfc9', '0002-02-02', 'male', '0830942407', '', 'teacher'),
+(000025, 'rain', 'rqin', '123', '12SD9bNpNg', '0001-01-01', 'male', '0830942407', '', 'student'),
+(000026, 'rain', 'rqin', '123', '7go4eZtcMo', '0001-01-01', 'male', '0830942407', '', 'student'),
+(000027, '111', '111', '111', 'K59rQUJig0', '0011-01-01', 'female', '0830942407', '', 'student'),
+(000028, '111', '111', '111', 'dFtAcAgQRr', '0011-01-01', 'female', '0830942407', '', 'student'),
+(000029, '111', '111', '111', 'pgjJBQutEg', '0011-01-01', 'female', '0830942407', '', 'student'),
+(000030, 'rain', 'rain', 'rain', 'a8j14vjUbi', '0001-01-11', 'male', '0830942407', '', 'student');
 
 --
 -- Indexes for dumped tables
@@ -342,6 +386,12 @@ ALTER TABLE `course`
   ADD PRIMARY KEY (`course_id`);
 
 --
+-- Indexes for table `faculty`
+--
+ALTER TABLE `faculty`
+  ADD PRIMARY KEY (`faculty_id`);
+
+--
 -- Indexes for table `material`
 --
 ALTER TABLE `material`
@@ -375,7 +425,8 @@ ALTER TABLE `role`
 ALTER TABLE `student`
   ADD PRIMARY KEY (`student_id`),
   ADD KEY `suser_id` (`user_id`),
-  ADD KEY `srole` (`role`);
+  ADD KEY `srole` (`role`),
+  ADD KEY `sfaculty` (`faculty`);
 
 --
 -- Indexes for table `submission`
@@ -397,7 +448,8 @@ ALTER TABLE `teacher`
 -- Indexes for table `teaches`
 --
 ALTER TABLE `teaches`
-  ADD PRIMARY KEY (`teacher_id`),
+  ADD PRIMARY KEY (`teaches_id`),
+  ADD KEY `tteacher_id` (`teacher_id`),
   ADD KEY `tcourse_id` (`course_id`);
 
 --
@@ -445,7 +497,7 @@ ALTER TABLE `attend`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `course_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `course_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `question`
@@ -463,7 +515,7 @@ ALTER TABLE `quiz`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `student_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `submission`
@@ -475,13 +527,13 @@ ALTER TABLE `submission`
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacher_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `teacher_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `teaches`
 --
 ALTER TABLE `teaches`
-  MODIFY `teacher_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `teaches_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `topic`
@@ -493,7 +545,7 @@ ALTER TABLE `topic`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
@@ -552,6 +604,7 @@ ALTER TABLE `quiz`
 -- Constraints for table `student`
 --
 ALTER TABLE `student`
+  ADD CONSTRAINT `sfaculty` FOREIGN KEY (`faculty`) REFERENCES `faculty` (`faculty_id`),
   ADD CONSTRAINT `srole` FOREIGN KEY (`role`) REFERENCES `role` (`role_id`),
   ADD CONSTRAINT `suser_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -574,7 +627,7 @@ ALTER TABLE `teacher`
 --
 ALTER TABLE `teaches`
   ADD CONSTRAINT `tcourse_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
-  ADD CONSTRAINT `teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`);
+  ADD CONSTRAINT `tteacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`);
 
 --
 -- Constraints for table `user`

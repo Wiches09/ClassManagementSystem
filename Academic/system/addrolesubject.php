@@ -1,38 +1,66 @@
 <?php
 include 'connectdatabase.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $role = isset($_POST["category"]) ? $_POST["category"] : null;
+    $courseId = isset($_GET["course_id"]) ? $_GET["course_id"] : null;
 
-    $role = $_POST['role'];
-    $tableName = 'teaches';
+    if ($role !== null && $courseId !== null) {
+        $secId = isset($_POST["studentsec"]) ? $_POST["studentsec"] : null;
+        $secId = isset($_POST["teachersec"]) ? $_POST["teachersec"] : null;
+        $year = isset($_POST["studentyear"]) ? $_POST["studentyear"] : null;
+        $year = isset($_POST["teacheryear"]) ? $_POST["teacheryear"] : null;
+        $semester = isset($_POST["semester"]) ? $_POST["semester"] : null;
 
-    if ($role == 'student') {
-        $course_id = $_POST['course_id'];
-        $grade = $_POST['year'];
-        $room = $_POST['sec'];
+        if ($role === "teacher") {
+            $teacherIds = isset($_POST["teacher_id"]) ? $_POST["teacher_id"] : null;
 
-        $sql = "INSERT INTO $tableName (course_id, year, sec) VALUES ('$course_id', '$grade', '$room')";
-        $result = mysqli_query($conn, $sql);
+            if ($teacherIds !== null && is_array($teacherIds) && !empty($teacherIds)) {
+                foreach ($teacherIds as $teacherId) {
+                    $teachesQuery = "INSERT INTO teaches (teacher_id, course_id, sec, year) 
+                            VALUES ('$teacherId', '$courseId', '$secId', '$year')";
+                    $result = mysqli_query($conn, $teachesQuery);
 
-        if ($result) {
-            echo "Data inserted successfully!";
-        } else {
-            echo "Error: " . mysqli_error($conn);
+                    if (!$result) {
+                        echo '<script>alert("Error inserting teacher with ID ' . $teacherId . ': ' . mysqli_error($conn) . '");</script>';
+                    }
+                }
+            } else {
+                echo '<script>alert("Error: Teacher IDs are not set!");</script>';
+            }
+        } elseif ($role === "student") {
+            $faculty = isset($_POST["faculty"]) ? $_POST["faculty"] : null;
+
+            if ($faculty !== null) {
+                $studentIdsQuery = "SELECT student_id FROM student WHERE faculty = '$faculty'";
+                $studentIdsResult = mysqli_query($conn, $studentIdsQuery);
+
+                if (mysqli_num_rows($studentIdsResult) > 0) {
+                    while ($studentRow = mysqli_fetch_assoc($studentIdsResult)) {
+                        $studentId = $studentRow['student_id'];
+
+                        $attendQuery = "INSERT INTO attend (student_id, course_id, sec_id, year, semester, grade ) 
+                                VALUES ('$studentId', '$courseId', '$secId', '$year', '$semester', '0')";
+                        $result = mysqli_query($conn, $attendQuery);
+
+                        if (!$result) {
+                            echo '<script>alert("Error inserting attendance record for student ID ' . $studentId . '");</script>';
+                        }
+                    }
+                } else {
+                    echo '<script>alert("No students found for the selected faculty.");</script>';
+                }
+            } else {
+                echo '<script>alert("Error: Faculty is not set!");</script>';
+            }
         }
-    } elseif ($role == 'teacher') {
-        $course_id = $_POST['course_id'];
-        $room = $_POST['sec'];
 
-        $teacher_ids = $_POST['teacher_id'];
-        $teacher_ids_str = implode(',', $teacher_ids);
-
-        $sql = "INSERT INTO $tableName (course_id, teacher_id, sec) VALUES ('$course_id', '$teacher_ids_str', '$room')";
-        $result = mysqli_query($conn, $sql);
-
-        if ($result) {
-            echo "Data inserted successfully!";
-        } else {
-            echo "Error: " . mysqli_error($conn);
+        if (isset($result) && $result) {
+            echo '<script>alert("Data inserted successfully!");</script>';
+        } elseif (isset($result)) {
+            echo '<script>alert("Error: ' . mysqli_error($conn) . '");</script>';
         }
+    } else {
+        echo '<script>alert("Error: Role or Course ID is not set!");</script>';
     }
 }

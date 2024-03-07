@@ -33,7 +33,6 @@
                         <div class="flex flex-col lg:flex-row justify-between mb-4 items-start">
                             <div class="mx-auto bg-white p-8 border rounded-md shadow-md w-full justify-center">
                                 <h2 class="text-2xl font-semibold mb-6">Course</h2>
-
                                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 mx-auto">
                                     <?php
                                     $sql = "SELECT * FROM course ORDER BY course_id DESC";
