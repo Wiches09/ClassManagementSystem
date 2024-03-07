@@ -35,104 +35,85 @@
                         <div class="flex flex-col lg:flex-row justify-between mb-4 items-start">
                             <div class="mx-auto bg-white p-8 border rounded-md shadow-md w-full">
                                 <h2 class="text-2xl font-semibold mb-6">Add Role</h2>
-                                <div class="flex flex-col justify-center items-center">
-                                    <ol class="flex items-center w-full text-xs md:text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
-                                        <li class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
-                                            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                                                <span class="me-1">1</span>
-                                                วิชา <span class="hidden sm:inline-flex sm:ms-2"></span>
-                                            </span>
-                                        </li>
-                                        <li class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
-                                            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                                                <span class="me-1">2</span>
-                                                สถานะ <span class="hidden sm:inline-flex sm:ms-2"></span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center">
-                                            <span class="me-1">3</span>
-                                            เซ็ค , อาจารย์
-                                        </li>
-                                    </ol>
-                                </div>
-                                <div class="flex flex-col justify-center items-center mt-16">
 
-                                    <form action="your_action_page.php" method="post" class="w-full lg:col-span-1">
-                                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                                            <div class="mb-4 flex">
-                                                <label for="courseName" class="block text-sm font-medium text-gray-600">Course Name</label>
-                                                <select id="courseName" name="courseName" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
-                                                    <?php
-                                                    $sql = "SELECT * FROM course";
-                                                    $result = mysqli_query($conn, $sql);
-                                                    while ($row = mysqli_fetch_array($result)) {
-                                                    ?>
-                                                        <option value="<?= $row['course_name'] ?>">
-                                                            <?= $row['course_name'] ?>
-                                                        </option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="mb-4 flex">
-                                                <label for="role" class="block text-sm font-medium text-gray-600">role</label>
-                                                <select id="role" name="role" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
-                                                    <?php
-                                                    $sql = "SELECT * FROM role";
-                                                    $result = mysqli_query($conn, $sql);
-                                                    while ($row = mysqli_fetch_array($result)) {
-                                                    ?>
-                                                        <option value="<?= $row['role_name'] ?>">
-                                                            <?= $row['role_name'] ?>
-                                                        </option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="mb-4 flex">
-                                                <label for="teacher" class="block text-sm font-medium text-gray-600">Teachers</label>
-                                                <select id="teacher" name="teacher[]" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" multiple required>
-                                                    <?php
-                                                    $sql = "SELECT * FROM teacher 
-                                                    INNER JOIN user ON teacher.user_id = user.user_id
-                                                    WHERE teacher.role = user.role";
-                                                    $result = mysqli_query($conn, $sql);
+                                <form action="../Academic/system/addselectcourse.php" method="POST" class="space-y-4" id="roleForm">
+                                    <div class="mb-4">
+                                        <label for="role" class="block text-sm font-medium text-gray-600">Select Role</label>
+                                        <select id="role" name="category" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" onchange="toggleFields()">
 
-                                                    while ($row = mysqli_fetch_array($result)) {
-                                                    ?>
-                                                        <option value="<?= $row['firstname'] . $row['lastname'] ?>">
-                                                            <?= $row['firstname'] . $row['lastname'] ?>
-                                                        </option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
+                                            <option value="empty" selected>Choose Role</option>
+                                            <option value="teacher">Teacher</option>
+                                            <option value="student">Student</option>
+                                        </select>
+                                    </div>
 
-                                            <div class="mb-4 flex">
-                                                <label for="student" class="block text-sm font-medium text-gray-600">student</label>
-                                                <select id="student" name="student" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
-                                                    <option value=" "> เลือกเซ็คของนักเรียน</option>
-                                                    <option value=" 1"> 1</option>
-                                                    <option value=" 2"> 2</option>
-                                                    <option value=" 3"> 3</option>
+                                    <div class="mb-4">
+                                        <label for="course" class="block text-sm font-medium text-gray-600">Select course</label>
+                                        <select id="course" name="course" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+                                            <option value="empty"> Choose Course</option> <?php
+                                                                                            $sql = "SELECT * FROM course";
+                                                                                            $result = mysqli_query($conn, $sql);
+                                                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                                            ?>
 
-                                                </select>
-                                            </div>
+                                                <option value=<?= $row['course_id'] ?>> <?= $row['course_name'] ?></option>
 
-                                            <!-- Add other form fields or buttons as needed -->
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4 hidden" id="studentField">
+                                        <label for="faculty" class="block text-sm font-medium text-gray-600">Select Faculty</label>
+                                        <select id="faculty" name="faculty" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+                                            <option value="empty"> Choose Faculty</option> <?php
+                                                                                            $sql = "SELECT * FROM faculty";
+                                                                                            $result = mysqli_query($conn, $sql);
+                                                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                                            ?>
 
-                                            <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Submit</button>
-                                    </form>
+                                                <option value=<?= $row['faculty_id'] ?>> <?= $row['faculty_name'] ?></option>
 
-                                    <!-- Add other form fields or buttons for the remaining columns (lg:col-span-2) if needed -->
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4 hidden" id="studentsectionField">
+                                        <label for="section" class="block text-sm font-medium text-gray-600">Section</label>
+                                        <input type="text" id="section" name="section" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                    </div>
+                                    <div class="mb-4 hidden" id="teachersectionField">
+                                        <label for="section" class="block text-sm font-medium text-gray-600">Section</label>
+                                        <input type="text" id="section" name="section" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                    </div>
 
-                                </div>
+                                    <div class="mb-4 hidden" id="semesterField">
+                                        <label for="semester" class="block text-sm font-medium text-gray-600">Semester</label>
+                                        <input type="number" id="semester" name="semester" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                    </div>
+
+                                    <div class="mb-6 hidden" id="studentyearField">
+                                        <label for=" year" class="block text-sm font-medium text-gray-600">Year</label>
+                                        <input type="number" id="year" name="year" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                    </div>
+                                    <div class="mb-6 hidden" id="teacheryearField">
+                                        <label for=" year" class="block text-sm font-medium text-gray-600">Year</label>
+                                        <input type="number" id="year" name="year" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                    </div>
+                                    <div class="mb-6 hidden" id="teacherField">
+                                        <label for="teacher" class="block text-sm font-medium text-gray-600">Teacher</label>
+                                        <?php
+                                        $sql = "SELECT * FROM teacher INNER JOIN user ON teacher.user_id = user.user_id";
+                                        $result = mysqli_query($conn, $sql);
+
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                        ?>
+                                            <input type="checkbox" class="text-white" name="teacher_id[]" value="<?= $row['teacher_id'] ?>" id="<?= $row['firstname'] . $row['lastname'] ?>">
+                                            <label class="text-gray-600" for="<?= $row['firstname'] . $row['lastname'] ?>"><?= $row['firstname'] . ' ' . $row['lastname'] ?></label><br>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <button type="submit" class="w-full bg-[#f84525] text-white p-2 rounded-md hover:bg-[#f82525] focus:outline-none">Submit</button>
+                                </form>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -144,6 +125,47 @@
     <script type="module" src="component.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function toggleFields() {
+            var role = document.getElementById('role').value;
+            var studentField = document.getElementById('studentField');
+            var studentsectionField = document.getElementById('studentsectionField');
+            var studentyearField = document.getElementById('studentyearField');
+            var teachersectionField = document.getElementById('teachersectionField');
+            var teacheryearField = document.getElementById('teacheryearField');
+            var semesterField = document.getElementById('semesterField');
+            var teacherField = document.getElementById('teacherField');
+
+
+            studentField.style.display = 'none';
+            semesterField.style.display = 'none';
+            studentsectionField.style.display = 'none';
+            studentyearField.style.display = 'none';
+            teacherField.style.display = 'none';
+            teachersectionField.style.display = 'none';
+            teacheryearField.style.display = 'none';
+
+            if (role === 'student') {
+                studentField.style.display = 'block';
+                semesterField.style.display = 'block';
+                studentsectionField.style.display = 'block';
+                studentyearField.style.display = 'block';
+                teacherField.style.display = 'none';
+                teachersectionField.style.display = 'none';
+                teacheryearField.style.display = 'none';
+            } else if (role === 'teacher') {
+                studentField.style.display = 'none';
+                semesterField.style.display = 'none';
+                studentsectionField.style.display = 'none';
+                studentyearField.style.display = 'none';
+                teacherField.style.display = 'block';
+                teachersectionField.style.display = 'block';
+                teacheryearField.style.display = 'block';
+            }
+
+
+        }
+    </script>
 </body>
 
 </html>
