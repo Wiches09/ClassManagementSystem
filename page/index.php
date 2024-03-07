@@ -19,7 +19,7 @@ if (isset($_SESSION["Error"])) {
 </head>
 
 <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
-  <div id="header-container"></div>
+  <div id="nav-side-container"></div>
   </div>
 
   <div class="pb-20">
