@@ -2,13 +2,11 @@ async function componentSidenav() {
   const response = await fetch("../Academic/component/sidenav.php");
   const htmlContent = await response.text();
   document.getElementById("sidenav-container").innerHTML = htmlContent;
-
-  // Execute the JavaScript for the loaded sidebar
   initializeSidebar();
 }
 
 function initializeSidebar() {
-  // Your existing sidebar JavaScript code here
+  
   const sidebarToggle = document.querySelector(".sidebar-toggle");
   const sidebarOverlay = document.querySelector(".sidebar-overlay");
   const sidebarMenu = document.querySelector(".sidebar-menu");
@@ -48,7 +46,7 @@ function initializeSidebar() {
     });
 }
 
-// Call the function to load and initialize the sidebar
+
 componentSidenav();
 
 componentSidenav();
