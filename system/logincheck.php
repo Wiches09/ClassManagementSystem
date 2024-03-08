@@ -17,9 +17,11 @@ if ($row > 0) {
     $_SESSION["lastname"] = $row['lastname'];
     $_SESSION["email"] = $row['email'];
     $_SESSION["loggedin"] = TRUE;
-    $show = header("location: ../page/1.php");
+    $_SESSION["role"] = $row['role'];
+    $show = header("location: ../page/index.php");
+    $_SESSION['sid'] = $sesid;
 } else {
     $_SESSION["Error"] = "<p> Your username or password is invalid </p>";
-    $show = header("location: ../page/testlogin.php");
+    $show = header("location: ../page/login.php");
 }
 $conn->close();

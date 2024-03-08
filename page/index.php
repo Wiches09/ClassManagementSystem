@@ -1,11 +1,4 @@
-<?php
-session_start();
-if (isset($_SESSION["Error"])) {
-  $error_message = $_SESSION["Error"];
-  unset($_SESSION["Error"]);
-}
-// var_dump($_SESSION);
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +19,7 @@ if (isset($_SESSION["Error"])) {
 
 
   <div class="mt-20 ml-60">
-    <!-- main page -->s
+    <!-- main page -->
     <div class="grid grid-cols-2 gap-10 p-10 ">
 
       <!-- profile -->
