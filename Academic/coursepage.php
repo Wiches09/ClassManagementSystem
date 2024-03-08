@@ -106,12 +106,12 @@
 
                                                                     <div class="col-span-2 hidden sm:col-span-1" id="studentYearField">
                                                                         <label for="year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year</label>
-                                                                        <input type="text" name="studentyear" id="studentyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                                        <input type="text" name="year" id="studentyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                                     </div>
 
                                                                     <div class="col-span-2 hidden sm:col-span-1" id="studentSecField">
                                                                         <label for="sec" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sec</label>
-                                                                        <input type="text" name="studentsec" id="studentsec" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                                        <input type="text" name="section" id="studentsec" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                                     </div>
                                                                     <div class="col-span-2 hidden sm:col-span-1" id="studentSemesterField">
                                                                         <label for="semester" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester</label>
@@ -120,12 +120,12 @@
 
                                                                     <div class="col-span-2 hidden sm:col-span-1" id="teacherSecField">
                                                                         <label for="sec" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sec</label>
-                                                                        <input type="text" name="teachersec" id="teachersec" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                                        <input type="text" name="section" id="teachersec" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                                     </div>
 
                                                                     <div class="col-span-2 hidden sm:col-span-1" id="teacherYearField">
                                                                         <label for="year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year</label>
-                                                                        <input type="text" name="teacheryear" id="teacheryear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                                        <input type="text" name="year" id="teacheryear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                                     </div>
 
                                                                     <div class="col-span-2 hidden" id="teacherField">
@@ -188,7 +188,6 @@
             var teacherField = document.getElementById("teacherField");
             var teacherYearField = document.getElementById("teacherYearField");
 
-            // Hide all fields initially
             studentField.style.display = "none";
             studentYearField.style.display = "none";
             studentSecField.style.display = "none";
@@ -197,7 +196,6 @@
             teacherField.style.display = "none";
             teacherYearField.style.display = "none";
 
-            // Show fields based on selected role
             if (role === "student") {
                 studentField.style.display = "block";
                 studentYearField.style.display = "block";
