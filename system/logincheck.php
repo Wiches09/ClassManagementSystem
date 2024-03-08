@@ -5,23 +5,39 @@ session_start();
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$sql = "SELECT * FROM user WHERE user_id = '$username' and password = '$password'";
+$sql = "SELECT * FROM user WHERE user_id = '$username' AND password = '$password'";
 $result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_array($result);
+$row = mysqli_fetch_assoc($result);
 
-if ($row > 0) {
+if ($row) {
     session_regenerate_id();
     $_SESSION["user_id"] = $row['user_id'];
     $_SESSION["password"] = $row['password'];
     $_SESSION["firstname"] = $row['firstname'];
     $_SESSION["lastname"] = $row['lastname'];
     $_SESSION["email"] = $row['email'];
-    $_SESSION["loggedin"] = TRUE;
+    $_SESSION["loggedin"] = true;
     $_SESSION["role"] = $row['role'];
-    $show = header("location: ../page/index.php");
-    $_SESSION['sid'] = $sesid;
+
+    switch ($_SESSION["role"]) {
+        case 'student':
+            header("location: ../page/index.php");
+            break;
+        case 'teacher':
+            header("location: ../page/index.php");
+            break;
+        case 'academic':
+            header("location: ../Academic/dashboard.php");
+            break;
+        default:
+            header("location: ../page/index.php");
+            break;
+    }
 } else {
-    $_SESSION["Error"] = "<p> Your username or password is invalid </p>";
-    $show = header("location: ../page/login.php");
+    echo "<script>alert('รหัสผ่าน หรือ ชื่อผู้ใช้งานไม่ตรงกัน');</script>";
+    // header("location: ../page/login.php");
+    echo "<script> window.location = '../page/login.php'; </script>";
 }
+
+
 $conn->close();

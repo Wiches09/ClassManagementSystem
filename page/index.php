@@ -1,4 +1,7 @@
-
+<?php
+session_start();
+var_dump($_SESSION);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,10 +64,8 @@
 
             <div class="flex justify-end">
               <a href="classes.php" class="flex text-2xl text-[#136C94]">ดูชั้นเรียนทั้งหมด
-                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none"
-                  viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m7 16 4-4-4-4m6 8 4-4-4-4" />
+                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 16 4-4-4-4m6 8 4-4-4-4" />
                 </svg>
               </a>
             </div>

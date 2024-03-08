@@ -140,10 +140,10 @@
 
             function toggleFullscreen() {
                 if (document.fullscreenElement) {
-                    // If already in fullscreen, exit fullscreen
+                    
                     document.exitFullscreen();
                 } else {
-                    // If not in fullscreen, request fullscreen
+                
                     document.documentElement.requestFullscreen();
                 }
             }
