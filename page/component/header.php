@@ -1,10 +1,16 @@
-<!-- <head>
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-</head> -->
+</head>
+
+<?php
+session_start();
+$sesid = session_id();
+?>
+
 <div class="fixed grid grid-cols-3 dark:bg-gray-900 shadow-xl w-full h-20">
   <!-- <div
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto"
@@ -46,10 +52,28 @@
       class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
       id="user-dropdown">
       <div class="px-4 py-3">
-        <span class="block text-sm text-white dark:text-white">Bonnie Green</span>
-        <span class="block text-sm text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+        <?php
+        echo '<span class="block text-sm text-white dark:text-white">' . $_SESSION["firstname"] . " " . $_SESSION["lastname"] . '</span>';
+        echo '<span class="block text-sm text-gray-500 truncate dark:text-gray-500">' . $_SESSION["email"] . '</span>';
+        echo '<span class="block text-sm text-gray-500 truncate dark:text-gray-500">' . $_SESSION["role"] . '</span>';
+        ?>
       </div>
-      <ul class="py-2" aria-labelledby="user-menu-button"></ul>
+      <ul class="pt-2" aria-labelledby="user-menu-button">
+        <form method="post" class="flex co content-center justify-center">
+          <input type="submit" class="text-sm bg-cyan-950 text-white truncate px-2 py-1 rounded mb-0" name="logout"
+            value="logout">
+        </form>
+        <?php
+        if (isset($_POST['logout'])) {
+          unset($_SESSION["userid"]);
+          unset($_SESSION["password"]);
+
+          session_destroy();
+
+          header('Refresh: 2; URL = ../login.php');
+        }
+        ?>
+      </ul>
     </div>
   </div>
 </div>
@@ -59,6 +83,14 @@
   <a href="#" class="flex items-center pb-4 h-20 justify-center">
     <h2 class="font-bold text-2xl">
       HOW TO <span class="bg-[#f84525] text-white px-2 rounded-md">LEARN</span>
+      <!-- <?php
+      if ($_SESSION['sid'] == $sesid) {
+        $test = $_SESSION['role'];
+        echo $test;
+      } else {
+        echo '<h1>You are not logged in.</h1>';
+      }
+      ?> -->
     </h2>
   </a>
   <ul class="mt-4">
@@ -74,7 +106,7 @@
       </a>
     </li>
     <li class="mb-1 group">
-      <a href=".././work-page.php"
+      <a href="./assignment.php"
         class="flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -91,22 +123,9 @@
       <br class="leading-3" />
 
       <!-- วิชาที่มี -->
-
-      <ul class="pl-7 mt-2 hidden group-[.selected]:block">
-        <li class="mb-4">
-          <a href="role.php"
-            class="text-gray-700 text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">View
-            user</a>
-        </li>
-        <li class="mb-4">
-          <a href="reg.php"
-            class="text-sky-700 text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Register
-            user</a>
-        </li>
-      </ul>
     </li>
     <li class="mb-1 group">
-      <a href=""
+      <a href="./class-page.php"
         class="flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100 sidebar-dropdown-toggle">
         <i class="w-6 h-6 pr-1">
           <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -118,30 +137,12 @@
         <span class="text-base pl-1">Course</span>
         <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
       </a>
-      <ul class="pl-7 mt-2 hidden group-[.selected]:block">
-        <li class="mb-4">
-          <a href="course.php"
-            class="text-sky-700 text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Create
-            Course</a>
-          <a href="course.php"
-            class="text-white text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">All</a>
-        </li>
-        <li class="mb-4">
-          <a href="regcourse.php"
-            class="text-white text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Course</a>
-        </li>
-        <li class="mb-4">
-          <a href="rolecourse.php"
-            class="text-white text-base flex items-center hover:text-[#f84525] before:contents-[''] before:w-1 before:h-1 before:rounded-full before:bg-gray-300 before:mr-3">Add
-            Role</a>
-        </li>
-      </ul>
     </li>
     <li class="mb-1 group">
-      <a href=""
+      <a href="./classes.php"
         class="flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
         <i class="bx bx-list-ul mr-3 text-lg"></i>
-        <span class="text-base">Activities</span>
+        <span class="text-base">ชั้นเรียนของฉัน</span>
       </a>
     </li>
 
@@ -149,8 +150,9 @@
     <hr />
     <br class="leading-3" />
 
+    <!-- Setting (do it later) -->
     <li class="mb-1 group">
-      <a href=""
+      <a href="#"
         class="flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
         <i class="bx bx-bell mr-3 text-lg"></i>
         <span class="text-base">การตั้งค่า</span>
