@@ -10,19 +10,23 @@ include 'connectdatabase.php';
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
             <div class="rounded-md border border-dashed border-gray-200 p-4">
-                <div class="flex items-center mb-2">
-                    <div class="text-xl font-semibold">Student</div>
-                    <span class="p-1 rounded text-[12px] font-semibold bg-blue-500/10 text-blue-500 leading-none ml-2">
-                        <?php
-                        $sql = "SELECT COUNT(*) AS student_count FROM `user` WHERE `role` = 'student'";
-                        $result = mysqli_query($conn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                        echo $row['student_count'];
-                        ?>
-                    </span>
+                <div class="flex flex-row md:flex-row items-center mb-2 justify-between">
+                    <div class="text-xl font-semibold mb-2 md:mb-0 md:mr-2">
+                        <span>Student</span>
+                        <span class="p-1 rounded text-xs md:text-sm font-semibold bg-blue-500/10 text-blue-500 leading-none">
+                            <?php
+                            $sql = "SELECT COUNT(*) AS student_count FROM `user` WHERE `role` = 'student'";
+                            $result = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            echo $row['student_count'];
+                            ?>
+                        </span>
+                    </div>
+                    <a href="../Academic/role.php" class="py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
                 </div>
-                <div class="flex flex-col justify-center items-center text-xs md:text-sm">
-                    <table class="w-full border-collapse">
+
+                <div class="flex flex-col justify-center items-center text-xs md:text-sm overflow-x-auto">
+                    <table class="w-full md:max-w-screen-md border-collapse">
                         <thead>
                             <tr class="bg-gray-200">
                                 <th class="border p-2">User ID</th>
@@ -33,7 +37,7 @@ include 'connectdatabase.php';
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM `user` WHERE `role`  = 'student'";
+                            $sql = "SELECT * FROM `user` WHERE `role` = 'student' LIMIT 8";
                             $result = mysqli_query($conn, $sql);
 
                             while ($row = mysqli_fetch_array($result)) {
@@ -50,20 +54,26 @@ include 'connectdatabase.php';
                 </div>
             </div>
 
+
             <div class="rounded-md border border-dashed border-gray-200 p-4">
-                <div class="flex items-center mb-0.5">
-                    <div class="text-xl font-semibold">Teacher</div>
-                    <span class="p-1 rounded text-[12px] font-semibold bg-emerald-500/10 text-emerald-500 leading-none ml-1">
-                        <?php
-                        $sql = "SELECT COUNT(*) AS teacher_count FROM `user` WHERE `role` = 'teacher'";
-                        $result = mysqli_query($conn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                        echo $row['teacher_count'];
-                        ?>
-                    </span>
+                <div class="flex flex-row md:flex-row items-center mb-2 justify-between">
+                    <div class="text-xl font-semibold mb-2 md:mb-0 md:mr-2  ">
+                        <span>Teacher</span>
+                        <span class="p-1 rounded text-xs md:text-sm font-semibold bg-emerald-500/10 text-emerald-500 leading-none">
+                            <?php
+                            $sql = "SELECT COUNT(*) AS teacher_count FROM `user` WHERE `role` = 'teacher'";
+                            $result = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            echo $row['teacher_count'];
+                            ?>
+                        </span>
+
+                    </div>
+                    <a href="../Academic/role.php" class="justify-self-end py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
+
                 </div>
-                <div class="flex flex-col justify-center items-center text-xs md:text-sm">
-                    <table class="w-full border-collapse">
+                <div class="flex flex-col justify-center items-center text-xs md:text-sm overflow-x-auto">
+                    <table class="w-full md:max-w-screen-md border-collapse">
                         <thead>
                             <tr class="bg-gray-200">
                                 <th class="border p-2">User ID</th>
@@ -74,7 +84,7 @@ include 'connectdatabase.php';
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM `user` WHERE `role`  = 'teacher'";
+                            $sql = "SELECT * FROM `user` WHERE `role` = 'teacher' LIMIT 8";
                             $result = mysqli_query($conn, $sql);
 
                             while ($row = mysqli_fetch_array($result)) {
@@ -89,22 +99,23 @@ include 'connectdatabase.php';
                         </tbody>
                     </table>
                 </div>
-
             </div>
+
             <div class="rounded-md border border-dashed border-gray-200 p-4">
-                <div class="flex items-center mb-0.5">
-                    <div class="text-xl font-semibold">User</div>
-                    <span class="p-1 rounded text-[12px] font-semibold bg-rose-500/10 text-rose-500 leading-none ml-1">
-                        <?php
-                        $sql = "SELECT COUNT(*) AS user_count FROM `user` WHERE `role` = 'user'";
-                        $result = mysqli_query($conn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                        echo $row['user_count'];
-                        ?>
-                    </span>
+                <div class="flex flex-row md:flex-row items-center mb-2 justify-between">
+                    <div class="text-xl font-semibold mb-2 md:mb-0 md:mr-2"><span>User</span><span class="p-1 rounded text-xs md:text-sm font-semibold bg-rose-500/10 text-rose-500 leading-none">
+                            <?php
+                            $sql = "SELECT COUNT(*) AS user_count FROM `user` WHERE `role` = 'user'";
+                            $result = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            echo $row['user_count'];
+                            ?>
+                        </span></div>
+                    <a href="../Academic/role.php" class="justify-self-end py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
+
                 </div>
-                <div class="flex flex-col justify-center items-center text-xs md:text-sm">
-                    <table class="w-full border-collapse">
+                <div class="flex flex-col justify-center items-center text-xs md:text-sm overflow-x-auto">
+                    <table class="w-full md:max-w-screen-md border-collapse">
                         <thead>
                             <tr class="bg-gray-200">
                                 <th class="border p-2">User ID</th>
@@ -115,7 +126,7 @@ include 'connectdatabase.php';
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM `user` WHERE `role` = 'user'";
+                            $sql = "SELECT * FROM `user` WHERE `role` = 'user' LIMIT 8";
                             $result = mysqli_query($conn, $sql);
 
                             while ($row = mysqli_fetch_array($result)) {
@@ -131,6 +142,7 @@ include 'connectdatabase.php';
                     </table>
                 </div>
             </div>
+
         </div>
         <div>
             <canvas id="order-chart"></canvas>
