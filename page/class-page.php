@@ -1,3 +1,12 @@
+<?php
+session_start();
+var_dump($_SESSION);
+
+if (!isset($_SESSION['login'])) {
+  header("Location: ./login.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
