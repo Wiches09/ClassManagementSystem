@@ -19,6 +19,7 @@ if ($row) {
     $_SESSION["loggedin"] = true;
     $_SESSION["role"] = $row['role'];
     $_SESSION["profile_picture"] = $row['profile_picture'];
+    $_SESSION["login"] = true;
 
     switch ($_SESSION["role"]) {
         case 'student':
