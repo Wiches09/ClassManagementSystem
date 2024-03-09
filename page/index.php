@@ -1,7 +1,7 @@
 <?php
 session_start();
-var_dump($_SESSION);
-
+// var_dump($_SESSION);
+include 'connectdatabase.php';
 if (!isset($_SESSION['login'])) {
   header("Location: ./login.php");
 }
@@ -29,34 +29,26 @@ if (!isset($_SESSION['login'])) {
       <div class="bg-[#136C94] w-full h-full rounded-2xl">
         <div class="flex justify-center mt-10">
           <!-- user img -->
-          <div class="py-4 w-80 h-80 bg-black rounded-full">
-
+          <div class="py-4 w-80 h-80 bg-black rounded-full overflow-hidden">
             <?php
-            echo '<img class="w-max h-max rounded-full" src="' . $_SESSION['profile_picture'] . '" alt="user photo" />';
-
+            $user_id = $_SESSION["user_id"];
+            $role = $_SESSION["role"];
+            $sql = "SELECT * FROM user WHERE role = '$role' and user_id = $user_id";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_array($result);
             ?>
+            <img class="w-full h-full object-cover" src="../Academic/system/profilepictures/<?= $row['profile_picture'] ?>" alt="Profile Image" />
           </div>
-        </div>
-
-        <div class="text-center mb-10">
-          <?php
-          echo '<h1 class="text-3xl text-[#FEFF86] py-2">' . $_SESSION['firstname'] . " " . $_SESSION['lastname'] . '</h1>';
-          echo '<h2 class="text-2xl text-white py-2">' . $_SESSION['user_id'] . '</h2>';
-          echo '<h3 class="text-xl text-white py-2">' . $_SESSION['email'] . '</h3>';
-          echo '<h4 class="text-lg text-white py-2">' . $_SESSION['role'] . '</h4>';
-          ?>
-        </div>
-
-        <div class="">
 
         </div>
 
-
-
-
-
+        <div class="text-center mb-10 text-[#FEFF86]">
+          <h1 class="text-3xl py-2"><?= $row['firstname'] . " " . $row['lastname'] ?></h1>
+          <h2 class="text-2xl py-2"><?= $row['user_id'] ?></h2>
+          <h3 class="text-xl py-2"><?= $row['email'] ?></h3>
+          <h4 class="text-lg py-2"><?= $row['role'] ?></h4>
+        </div>
       </div>
-
       <!-- classes & calendar -->
       <div class="grid grid-rows-3 gap-2 w-full h-full rounded-2xl">
 
@@ -70,10 +62,8 @@ if (!isset($_SESSION['login'])) {
 
             <div class="flex justify-end">
               <a href="classes.php" class="flex text-2xl text-[#136C94]">ดูชั้นเรียนทั้งหมด
-                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none"
-                  viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m7 16 4-4-4-4m6 8 4-4-4-4" />
+                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 16 4-4-4-4m6 8 4-4-4-4" />
                 </svg>
               </a>
             </div>
