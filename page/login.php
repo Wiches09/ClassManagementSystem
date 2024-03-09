@@ -1,9 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION['login'])) {
-    header("Location: ./login.php");
-} else {
-    header("Location: ./index.php");
+if (isset($_SESSION["Error"])) {
+    $error_message = $_SESSION["Error"];
+    unset($_SESSION["Error"]);
 }
 ?>
 <!DOCTYPE html>
