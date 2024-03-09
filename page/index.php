@@ -1,6 +1,10 @@
 <?php
 session_start();
 var_dump($_SESSION);
+
+if (!isset($_SESSION['login'])) {
+  header("Location: ./login.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +21,6 @@ var_dump($_SESSION);
 <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
   <div id="nav-side-container"></div>
   <!-- end nav -->
-
-
-
-
   <div class="mt-20 ml-60">
     <!-- main page -->
     <div class="grid grid-cols-2 gap-10 p-10 ">
@@ -29,16 +29,22 @@ var_dump($_SESSION);
       <div class="bg-[#136C94] w-full h-full rounded-2xl">
         <div class="flex justify-center mt-10">
           <!-- user img -->
-          <div class="py-4 w-80 h-80">
-            <img class="w-max h-max rounded-full" src="../images/profile.jpg" alt="user photo" />
+          <div class="py-4 w-80 h-80 bg-black rounded-full">
+
+            <?php
+            echo '<img class="w-max h-max rounded-full" src="' . $_SESSION['profile_picture'] . '" alt="user photo" />';
+
+            ?>
           </div>
         </div>
 
         <div class="text-center mb-10">
-          <h1 class="text-3xl text-[#FEFF86] py-2">ชื่อ</h1>
-          <h2 class="text-2xl text-white py-2">รหัสนักเรียน</h2>
-          <h3 class="text-xl text-white py-2">อีเมล</h2>
-            <h4 class="text-lg text-white py-2">ข้อมูลอื่นๆ</h2>
+          <?php
+          echo '<h1 class="text-3xl text-[#FEFF86] py-2">' . $_SESSION['firstname'] . " " . $_SESSION['lastname'] . '</h1>';
+          echo '<h2 class="text-2xl text-white py-2">' . $_SESSION['user_id'] . '</h2>';
+          echo '<h3 class="text-xl text-white py-2">' . $_SESSION['email'] . '</h3>';
+          echo '<h4 class="text-lg text-white py-2">' . $_SESSION['role'] . '</h4>';
+          ?>
         </div>
 
         <div class="">
@@ -64,8 +70,10 @@ var_dump($_SESSION);
 
             <div class="flex justify-end">
               <a href="classes.php" class="flex text-2xl text-[#136C94]">ดูชั้นเรียนทั้งหมด
-                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 16 4-4-4-4m6 8 4-4-4-4" />
+                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none"
+                  viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m7 16 4-4-4-4m6 8 4-4-4-4" />
                 </svg>
               </a>
             </div>
@@ -73,7 +81,14 @@ var_dump($_SESSION);
           </div>
 
 
-          <div class="grid grid-cols-2 grid-rows-2 py-4 gap-5">
+          <div class="grid grid-cols-2 grid-rows-2  py-4 gap-5 w-full max-h-64">
+
+            <!-- fetch class from db and show -->
+            <?php
+            //$sql = "SELECT * FROM user WHERE user_id = '$username' AND password = '$password'";
+            // $result = mysqli_query($conn, $sql);
+            //$row = mysqli_fetch_assoc($result);
+            ?>
 
             <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
               <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
@@ -81,13 +96,13 @@ var_dump($_SESSION);
                 <p class="text-l p-3 text-gray-600">ชื่อครู</p>
               </div>
             </a>
+
             <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
               <div id="class2" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
                 <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
                 <p class="text-l p-3 text-gray-600">ชื่อครู</p>
               </div>
             </a>
-
 
             <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
               <div id="class3" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
@@ -113,7 +128,13 @@ var_dump($_SESSION);
             <hr class="border-gray-800">
           </div>
           <div>
-            <h1 class="text-3xl text-gray-900 pb-5">ตารางเรียน</h1>
+            <?php
+            if ($_SESSION['role'] == 'student') {
+              echo '<h1 class="text-3xl text-gray-900 pb-5">ตารางเรียน</h1>';
+            } else if ($_SESSION['role'] == 'teacher') {
+              echo '<h1 class="text-3xl text-gray-900 pb-5">ตารางสอน</h1>';
+            }
+            ?>
           </div>
 
           <div class="p-4 bg-white">calendar</div>
