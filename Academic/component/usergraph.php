@@ -1,3 +1,21 @@
+<?php
+include 'connectdatabase.php';
+
+$sqlStudent = "SELECT COUNT(*) as count FROM user WHERE role = 'student'";
+$resultStudent = mysqli_query($conn, $sqlStudent);
+$rowStudent = mysqli_fetch_assoc($resultStudent);
+
+$sqlTeacher = "SELECT COUNT(*) as count FROM user WHERE role = 'teacher'";
+$resultTeacher = mysqli_query($conn, $sqlTeacher);
+$rowTeacher = mysqli_fetch_assoc($resultTeacher);
+
+$sqlAcademic = "SELECT COUNT(*) as count FROM user WHERE role = 'academic'";
+$resultAcademic = mysqli_query($conn, $sqlAcademic);
+$rowAcademic = mysqli_fetch_assoc($resultAcademic);
+
+mysqli_close($conn);
+?>
+
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
     <div class="p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
         <div class="rounded-t mb-0 px-0 border-0">
@@ -17,56 +35,42 @@
                     </thead>
                     <tbody>
                         <tr class="text-gray-700 dark:text-gray-100">
-                            <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">Administrator</th>
-                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">1</td>
+                            <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">Student</th>
+                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"><?= $rowStudent['count'] ?></td>
                             <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 <div class="flex items-center">
-                                    <span class="mr-2">70%</span>
+                                    <span class="mr-2"><?= number_format(($rowStudent['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%</span>
                                     <div class="relative w-full">
                                         <div class="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
-                                            <div style="width: 70%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"></div>
+                                            <div style="width: <?= number_format(($rowStudent['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"></div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         <tr class="text-gray-700 dark:text-gray-100">
-                            <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">User</th>
-                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">6</td>
+                            <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">Teacher</th>
+                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"><?= $rowTeacher['count'] ?></td>
                             <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 <div class="flex items-center">
-                                    <span class="mr-2">40%</span>
-                                    <div class="relative w-full">
-                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
-                                            <div style="width: 40%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="text-gray-700 dark:text-gray-100">
-                            <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">User</th>
-                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">5</td>
-                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <div class="flex items-center">
-                                    <span class="mr-2">45%</span>
-                                    <div class="relative w-full">
-                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-pink-200">
-                                            <div style="width: 45%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="text-gray-700 dark:text-gray-100">
-                            <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">User</th>
-                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">4</td>
-                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <div class="flex items-center">
-                                    <span class="mr-2">60%</span>
+                                    <span class="mr-2"><?= number_format(($rowTeacher['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%</span>
                                     <div class="relative w-full">
                                         <div class="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                                            <div style="width: 60%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"></div>
+                                            <div style="width: <?= number_format(($rowTeacher['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-600"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-gray-700 dark:text-gray-100">
+                            <th class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">Academic</th>
+                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"><?= $rowAcademic['count'] ?></td>
+                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <div class="flex items-center">
+                                    <span class="mr-2"><?= number_format(($rowAcademic['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%</span>
+                                    <div class="relative w-full">
+                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-green-200">
+                                            <div style="width: <?= number_format(($rowAcademic['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-600"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -77,6 +81,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
         <div class="flex justify-between mb-4 items-start">
             <div class="font-medium">Activities</div>
