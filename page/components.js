@@ -1,12 +1,5 @@
-async function componentHeader() {
-  const response = await fetch("../page/component/header.php");
-  const htmlContent = await response.text();
-  document.getElementById("nav-side-container").innerHTML = htmlContent;
-}
-
-componentHeader();
 async function componentSidenav() {
-  const response = await fetch("../Academic/component/sidenav.php");
+  const response = await fetch("../page/component/sidenav.php");
   const htmlContent = await response.text();
   document.getElementById("sidenav-container").innerHTML = htmlContent;
   initializeSidebar();
@@ -57,7 +50,7 @@ componentSidenav();
 componentSidenav();
 
 async function componentNavbar() {
-  const response = await fetch("../Academic/component/navbar.php");
+  const response = await fetch("../page/component/navbar.php");
   const htmlContent = await response.text();
   document.getElementById("navbar-container").innerHTML = htmlContent;
 
