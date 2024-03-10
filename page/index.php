@@ -116,6 +116,7 @@ if (!isset($_SESSION['login'])) {
                 WHERE user.user_id = $user_id
               )";
 
+
             $result = mysqli_query($conn, $sql);
             $result2 = mysqli_query($conn, $sql2);
 
