@@ -16,12 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($teacherIds !== null && is_array($teacherIds) && !empty($teacherIds)) {
                 foreach ($teacherIds as $teacherId) {
-                    $checkTeachesQuery = "SELECT * FROM teaches WHERE teacher_id = '$teacherId' AND course_id = '$courseId'";
+                    $checkTeachesQuery = "SELECT * FROM teacher_subject WHERE teacher_id = '$teacherId' AND course_id = '$courseId'";
                     $checkTeachesResult = mysqli_query($conn, $checkTeachesQuery);
 
                     if (mysqli_num_rows($checkTeachesResult) == 0) {
                         // If the teacher is not assigned, insert the assignment
-                        $teachesQuery = "INSERT INTO teaches (teacher_id, course_id, sec, year) 
+                        $teachesQuery = "INSERT INTO teacher_subject (teacher_id, course_id, sec, year) 
                                 VALUES ('$teacherId', '$courseId', '$secID', '$year')";
                         $result = mysqli_query($conn, $teachesQuery);
 
@@ -45,11 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (mysqli_num_rows($studentIdsResult) > 0) {
                     while ($studentRow = mysqli_fetch_assoc($studentIdsResult)) {
                         $studentId = $studentRow['student_id'];
-                        $enrollmentQuery = "SELECT * FROM attend WHERE student_id = '$studentId' AND course_id = '$courseId'";
+                        $enrollmentQuery = "SELECT * FROM student_subject WHERE student_id = '$studentId' AND course_id = '$courseId'";
                         $enrollmentResult = mysqli_query($conn, $enrollmentQuery);
 
                         if (mysqli_num_rows($enrollmentResult) == 0) {
-                            $attendQuery = "INSERT INTO attend (student_id, course_id, sec, year, semester, grade ) 
+                            $attendQuery = "INSERT INTO student_subject (student_id, course_id, sec, year, semester, grade ) 
                                 VALUES ('$studentId', '$courseId', '$secId', '$year', '$semester', '0')";
                             $result = mysqli_query($conn, $attendQuery);
 

@@ -65,7 +65,8 @@ include 'connectdatabase.php';
                     <div class="p-1 bg-white rounded-full focus:outline-none focus:ring">
                         <?php
                         $academic = $_SESSION["role"];
-                        $sql = "SELECT * FROM user WHERE role = '$academic'";
+                        $user_id = $_SESSION["user_id"];
+                        $sql = "SELECT * FROM user WHERE role = '$academic' and user_id = $user_id";
                         $result = mysqli_query($conn, $sql);
                         while ($row = mysqli_fetch_array($result)) {
                         ?>

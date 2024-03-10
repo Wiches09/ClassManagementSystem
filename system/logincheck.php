@@ -23,16 +23,16 @@ if ($row) {
 
     switch ($_SESSION["role"]) {
         case 'student':
-            header("location: ../page/index.php");
+            header("location: ../page/userpage.php");
             break;
         case 'teacher':
-            header("location: ../page/index.php");
+            header("location: ../page/userpage.php");
             break;
         case 'academic':
             header("location: ../Academic/dashboard.php");
             break;
         default:
-            header("location: ../page/index.php");
+            header("location: ../page/userpage.php");
             break;
     }
 } else {
