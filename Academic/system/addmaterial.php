@@ -1,0 +1,43 @@
+<?php
+include 'connectdatabase.php';
+session_start();
+
+$course_id = $_GET['course_id'];
+$postrole = $_POST['postrole'];
+$lessonTitle = $_POST['lessonTitle'];
+$lessonContent = $_POST['lessonContent'];
+$materialname = $_POST['materialname'];
+$material_id = $_POST['postmaterial'];
+$user_id = $_SESSION["user_id"];
+
+if (is_uploaded_file($_FILES['lessonFile']['tmp_name'])) {
+    $lessonFileimage = 'lesson_' . uniqid() . "." . pathinfo(basename($_FILES['lessonFile']['name']), PATHINFO_EXTENSION);
+    $image_upload_path = "../system/coursefile/" . $lessonFileimage;
+    move_uploaded_file($_FILES['lessonFile']['tmp_name'], $image_upload_path);
+} else {
+    $lessonFileimage = "";
+}
+
+if ($postrole === 'material') {
+    $sql = "INSERT INTO `material` (material_name, course_id) VALUES ('$materialname', '$course_id')";
+    $result = mysqli_query($conn, $sql);
+
+    if (!$result) {
+        echo "Failed to insert material: " . mysqli_error($conn);
+        exit;
+    }
+} elseif ($postrole === 'post') {
+    $sql = "INSERT INTO `topic` (topic_title, topic_description, material_id, date_upload, topic_file, user_id) 
+            VALUES ('$lessonTitle', '$lessonContent', '$material_id', CURRENT_TIMESTAMP, '$lessonFileimage', '$user_id')";
+
+    $result = mysqli_query($conn, $sql);
+
+    if (!$result) {
+        echo "Failed to insert post: " . mysqli_error($conn);
+        exit;
+    }
+}
+
+echo "Data inserted successfully.";
+echo "<script>window.location = '../coursepage.php?course_id=$course_id';</script>";
+echo "<script>location.reload(true);</script>";

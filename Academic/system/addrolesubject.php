@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $checkTeachesResult = mysqli_query($conn, $checkTeachesQuery);
 
                     if (mysqli_num_rows($checkTeachesResult) == 0) {
-                        // If the teacher is not assigned, insert the assignment
                         $teachesQuery = "INSERT INTO teacher_subject (teacher_id, course_id, sec, year) 
                                 VALUES ('$teacherId', '$courseId', '$secID', '$year')";
                         $result = mysqli_query($conn, $teachesQuery);
