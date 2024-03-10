@@ -4,6 +4,7 @@ session_start();
 include 'connectdatabase.php';
 if (!isset($_SESSION['login'])) {
   header("Location: ./login.php");
+  exit();
 }
 ?>
 <!DOCTYPE html>
@@ -37,16 +38,25 @@ if (!isset($_SESSION['login'])) {
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_array($result);
             ?>
-            <img class="w-full h-full object-cover" src="../Academic/system/profilepictures/<?= $row['profile_picture'] ?>" alt="Profile Image" />
+            <img class="w-full h-full object-cover"
+              src="../Academic/system/profilepictures/<?= $row['profile_picture'] ?>" alt="Profile Image" />
           </div>
 
         </div>
 
         <div class="text-center mb-10 text-[#FEFF86]">
-          <h1 class="text-3xl py-2"><?= $row['firstname'] . " " . $row['lastname'] ?></h1>
-          <h2 class="text-2xl py-2"><?= $row['user_id'] ?></h2>
-          <h3 class="text-xl py-2"><?= $row['email'] ?></h3>
-          <h4 class="text-lg py-2"><?= $row['role'] ?></h4>
+          <h1 class="text-3xl py-2">
+            <?= $row['firstname'] . " " . $row['lastname'] ?>
+          </h1>
+          <h2 class="text-2xl py-2">
+            <?= $row['user_id'] ?>
+          </h2>
+          <h3 class="text-xl py-2">
+            <?= $row['email'] ?>
+          </h3>
+          <h4 class="text-lg py-2">
+            <?= $row['role'] ?>
+          </h4>
         </div>
       </div>
       <!-- classes & calendar -->
@@ -62,8 +72,10 @@ if (!isset($_SESSION['login'])) {
 
             <div class="flex justify-end">
               <a href="classes.php" class="flex text-2xl text-[#136C94]">ดูชั้นเรียนทั้งหมด
-                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 16 4-4-4-4m6 8 4-4-4-4" />
+                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none"
+                  viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m7 16 4-4-4-4m6 8 4-4-4-4" />
                 </svg>
               </a>
             </div>
@@ -75,40 +87,53 @@ if (!isset($_SESSION['login'])) {
 
             <!-- fetch class from db and show -->
             <?php
-            //$sql = "SELECT * FROM user WHERE user_id = '$username' AND password = '$password'";
-            // $result = mysqli_query($conn, $sql);
-            //$row = mysqli_fetch_assoc($result);
+            $user_id = $_SESSION["user_id"];
+
+            // Fetch user's classes
+            $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
+              FROM teacher t
+              INNER JOIN user ON t.user_id = user.user_id
+              INNER JOIN teacher_subject ON teacher_subject.teacher_id = t.teacher_id
+              WHERE teacher_subject.course_id IN (
+                SELECT s.course_id
+                FROM student_subject s
+                WHERE s.student_id = (
+                  SELECT st.student_id
+                  FROM student st
+                  INNER JOIN user ON user.user_id = st.user_id
+                  WHERE user.user_id = $user_id
+                )
+              )";
+
+            // Fetch course names for the user's classes
+            $sql2 = "SELECT c.course_name
+              FROM course c
+              INNER JOIN student_subject ON student_subject.course_id = c.course_id 
+              WHERE student_subject.student_id = (
+                SELECT st.student_id
+                FROM student st
+                INNER JOIN user ON user.user_id = st.user_id
+                WHERE user.user_id = $user_id
+              )";
+
+            $result = mysqli_query($conn, $sql);
+            $result2 = mysqli_query($conn, $sql2);
+
+            $row2 = mysqli_fetch_assoc($result2);
+            $dummy = mysqli_fetch_assoc($result2);
+
+
+            // Display user's classes with course names
+            while ($dummy && $row = mysqli_fetch_assoc($result)) {
+              echo '
+                <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
+                  <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
+                    <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">' . $row2['course_name'] . '</h1>
+                    <p class="text-l p-3 text-gray-600">' . $row["firstname"] . " " . $row["lastname"] . '</p>
+                  </div>
+                </a>';
+            }
             ?>
-
-            <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-              <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
-                <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-              </div>
-            </a>
-
-            <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-              <div id="class2" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
-                <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-              </div>
-            </a>
-
-            <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-              <div id="class3" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
-                <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-              </div>
-            </a>
-
-
-            <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-              <div id="class4" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">ชื่อชั้นเรียน</h1>
-                <p class="text-l p-3 text-gray-600">ชื่อครู</p>
-              </div>
-            </a>
-
           </div>
         </div>
 
