@@ -22,8 +22,24 @@ $sql = "INSERT INTO `course` (course_name, course_description, course_image, sec
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
+    $course_id = mysqli_insert_id($conn);
+
+    $material_names = ['Lesson', 'Material'];
+
+    foreach ($material_names as $material_name) {
+        $material_sql = "INSERT INTO `material` (material_name, course_id) 
+                         VALUES ('$material_name', '$course_id')";
+        $material_result = mysqli_query($conn, $material_sql);
+
+        if (!$material_result) {
+            echo "<script>alert('Failed to save material data.');</script>";
+            echo mysqli_error($conn);
+            exit;
+        }
+    }
+
     echo "<script>alert('Data saved successfully.');</script>";
-    echo "<script> window.location = '../regcourse.php'; </script>";
+    echo "<script>window.location = '../regcourse.php';</script>";
 } else {
     echo "<script>alert('Failed to save data.');</script>";
     echo mysqli_error($conn);
