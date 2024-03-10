@@ -384,6 +384,13 @@ if (!isset($_SESSION['login'])) {
                 </div>
 
                 <!-- member -->
+                <?php
+                $user_id = $_SESSION["user_id"];
+                $role = $_SESSION["role"];
+                // $sql = "SELECT firstname, lastname FROM user WHERE role = 'teacher' and user_id = $user_id and user_id = (SELECT user_id FROM)";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_array($result);
+                ?>
                 <div>
                   <div class="flex ml-20 h-full w-full">
                     <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
