@@ -29,6 +29,8 @@ if (!isset($_SESSION['login'])) {
   <div class="mt-20 ml-60">
     <!-- class display -->
     <div id="main-page" class="grid grid-cols-3 gap-28 p-32 -mt-12">
+      <?php
+      ?>
 
 
       <!-- class1 -->

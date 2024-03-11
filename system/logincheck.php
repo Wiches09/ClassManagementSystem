@@ -21,6 +21,11 @@ if ($row) {
     $_SESSION["profile_picture"] = $row['profile_picture'];
     $_SESSION["login"] = true;
 
+    // add default pic for no profile image user but not finish yet
+    // if (empty($_SESSION["profile_picture"])) {
+    //     echo "<script>console.log('no pic');</script>";
+    // }
+
     switch ($_SESSION["role"]) {
         case 'student':
             header("location: ../page/index.php");
