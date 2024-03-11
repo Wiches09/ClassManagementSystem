@@ -41,7 +41,7 @@ mysqli_close($conn);
                                 <div class="flex items-center">
                                     <span class="mr-2"><?= number_format(($rowStudent['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%</span>
                                     <div class="relative w-full">
-                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
+                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-blue-300">
                                             <div style="width: <?= number_format(($rowStudent['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"></div>
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@ mysqli_close($conn);
                                 <div class="flex items-center">
                                     <span class="mr-2"><?= number_format(($rowTeacher['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%</span>
                                     <div class="relative w-full">
-                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-red-200">
+                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-red-300">
                                             <div style="width: <?= number_format(($rowTeacher['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-600"></div>
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@ mysqli_close($conn);
                                 <div class="flex items-center">
                                     <span class="mr-2"><?= number_format(($rowAcademic['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%</span>
                                     <div class="relative w-full">
-                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-green-200">
+                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-green-300">
                                             <div style="width: <?= number_format(($rowAcademic['count'] / ($rowStudent['count'] + $rowTeacher['count'] + $rowAcademic['count'])) * 100, 2) ?>%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-600"></div>
                                         </div>
                                     </div>

@@ -2,10 +2,10 @@
 include 'connectdatabase.php';
 session_start();
 
-$username = $_POST['username'];
+$email = $_POST['email'];
 $password = $_POST['password'];
 
-$sql = "SELECT * FROM user WHERE user_id = '$username' AND password = '$password'";
+$sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
