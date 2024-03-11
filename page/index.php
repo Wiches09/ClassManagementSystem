@@ -123,10 +123,12 @@ if (!isset($_SESSION['login'])) {
 
             $row2 = mysqli_fetch_assoc($result2);
             $dummy = mysqli_fetch_assoc($result2);
+            $count = 0;
 
 
-            // Display user's classes with course names
+            // Display user's classes with course names, still bug
             while ($dummy && $row = mysqli_fetch_assoc($result)) {
+              $count += 1;
               echo '
                 <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
                   <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
@@ -134,6 +136,9 @@ if (!isset($_SESSION['login'])) {
                     <p class="text-l p-3 text-gray-600">' . $row["firstname"] . " " . $row["lastname"] . '</p>
                   </div>
                 </a>';
+              if ($count >= 4) {
+                break;
+              }
             }
             ?>
           </div>

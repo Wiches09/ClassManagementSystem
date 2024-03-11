@@ -81,9 +81,18 @@ if (!isset($_SESSION['login'])) {
             <div class="flex justify-end">
               <img src="../images/icon-banner-new.png" class="w-[200px] h-[200px] float-right p-2 mt-4 mr-20" />
             </div>
-            <h1 class="text-gray-900 text-left p-10 pt-[10px] text-3xl text-ellipsis overflow-x-hidden ...">
-              ชื่อชั้นเรียน
-            </h1>
+
+            <?php
+            $sql = 'SELECT course.course_name
+            FROM course
+            WHERE course.course_id = 22';
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_array($result);
+
+            echo '<h1 class="text-gray-900 text-left p-10 pt-[10px] text-3xl text-ellipsis overflow-x-hidden ...">' .
+              $row['course_name']
+              . '</h1>'
+              ?>
           </div>
 
           <div class="grid grid-cols-5 py-5">
@@ -461,7 +470,6 @@ if (!isset($_SESSION['login'])) {
                     <hr class="border-gray-300" />  
                   </div>
                 </div>';
-                    $count += 1;
                   }
                   ?>
                 </div>
