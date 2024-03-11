@@ -15,10 +15,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="style.css" rel="stylesheet">
     <title>Admin Panel</title>
+
+
 </head>
 <body class="text-gray-800 font-inter">
     <!--sidenav -->
-    <div id="sidenav-container"></div>  
+    <div id="sidenav-container"></div>
     <div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>
     <!-- end sidenav -->
 
@@ -32,12 +34,12 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2 w-full">
                     <div class="flex justify-between mb-4 items-start">
-                        <select id="role" name="category" class="mt-1 p-2 border rounded-md focus:outline-none focus:border-blue-500" onchange="redirectPage()">
-                            <option value="all" selected>All user</option>
-                            <option value="student">Student</option>
-                            <option value="teacher">Teacher</option>
-                            <option value="academic">Academic</option>
-                        </select>
+                            <select id="role" name="category" class="mt-1 p-2 border rounded-md focus:outline-none focus:border-blue-500" onchange="redirectPage()">
+                                <option value="all">All user</option>
+                                <option value="student" selected>Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="academic">Academic</option>
+                            </select>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full border border-collapse border-2">
@@ -56,14 +58,8 @@
                             </thead>
                             <div class="all-user">
                                 <tbody>
-                                <?php
-                                    $sql_user = "SELECT * FROM `user` ORDER BY 
-                                        CASE 
-                                            WHEN role = 'academic' THEN 1 
-                                            WHEN role = 'student' THEN 2 
-                                            WHEN role = 'teacher' THEN 3 
-                                            ELSE 4 
-                                        END";
+                                    <?php
+                                    $sql_user = "SELECT * FROM `user` WHERE `role` = 'student'";
                                     $result_user = mysqli_query($conn, $sql_user);
 
                                     while ($row = mysqli_fetch_array($result_user)) {
