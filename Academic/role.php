@@ -71,26 +71,13 @@
                                             <td class="border p-2 text-center"><?= $row['dob'] ?></td>
                                             <td class="border p-2 text-center"><?= $row['gender'] ?></td>
                                             <td class="border p-2 text-center"><?= $row['phonenum'] ?></td>
-                                            <!-- Uncomment the following lines to display the Profile Image -->
-                                            <!-- <td class="border p-2">
-                                        <img src="../imagebooks/<?= $row['profile_picture'] ?>" alt="<?= $row['profile_picture'] ?>" class="max-w-20 h-auto">
-                                    </td> -->
+
                                             <td class="border p-2 relative flex justify-center">
                                                 <div class="flex-col flex  relative w-22">
-                                                    <button id="roleDropdown" class="bg-gray-300 text-gray-700 py-1 px-4 rounded-sm inline-flex items-center">
-                                                        <?php
-                                                        if ($role == 'user') {
-                                                            echo "<span class='mr-1 bg-green-500 text-white px-1 rounded-sm'>User</span>";
-                                                        } else if ($role == 'student') {
-                                                            echo "<span class='mr-1 bg-blue-500 text-white px-1 rounded-sm'>Student</span>";
-                                                        } else if ($role == 'teacher') {
-                                                            echo "<span class='mr-1 bg-red-500 text-white px-1 rounded-sm'>Teacher</span>";
-                                                        }
-                                                        ?>
-                                                        <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                            <path fill-rule="evenodd" d="M10 14a4 4 0 100-8 4 4 0 000 8z" clip-rule="evenodd" />
-                                                        </svg>
+                                                    <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                        <path fill-rule="evenodd" d="M10 14a4 4 0 100-8 4 4 0 000 8z" clip-rule="evenodd" />
+                                                    </svg>
 
                                                     </button>
                                                     <!-- HTML file -->
@@ -105,19 +92,7 @@
                                                     </ul>
                                                 </div>
 
-                                                <script>
-                                                    document.getElementById('roleDropdown').addEventListener('click', function() {
-                                                        var roleOptions = document.getElementById('roleOptions');
-                                                        roleOptions.classList.toggle('hidden');
-                                                    });
-                                                    document.addEventListener('click', function(event) {
-                                                        var roleDropdown = document.getElementById('roleDropdown');
-                                                        var roleOptions = document.getElementById('roleOptions');
-                                                        if (!roleDropdown.contains(event.target) && !roleOptions.contains(event.target)) {
-                                                            roleOptions.classList.add('hidden');
-                                                        }
-                                                    });
-                                                </script>
+
                                             </td>
                                         </tr>
                                     <?php
