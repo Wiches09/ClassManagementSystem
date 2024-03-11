@@ -326,29 +326,32 @@ session_start();
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     $borderColor = ($row['topic_id'] !== null) ? '#FF0000' : '#17A7CE';
                                                 ?>
-                                                    <div class="rounded-xl bg-white w-full ring-1 ring-<?= $borderColor ?> mb-6 mt-6">
-                                                        <div class="flex flex-wrap p-6">
-                                                            <div class="rounded-full w-[40px] h-[40px] ring-4 ring-[#136C94]">
-                                                                <img src="../Academic/system/profilepictures/<?= $row['profile_picture'] ?>" class="rounded-full w-[40px] h-[40px]" />
-                                                            </div>
-                                                            <div class="px-4">
-                                                                <h2 class="dark:text-gray-900 text-2xl"><?= $row['firstname'] . ' ' . $row['lastname'] ?> POST : <?= $row['topic_title'] ?> </h2>
-                                                                <h3 class="text-gray-500 text-xl"><?= $row['date_upload'] ?></h3>
-                                                                <h3 class="text-gray-500 text-xl"><?= $row['material_name'] ?></h3>
+                                                    <a href="postpage.php?material_name=<?= $row['material_name'] . $row['topic_id'] ?>" onclick="">
 
+                                                        <div class="rounded-xl bg-white w-full ring-1 ring-<?= $borderColor ?> mb-6 mt-6">
+                                                            <div class="flex flex-wrap p-6">
+                                                                <div class="rounded-full w-[40px] h-[40px] ring-4 ring-[#136C94]">
+                                                                    <img src="../Academic/system/profilepictures/<?= $row['profile_picture'] ?>" class="rounded-full w-[40px] h-[40px]" />
+                                                                </div>
+                                                                <div class="px-4">
+                                                                    <h2 class="dark:text-gray-900 text-2xl"><?= $row['firstname'] . ' ' . $row['lastname'] ?> POST : <?= $row['topic_title'] ?> </h2>
+                                                                    <h3 class="text-gray-500 text-xl"><?= $row['date_upload'] ?></h3>
+                                                                    <h3 class="text-gray-500 text-xl"><?= $row['material_name'] ?></h3>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div role="separator" class="px-5 py-5">
+                                                                <hr class="border-[#17A7CE]" />
+                                                            </div>
+
+                                                            <div class="">
+                                                                <div class="py-2 px-5 pb-7">
+                                                                    <p class="text-xl"><?= $row['topic_description'] ?></p>
+                                                                </div>
                                                             </div>
                                                         </div>
-
-                                                        <div role="separator" class="px-5 py-5">
-                                                            <hr class="border-[#17A7CE]" />
-                                                        </div>
-
-                                                        <div class="">
-                                                            <div class="py-2 px-5 pb-7">
-                                                                <p class="text-xl"><?= $row['topic_description'] ?></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    </a>
                                                 <?php
                                                 }
                                                 ?>
