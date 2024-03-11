@@ -39,17 +39,19 @@ if (isset($_SESSION["Error"])) {
                 <h1 class="text-3xl justify-center font-bold">Login</h1>
             </div>
             <div>
-                <form action="../system/logincheck.php" method="POST">
-                    <label for="username">
-                        <h1>Username: </h1>
-                    </label>
-                    <input type="text" name="username" class="w-full mb-5" id="username">
-                    <label for="password">
-                        <h1>Password: </h1>
-                    </label>
-                    <input type="text" name="password" class="w-full" id="password"><br>
-                    <button type="submit" class="mt-8 p-3 bg-cyan-300 rounded-xl">Submit</button>
-                </form>
+            <form action="../system/logincheck.php" method="POST">
+                <label for="email">
+                    <h1>email : </h1>
+                </label>
+                <!-- Adding "rounded-full" class to make the input round -->
+                <input type="text" name="email" class="w-full mb-5 rounded-full" id="email">
+                <label for="password">
+                    <h1>Password: </h1>
+                </label>
+                <!-- Changing "text" type to "password" to hide the letters and adding "rounded-full" class -->
+                <input type="password" name="password" class="w-full rounded-full" id="password"><br>
+                <button type="submit" class="mt-8 p-3 bg-cyan-300 rounded-xl">Submit</button>
+            </form>
             </div>
         </div>
 
