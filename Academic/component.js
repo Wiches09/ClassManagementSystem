@@ -160,9 +160,5 @@ async function componentusertable() {
 }
 componentusertable();
 
-async function componentModaluser() {
-  const response = await fetch("../Academic/component/modaluser.php");
-  const htmlContent = await response.text();
-  document.getElementById("Modaluser-container").innerHTML = htmlContent;
-}
-componentModaluser();
+
+
