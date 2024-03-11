@@ -31,7 +31,7 @@ if (!isset($_SESSION['login'])) {
       <div class="bg-[#136C94] w-full h-full rounded-2xl">
         <div class="flex justify-center mt-10">
           <!-- user img -->
-          <div class="py-4 w-80 h-80 bg-black rounded-full overflow-hidden">
+          <div class="py-4 w-80 h-80 bg-gray-900 mb-8 rounded-full overflow-hidden">
             <?php
             $user_id = $_SESSION["user_id"];
             $role = $_SESSION["role"];
@@ -89,9 +89,11 @@ if (!isset($_SESSION['login'])) {
             <!-- fetch class from db and show -->
             <?php
             $user_id = $_SESSION["user_id"];
+            $role = $_SESSION['role'];
 
-            // Fetch user's classes
-            $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
+            if ($role == 'student') {
+              // Fetch user's classes
+              $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
               FROM teacher t
               INNER JOIN user ON t.user_id = user.user_id
               INNER JOIN teacher_subject ON teacher_subject.teacher_id = t.teacher_id
@@ -106,8 +108,8 @@ if (!isset($_SESSION['login'])) {
                 )
               )";
 
-            // Fetch course names for the user's classes
-            $sql2 = "SELECT c.course_name
+              // Fetch course names for the user's classes
+              $sql2 = "SELECT c.course_name
               FROM course c
               INNER JOIN student_subject ON student_subject.course_id = c.course_id 
               WHERE student_subject.student_id = (
@@ -116,6 +118,35 @@ if (!isset($_SESSION['login'])) {
                 INNER JOIN user ON user.user_id = st.user_id
                 WHERE user.user_id = $user_id
               )";
+
+            } else {
+              $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
+              FROM teacher t
+              INNER JOIN user ON t.user_id = user.user_id
+              INNER JOIN teacher_subject ON teacher_subject.teacher_id = t.teacher_id
+              WHERE teacher_subject.course_id IN (
+                SELECT ts.course_id
+                FROM teacher_subject ts
+                WHERE ts.teacher_id = (
+                  SELECT t.teacher_id
+                  FROM teacher t
+                  INNER JOIN user ON user.user_id = t.user_id
+                  WHERE user.user_id = $user_id))
+                
+              ";
+
+              $sql2 = "SELECT c.course_name
+              FROM course c
+              INNER JOIN teacher_subject ON teacher_subject.course_id = c.course_id 
+              WHERE teacher_subject.teacher_id = (
+                SELECT t.teacher_id
+                FROM teacher t
+                INNER JOIN user ON user.user_id = t.user_id
+                WHERE user.user_id = $user_id
+              )";
+
+            }
+
 
 
             $result = mysqli_query($conn, $sql);
@@ -140,6 +171,9 @@ if (!isset($_SESSION['login'])) {
                 break;
               }
             }
+
+            // var_dump($row2);
+            // var_dump($row);
             ?>
           </div>
         </div>
