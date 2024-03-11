@@ -85,7 +85,7 @@ session_start();
                                                     <span class="text-[#17A7CE] text-left text-sm mt-2">status</span>
                                                 </div>
                                                 <div class="mt-4">
-                                                    <input type="file" name="assignmentfile" id="assignmentfile" class="bg-[#17A7CE] text-white flex w-full px-4 py-2.5 rounded-md cursor-pointer hover:bg-blue-800 transition duration-300">
+                                                    <input type="file" name="assignmentfile" id="assignmentfile" class="bg-[#17A7CE] text-white flex w-full px-4 py-2.5 rounded-md cursor-pointer hover:bg-blue-800 transition duration-300 " require>
                                                 </div>
 
                                                 <div class="w-full mt-4">

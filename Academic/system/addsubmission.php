@@ -1,6 +1,7 @@
 <?php
 include 'connectdatabase.php';
 session_start();
+
 if (isset($_GET['assignment_id'])) {
     $assignment_id = $_GET['assignment_id'];
     $user_id = $_SESSION['user_id'];
@@ -13,14 +14,30 @@ if (isset($_GET['assignment_id'])) {
         $assignmentfile = "";
     }
 
-    $sql = "INSERT INTO submission (assignment_id, user_id, submit_file, send_date, score) VALUES ('$assignment_id', '$user_id', '$assignmentfile', CURRENT_TIMESTAMP, '0')";
+    $checkSubmissionQuery = "SELECT * FROM submission WHERE assignment_id = '$assignment_id' AND student_id = '$user_id'";
+    $checkSubmissionResult = mysqli_query($conn, $checkSubmissionQuery);
 
-    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($checkSubmissionResult) > 0) {
+        $updateSubmissionQuery = "UPDATE submission 
+                                SET submit_file = '$assignmentfile', send_date = CURRENT_TIMESTAMP, status = 'submitted'
+                                WHERE assignment_id = '$assignment_id' AND student_id = '$user_id'";
+        $updateResult = mysqli_query($conn, $updateSubmissionQuery);
 
-    if ($result) {
-        echo "Submission successful";
+        if ($updateResult) {
+            echo "Submission updated successfully";
+        } else {
+            echo "Error updating submission: " . mysqli_error($conn);
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        $insertSubmissionQuery = "INSERT INTO submission (assignment_id, student_id, submit_file, send_date, score, status) 
+                                VALUES ('$assignment_id', '$user_id', '$assignmentfile', CURRENT_TIMESTAMP, '0', 'submitted')";
+        $insertResult = mysqli_query($conn, $insertSubmissionQuery);
+
+        if ($insertResult) {
+            echo "Submission successful";
+        } else {
+            echo "Error inserting submission: " . mysqli_error($conn);
+        }
     }
 } else {
     echo "No Submission successful";
