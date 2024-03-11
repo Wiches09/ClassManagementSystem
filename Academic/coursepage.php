@@ -306,27 +306,33 @@ session_start();
                                                 <?php
                                                 $course_id = $_GET['course_id'];
                                                 $sql = "(
-                                                    SELECT topic.topic_id, topic.topic_title, topic.topic_description, topic.material_id, topic.date_upload, topic.topic_file, topic.user_id, user.firstname, user.lastname, user.profile_picture, material.material_name
-                                                    FROM topic
-                                                    INNER JOIN user ON topic.user_id = user.user_id
-                                                    INNER JOIN material ON topic.material_id = material.material_id
-                                                    WHERE material.course_id = '$course_id'
-                                                )
-                                                UNION
-                                                (
-                                                    SELECT assignment.assignment_id, assignment.assignment_title, assignment.description, assignment.material_id, assignment.start_date AS date_upload, assignment.file_attachment AS topic_file, assignment.user_id, user.firstname, user.lastname, user.profile_picture, material.material_name
-                                                    FROM assignment
-                                                    INNER JOIN user ON assignment.user_id = user.user_id
-                                                    INNER JOIN material ON assignment.material_id = material.material_id
-                                                    WHERE material.course_id = '$course_id'
-                                                )
-                                                ORDER BY date_upload DESC";
+                                                SELECT topic.topic_id, topic.topic_title, topic.topic_description, topic.material_id, topic.date_upload, topic.topic_file, topic.user_id, user.firstname, user.lastname, user.profile_picture, material.material_name
+                                                FROM topic
+                                                INNER JOIN user ON topic.user_id = user.user_id
+                                                INNER JOIN material ON topic.material_id = material.material_id
+                                                WHERE material.course_id = '$course_id'
+                                            )
+                                            UNION
+                                            (
+                                                SELECT assignment.assignment_id, assignment.assignment_title, assignment.description, assignment.material_id, assignment.start_date AS date_upload, assignment.file_attachment AS topic_file, assignment.user_id, user.firstname, user.lastname, user.profile_picture, material.material_name
+                                                FROM assignment
+                                                INNER JOIN user ON assignment.user_id = user.user_id
+                                                INNER JOIN material ON assignment.material_id = material.material_id
+                                                WHERE material.course_id = '$course_id'
+                                            )
+                                            ORDER BY date_upload DESC";
                                                 $result = mysqli_query($conn, $sql);
 
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     $borderColor = ($row['topic_id'] !== null) ? '#FF0000' : '#17A7CE';
+
+
+                                                    $link = ($row['material_name'] === 'Assignment')
+                                                        ? "assignmentpage.php?assignment_id={$row['topic_id']}"
+                                                        : "topic.php?topic_id={$row['topic_id']}";
+
                                                 ?>
-                                                    <a href="postpage.php?material_name=<?= $row['material_name'] . $row['topic_id'] ?>" onclick="">
+                                                    <a href="<?= $link ?>" onclick="">
 
                                                         <div class="rounded-xl bg-white w-full ring-1 ring-<?= $borderColor ?> mb-6 mt-6">
                                                             <div class="flex flex-wrap p-6">
