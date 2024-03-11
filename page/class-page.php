@@ -402,7 +402,7 @@ if (!isset($_SESSION['login'])) {
                 INNER JOIN teacher t ON t.user_id = u.user_id
                 INNER JOIN teacher_subject ts ON ts.teacher_id = t.teacher_id
                 INNER JOIN course c ON c.course_id = ts.course_id
-                WHERE c.course_id = 24;
+                WHERE c.course_id = 22;
                 ";
                 $result = mysqli_query($conn, $sql);
                 $count = 0;
@@ -450,7 +450,7 @@ if (!isset($_SESSION['login'])) {
                 INNER JOIN student st ON st.user_id = u.user_id
                 INNER JOIN student_subject ss ON ss.student_id = st.student_id
                 INNER JOIN course c ON c.course_id = ss.course_id
-                WHERE c.course_id = 24;
+                WHERE c.course_id = 22;
                 ";
                   $result = mysqli_query($conn, $sql);
                   $count = 0;
