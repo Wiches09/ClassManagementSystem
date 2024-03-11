@@ -1,7 +1,7 @@
 <?php
 session_start();
 // var_dump($_SESSION);
-
+include 'connectdatabase.php';
 if (!isset($_SESSION['login'])) {
   header("Location: ./login.php");
 }
@@ -20,10 +20,11 @@ if (!isset($_SESSION['login'])) {
 </head>
 
 <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
-  <div id="nav-side-container"></div>
+  <div id="navbar-container"></div>
+  <div id="sidenav-container"></div>
 
   <div class="ml-60">
-    <div class="mt-20 bg-gray-900 fixed w-11/12">
+    <div class="mt-16 bg-gray-900 fixed w-11/12">
       <div>
         <ul class="px-4 py-2 flex justify-center" id="tabs" data-tabs-toggle="#tabs-content" role="tablist">
           <li class="w-full flex justify-center">
@@ -387,153 +388,82 @@ if (!isset($_SESSION['login'])) {
                 <?php
                 $user_id = $_SESSION["user_id"];
                 $role = $_SESSION["role"];
-                // $sql = "SELECT firstname, lastname FROM user WHERE role = 'teacher' and user_id = $user_id and user_id = (SELECT user_id FROM)";
+                $sql = "SELECT u.firstname, u.lastname, u.profile_picture
+                FROM user u
+                INNER JOIN teacher t ON t.user_id = u.user_id
+                INNER JOIN teacher_subject ts ON ts.teacher_id = t.teacher_id
+                INNER JOIN course c ON c.course_id = ts.course_id
+                WHERE c.course_id = 24;
+                ";
                 $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_array($result);
+                $count = 0;
+                while ($row = mysqli_fetch_array($result)) {
+                  echo '<div>
+                  <div class="flex ml-20 h-full w-full">
+                    <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
+                      <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
+                    </div>
+
+                    <div class="mt-1">
+                      <h1 class="text-gray-900 text-2xl">' . $row['firstname'] . ' ' . $row['lastname'] . '</h1>
+                    </div>
+                  </div>
+
+                  <div class="mb-5 mt-5 px-6">
+                    <hr class="border-gray-300" />  
+                  </div>
+                </div>';
+                  $count += 1;
+                }
                 ?>
+
+                <!-- student -->
                 <div>
+
+                  <div class="mt-20 mb-10 grid grid-cols-2">
+                    <h1 class="text-[#17A7CE] text-4xl">นักเรียน</h1>
+                    <!-- จำนวนนักเรียนในชั้นเรียน -->
+                    <div class="flex justify-end mt-2">
+                      <h1 class="text-[#17A7CE] text-2xl">xx</h1>
+                      &ensp;
+                      <h1 class="text-[#17A7CE] text-2xl">คน</h1>
+                    </div>
+                  </div>
+
+                  <div class="mb-10">
+                    <hr class="border-[#17A7CE]" />
+                  </div>
+                  <?php
+                  $user_id = $_SESSION["user_id"];
+                  $role = $_SESSION["role"];
+                  $sql = "SELECT u.firstname, u.lastname, u.profile_picture
+                FROM user u
+                INNER JOIN student st ON st.user_id = u.user_id
+                INNER JOIN student_subject ss ON ss.student_id = st.student_id
+                INNER JOIN course c ON c.course_id = ss.course_id
+                WHERE c.course_id = 24;
+                ";
+                  $result = mysqli_query($conn, $sql);
+                  $count = 0;
+                  while ($row = mysqli_fetch_array($result)) {
+                    echo '<div>
                   <div class="flex ml-20 h-full w-full">
                     <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
                       <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
                     </div>
 
                     <div class="mt-1">
-                      <h1 class="text-gray-900 text-2xl">ชื่อ</h1>
+                      <h1 class="text-gray-900 text-2xl">' . $row['firstname'] . ' ' . $row['lastname'] . '</h1>
                     </div>
                   </div>
 
                   <div class="mb-5 mt-5 px-6">
-                    <hr class="border-gray-300" />
+                    <hr class="border-gray-300" />  
                   </div>
-                </div>
-                <!-- member -->
-                <div>
-                  <div class="flex ml-20 h-full w-full">
-                    <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
-                      <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
-                    </div>
-
-                    <div class="mt-1">
-                      <h1 class="text-gray-900 text-2xl">ชื่อ</h1>
-                    </div>
-                  </div>
-
-                  <div class="mb-5 mt-5 px-6">
-                    <hr class="border-gray-300" />
-                  </div>
-                </div>
-                <!-- member -->
-                <div>
-                  <div class="flex ml-20 h-full w-full">
-                    <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
-                      <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
-                    </div>
-
-                    <div class="mt-1">
-                      <h1 class="text-gray-900 text-2xl">ชื่อ</h1>
-                    </div>
-                  </div>
-
-                  <div class="mb-5 mt-5 px-6">
-                    <hr class="border-gray-300" />
-                  </div>
-                </div>
-                <!-- member -->
-                <div>
-                  <div class="flex ml-20 h-full w-full">
-                    <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
-                      <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
-                    </div>
-
-                    <div class="mt-1">
-                      <h1 class="text-gray-900 text-2xl">ชื่อ</h1>
-                    </div>
-                  </div>
-
-                  <div class="mb-5 mt-5 px-6">
-                    <hr class="border-gray-300" />
-                  </div>
-                </div>
-              </div>
-              <!-- student -->
-              <div>
-                <div class="mt-20 mb-10 grid grid-cols-2">
-                  <h1 class="text-[#17A7CE] text-4xl">นักเรียน</h1>
-                  <!-- จำนวนนักเรียนในชั้นเรียน -->
-                  <div class="flex justify-end mt-2">
-                    <h1 class="text-[#17A7CE] text-2xl">xx</h1>
-                    &ensp;
-                    <h1 class="text-[#17A7CE] text-2xl">คน</h1>
-                  </div>
-                </div>
-
-                <div class="mb-10">
-                  <hr class="border-[#17A7CE]" />
-                </div>
-
-                <!-- member -->
-                <div>
-                  <div class="flex ml-20 h-full w-full">
-                    <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
-                      <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
-                    </div>
-
-                    <div class="mt-1">
-                      <h1 class="text-gray-900 text-2xl">ชื่อ</h1>
-                    </div>
-                  </div>
-
-                  <div class="mb-5 mt-5 px-6">
-                    <hr class="border-gray-300" />
-                  </div>
-                </div>
-                <!-- member -->
-                <div>
-                  <div class="flex ml-20 h-full w-full">
-                    <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
-                      <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
-                    </div>
-
-                    <div class="mt-1">
-                      <h1 class="text-gray-900 text-2xl">ชื่อ</h1>
-                    </div>
-                  </div>
-
-                  <div class="mb-5 mt-5 px-6">
-                    <hr class="border-gray-300" />
-                  </div>
-                </div>
-                <!-- member -->
-                <div>
-                  <div class="flex ml-20 h-full w-full">
-                    <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
-                      <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
-                    </div>
-
-                    <div class="mt-1">
-                      <h1 class="text-gray-900 text-2xl">ชื่อ</h1>
-                    </div>
-                  </div>
-
-                  <div class="mb-5 mt-5 px-6">
-                    <hr class="border-gray-300" />
-                  </div>
-                </div>
-                <!-- member -->
-                <div>
-                  <div class="flex ml-20 h-full w-full">
-                    <div class="rounded-full w-[50px] h-[50px] ring-4 ring-[#136C94] mr-5">
-                      <img src="../images/profile.jpg" class="rounded-full w-[50px] h-[50px]" />
-                    </div>
-
-                    <div class="mt-1">
-                      <h1 class="text-gray-900 text-2xl">ชื่อ</h1>
-                    </div>
-                  </div>
-
-                  <div class="mb-5 mt-5 px-6">
-                    <hr class="border-gray-300" />
-                  </div>
+                </div>';
+                    $count += 1;
+                  }
+                  ?>
                 </div>
               </div>
             </div>
@@ -541,7 +471,7 @@ if (!isset($_SESSION['login'])) {
         </div>
       </div>
     </div>
-  </div>
+
 </body>
 
 </html>

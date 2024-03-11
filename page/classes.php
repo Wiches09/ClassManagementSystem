@@ -21,7 +21,8 @@ if (!isset($_SESSION['login'])) {
 
 <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
   <!-- end nav -->
-  <div id="nav-side-container"></div>
+  <div id="navbar-container"></div>
+  <div id="sidenav-container"></div>
 
 
 
