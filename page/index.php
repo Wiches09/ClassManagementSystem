@@ -20,7 +20,8 @@ if (!isset($_SESSION['login'])) {
 </head>
 
 <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
-  <div id="nav-side-container"></div>
+  <div id="navbar-container"></div>
+  <div id="sidenav-container"></div>
   <!-- end nav -->
   <div class="mt-20 ml-60">
     <!-- main page -->

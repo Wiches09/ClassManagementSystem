@@ -21,7 +21,8 @@ if (!isset($_SESSION['login'])) {
 </head>
 
 <body class="bg-[#AFDAFF] flex flex-col w-full min-h-screen">
-  <div id="nav-side-container"></div>
+<div id="navbar-container"></div>
+  <div id="sidenav-container"></div>
   <!-- end nav -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
