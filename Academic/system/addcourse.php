@@ -24,7 +24,7 @@ $result = mysqli_query($conn, $sql);
 if ($result) {
     $course_id = mysqli_insert_id($conn);
 
-    $material_names = ['Lesson', 'Material'];
+    $material_names = ['Lesson', 'Material', 'Assignment', 'Quiz', 'Anouncement'];
 
     foreach ($material_names as $material_name) {
         $material_sql = "INSERT INTO `material` (material_name, course_id) 
