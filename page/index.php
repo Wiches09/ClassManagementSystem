@@ -91,89 +91,51 @@ if (!isset($_SESSION['login'])) {
             $user_id = $_SESSION["user_id"];
             $role = $_SESSION['role'];
 
+            $sql = "";
             if ($role == 'student') {
-              // Fetch user's classes
-              $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
-              FROM teacher t
-              INNER JOIN user ON t.user_id = user.user_id
-              INNER JOIN teacher_subject ON teacher_subject.teacher_id = t.teacher_id
-              WHERE teacher_subject.course_id IN (
-                SELECT s.course_id
-                FROM student_subject s
-                WHERE s.student_id = (
-                  SELECT st.student_id
-                  FROM student st
-                  INNER JOIN user ON user.user_id = st.user_id
-                  WHERE user.user_id = $user_id
-                )
-              )";
-
-              // Fetch course names for the user's classes
-              $sql2 = "SELECT c.course_name
-              FROM course c
-              INNER JOIN student_subject ON student_subject.course_id = c.course_id 
-              WHERE student_subject.student_id = (
-                SELECT st.student_id
-                FROM student st
-                INNER JOIN user ON user.user_id = st.user_id
-                WHERE user.user_id = $user_id
-              )";
-
-            } else {
-              $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
-              FROM teacher t
-              INNER JOIN user ON t.user_id = user.user_id
-              INNER JOIN teacher_subject ON teacher_subject.teacher_id = t.teacher_id
-              WHERE teacher_subject.course_id IN (
-                SELECT ts.course_id
-                FROM teacher_subject ts
-                WHERE ts.teacher_id = (
-                  SELECT t.teacher_id
-                  FROM teacher t
-                  INNER JOIN user ON user.user_id = t.user_id
-                  WHERE user.user_id = $user_id))
-                
-              ";
-
-              $sql2 = "SELECT c.course_name
-              FROM course c
-              INNER JOIN teacher_subject ON teacher_subject.course_id = c.course_id 
-              WHERE teacher_subject.teacher_id = (
-                SELECT t.teacher_id
-                FROM teacher t
-                INNER JOIN user ON user.user_id = t.user_id
-                WHERE user.user_id = $user_id
-              )";
-
+              $sql = "SELECT u.firstname, u.lastname, u.user_id, t.teacher_id, c.course_name
+                        FROM teacher t
+                        INNER JOIN teacher_subject ts ON ts.teacher_id = t.teacher_id
+                        INNER JOIN course c ON c.course_id = ts.course_id
+                        INNER JOIN student_subject ss ON ss.course_id = ts.course_id
+                        INNER JOIN student s ON s.student_id = ss.student_id
+                        INNER JOIN user u on u.user_id = s.user_id
+                        WHERE s.user_id = $user_id";
+            } else if ($role == 'teacher') {
+              $sql = "SELECT u.firstname, u.lastname, u.user_id, t.teacher_id, c.course_name
+                        FROM teacher t
+                        INNER JOIN user u ON t.user_id = u.user_id
+                        INNER JOIN teacher_subject ts ON ts.teacher_id = t.teacher_id
+                        INNER JOIN course c ON ts.course_id = c.course_id
+                        WHERE t.user_id = $user_id";
             }
 
+            // echo "Generated SQL query: " . $sql . "<br>"; // Print the generated SQL query for debugging
+            
+            if (!empty($sql)) {
+              $result = mysqli_query($conn, $sql);
 
+              $count = 0;
 
-            $result = mysqli_query($conn, $sql);
-            $result2 = mysqli_query($conn, $sql2);
-
-            $row2 = mysqli_fetch_assoc($result2);
-            $dummy = mysqli_fetch_assoc($result2);
-            $count = 0;
-
-
-            // Display user's classes with course names, still bug
-            while ($dummy && $row = mysqli_fetch_assoc($result)) {
-              $count += 1;
-              echo '
-                <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-                  <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                    <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">' . $row2['course_name'] . '</h1>
-                    <p class="text-l p-3 text-gray-600">' . $row["firstname"] . " " . $row["lastname"] . '</p>
-                  </div>
-                </a>';
-              if ($count >= 4) {
-                break;
+              // Display user's classes with course names
+              while ($row = mysqli_fetch_assoc($result)) {
+                $count += 1;
+                echo '
+                        <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
+                            <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
+                                <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">' . $row['course_name'] . '</h1>
+                                <p class="text-l p-3 text-gray-600">' . $row["firstname"] . " " . $row["lastname"] . '</p>
+                            </div>
+                        </a>';
+                if ($count >= 4) {
+                  break;
+                }
               }
+            } else {
+              echo "Unknown role";
             }
 
-            // var_dump($row2);
-            // var_dump($row);
+
             ?>
           </div>
         </div>
