@@ -6,7 +6,6 @@ async function componentSidenav() {
 }
 
 function initializeSidebar() {
-  
   const sidebarToggle = document.querySelector(".sidebar-toggle");
   const sidebarOverlay = document.querySelector(".sidebar-overlay");
   const sidebarMenu = document.querySelector(".sidebar-menu");
@@ -45,7 +44,6 @@ function initializeSidebar() {
       });
     });
 }
-
 
 componentSidenav();
 
@@ -161,3 +159,10 @@ async function componentusertable() {
   document.getElementById("usertable-container").innerHTML = htmlContent;
 }
 componentusertable();
+
+async function componentModaluser() {
+  const response = await fetch("../Academic/component/modaluser.php");
+  const htmlContent = await response.text();
+  document.getElementById("Modaluser-container").innerHTML = htmlContent;
+}
+componentModaluser();
