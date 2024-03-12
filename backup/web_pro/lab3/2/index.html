@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 200px 200px;
+        grid-template-rows: 200px 200px;
+        grid-gap: 20px;
+      }
+      .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .box1,
+      .box2,
+      .box3,
+      .box4 {
+        width: 100%;
+      }
+      .btn {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content-container">
+      <div class="container">
+        <div class="box1">
+          <img id="box11" src="image/1.png" />
+        </div>
+        <div class="box2">
+          <img id="box22" src="image/2.png" />
+        </div>
+        <div class="box3">
+          <img id="box33" src="image/3.png" />
+        </div>
+        <div class="box4">
+          <img id="box44" src="image/4.png" />
+        </div>
+      </div>
+      <div class="box">
+        <button type="button" class="btn" onclick="changeImages()">
+          Change Images
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function changeImages() {
+        console.log("changeImages");
+        let leftup = document.getElementById("box33").src;
+        let rightup = document.getElementById("box11").src;
+        let leftdown = document.getElementById("box44").src;
+        let rightdown = document.getElementById("box22").src;
+        document.getElementById("box33").src = leftdown;
+        document.getElementById("box11").src = leftup;
+        document.getElementById("box44").src = rightdown;
+        document.getElementById("box22").src = rightup;
+      }
+    </script>
+  </body>
+</html>

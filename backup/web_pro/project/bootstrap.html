@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/pop.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0%;
+        padding: 0%;
+      }
+    </style>
+  </head>
+
+  <body class="flex flex-col w-full min-h-screen">
+    <div id="navbar-container"></div>
+    <div class="bg-[#820300] flex-1 relative flex flex-col text-white px-10">
+      <div
+        class="flex flex-col items-center justify-center mt-8 py-8 z-10 w-full h-full pb-8 bg-white mx-auto"
+      >
+        <div class="text-center text-4xl pt-24 text-black">
+          Bootstrap
+          <img
+            src="image/bootstap-removebg-preview.png"
+            class="mt-8 w-1/2 mx-auto rounded-lg max-w-96"
+          />
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col md:flex-row items-center justify-center mt-8 py-8 z-10 w-full my-8 h-full border-gray-950 border mx-auto rounded-lg shadow-lg"
+      >
+        <p class="text-xl md:px-24 px-4 text-white">
+          Bootstrap เป็นเฟรมเวิร์ก CSS, HTML, และ JavaScript
+          ที่ใช้สำหรับการพัฒนาเว็บไซต์และเว็บแอปพลิเคชัน.
+          ถูกสร้างขึ้นโดยทีมพัฒนาที่ Twitter
+          และได้รับความนิยมมากในวงการพัฒนาเว็บ. Bootstrap
+          มีคุณสมบัติหลายอย่างที่ทำให้นักพัฒนาสามารถสร้างหน้าเว็บที่สวยงามและปรับแต่งได้ง่ายขึ้น
+          โดยไม่จำเป็นต้องเขียน CSS หรือ JavaScript จากศูนย์.
+          นอกจากนี้ยังช่วยในการทำให้เว็บไซต์เป็น responsive ด้วยการให้ grid
+          system ที่สามารถปรับขนาดได้ตามอุปกรณ์ที่ใช้
+        </p>
+      </div>
+      <div class="bg-black mx-auto w-full rounded-lg shadow-lg">
+        <div>
+          <pre class="pre-code-ception pt-6"> Example Code CSS<code>
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  z-index: 10;
+  width: 100%;
+  margin-top: 8px;
+  height: 100%;
+  border: 1px solid #475569; 
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+
+</code></pre>
+          <pre class="pre-code-ception pt-6"> Example Code Bootstrap<code>
+div class="container mt-4 pt-4 pb-4 border rounded-lg shadow-sm"
+  div class="d-flex flex-column align-items-center justify-content-center"
+    h1 class="text-center"Your Content Goes Here/h1
+    p class="text-center"This is a Bootstrap example with similar styling as the provided CSS code./p
+  /div
+/div </code></pre>
+        </div>
+      </div>
+      <div
+        class="flex flex-col md:flex-row items-center justify-center mt-8 py-8 z-10 w-full my-8 h-full border-gray-950 border mx-auto rounded-lg shadow-lg"
+      >
+        <div class="text-xl px-4 md:px-24 text-white">
+          <p>
+            Bootstrap
+            เป็นเฟรมเวิร์กที่มีข้อดีมากมายที่ทำให้นักพัฒนาและออกแบบเว็บไซต์มักทำนิยมใช้:
+          </p>
+          <br />
+          <ul class="list-disc pl-8">
+            <li>
+              Responsiveness (การทำให้เว็บไซต์ทำงานได้บนหลายขนาดหน้าจอ):
+              Bootstrap มี Grid System
+              ที่ช่วยให้เว็บไซต์ทำงานได้ดีในหลายขนาดหน้าจอต่าง ๆ
+              ตั้งแต่แท็บเล็ตไปจนถึงมือถือ
+            </li>
+            <br />
+            <li>
+              สไตล์ที่สวยงาม: Bootstrap
+              มีสไตล์ที่ถูกออกแบบมาเพื่อดูดีและมีลักษณะทันสมัย
+              ทำให้เว็บไซต์ที่สร้างด้วย Bootstrap มีลุคที่ดีตา.
+            </li>
+            <br />
+            <li>
+              Cross-Browser Compatibility (ความเข้ากันได้กับเบราว์เซอร์):
+              Bootstrap ถูกทดสอบเพื่อความเข้ากันได้กับเบราว์เซอร์หลายชนิด,
+              รวมถึง Chrome, Firefox, Safari, และ Internet Explorer.
+            </li>
+            <br />
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Container EiEi -->
+    </div>
+    <footer class="bg-[#161A30] shadow w-full mt-auto">
+      <div id="footer-container"></div>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script type="module" src="component.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script>
+      function handleClick() {
+        var mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.toggle("hidden");
+      }
+    </script>
+  </body>
+</html>

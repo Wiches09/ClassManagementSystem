@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <label for="inputEmail4">รหัสนักศึกษา</label>
+          <input
+            id="numid"
+            type="text"
+            class="form-control"
+            placeholder="65070XXX"
+          />
+        </div>
+        <div class="col">
+          <label for="inputEmail4">ชื่อจริง</label>
+          <input
+            id="firstname"
+            type="text"
+            class="form-control"
+            placeholder="First name"
+          />
+        </div>
+        <div class="col">
+          <label for="inputEmail4">นามสกุล</label>
+          <input
+            type="text"
+            id="lastname"
+            class="form-control"
+            placeholder="Last name"
+          />
+        </div>
+      </div>
+      <br />
+      <button type="button" class="btn btn-danger" onclick="update()">
+        Submit
+      </button>
+      <br />
+      <br />
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ลำดับ</th>
+            <th scope="col">รหัสนักศึกษา</th>
+            <th scope="col">ชื่อจริง</th>
+            <th scope="col">นามสกุล</th>
+          </tr>
+        </thead>
+        <tbody id="table"></tbody>
+      </table>
+    </div>
+  </body>
+  <script>
+    var count = 0;
+    function update() {
+
+      count++;
+      console.log("update");
+
+      let numid = document.getElementById("numid").value;
+      let firstname = document.getElementById("firstname").value;
+      let lastname = document.getElementById("lastname").value;
+
+      let shownum = document.createTextNode(numid);
+      let shownname = document.createTextNode(firstname);
+      let showlastname = document.createTextNode(lastname);
+      let showcount = document.createTextNode(count);
+
+      let table = document.createElement("tr");
+      let counttext = document.createElement("th");
+
+      let numtext = document.createElement("td");
+      let fnametext = document.createElement("td");
+      let ltext = document.createElement("td");
+      table.appendChild(showcount);
+      counttext.appendChild(showcount);
+
+      numtext.appendChild(shownum);
+      fnametext.appendChild(shownname);
+      ltext.appendChild(showlastname);
+      document.getElementById("table").appendChild(table);
+      document.getElementById("table").appendChild(counttext); 
+      document.getElementById("table").appendChild(numtext);
+      document.getElementById("table").appendChild(fnametext);
+      document.getElementById("table").appendChild(ltext);
+     
+    }
+  </script>
+</html>

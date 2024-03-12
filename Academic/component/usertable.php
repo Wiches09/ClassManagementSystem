@@ -107,12 +107,13 @@ include 'connectdatabase.php';
                         <span>Academic</span>
                         <span class="p-1 rounded text-xs md:text-sm font-semibold bg-emerald-500/10 text-emerald-500 leading-none">
                             <?php
-                            $sql = "SELECT COUNT(*) AS user_count FROM `user` WHERE `role` = 'user'";
+                            $sql = "SELECT COUNT(*) AS user_count FROM `user` WHERE `role` = 'academic'";
                             $result = mysqli_query($conn, $sql);
                             $row = mysqli_fetch_assoc($result);
                             echo $row['user_count'];
                             ?>
-                        </span></div>
+                        </span>
+                    </div>
                     <a href="../Academic/showacademic.php" class="justify-self-end py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
 
                 </div>
