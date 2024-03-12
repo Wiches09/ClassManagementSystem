@@ -1,5 +1,12 @@
 <?php include 'connectdatabase.php';
 session_start();
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,58 +44,99 @@ session_start();
                             <div class="mx-auto bg-white p-8 border rounded-md shadow-md w-full">
                                 <h2 class="text-2xl font-semibold mb-6">QUIZ Page</h2>
                                 <div class="flex flex-col lg:flex-row items-center justify-center w-full">
-                                    <div class="flex flex-col justify-center border rounded-md border-grey gap-6 w-full self-start h-full">
+                                    <div
+                                        class="flex flex-col justify-center border rounded-md border-grey gap-6 w-full self-start h-full">
                                         <div class="flex p-4 bg-white rounded-3xl w-full self-start">
                                             <!-- Icon Container -->
 
                                             <div class="flex flex-col w-full ml-4">
                                                 <?php
+                                                $db = new MyDB();
                                                 if (isset($_GET['quiz_id'])) {
                                                     $quiz_id = $_GET['quiz_id'];
 
                                                     // เรียกข้อมูลของควิซ
                                                     $sql_quiz = "SELECT * FROM quiz WHERE quiz_id = '$quiz_id'";
-                                                    $result_quiz = mysqli_query($conn, $sql_quiz);
-                                                    $row_quiz = mysqli_fetch_assoc($result_quiz);
-                                                ?>
+                                                    $result_quiz = $db->query($sql_quiz);
+                                                    $row_quiz = $result_quiz->fetchArray(SQLITE3_ASSOC);
+                                                    ?>
                                                     <div class="w-full">
-                                                        <h1 class="text-[#136C94] text-3xl px-4 pt-2"><?= $row_quiz['title'] ?></h1>
-                                                        <h2 class="text-gray-600 text-base px-4 pt-1 pb-2">Description: <?= $row_quiz['description'] ?></h2>
-                                                        <h2 class="text-gray-600 text-base px-4 pt-1 pb-2">Start Date: <?= $row_quiz['start_date'] ?></h2>
-                                                        <h2 class="text-gray-600 text-base px-4 pt-1 pb-2">Due Date: <?= $row_quiz['due_date'] ?></h2>
-                                                        <h2 class="text-gray-600 text-base px-4 pt-1 pb-2">Total Score: <?= $row_quiz['total_score'] ?></h2>
+                                                        <h1 class="text-[#136C94] text-3xl px-4 pt-2">
+                                                            <?= $row_quiz['title'] ?>
+                                                        </h1>
+                                                        <h2 class="text-gray-600 text-base px-4 pt-1 pb-2">Description:
+                                                            <?= $row_quiz['description'] ?>
+                                                        </h2>
+                                                        <h2 class="text-gray-600 text-base px-4 pt-1 pb-2">Start Date:
+                                                            <?= $row_quiz['start_date'] ?>
+                                                        </h2>
+                                                        <h2 class="text-gray-600 text-base px-4 pt-1 pb-2">Due Date:
+                                                            <?= $row_quiz['due_date'] ?>
+                                                        </h2>
+                                                        <h2 class="text-gray-600 text-base px-4 pt-1 pb-2">Total Score:
+                                                            <?= $row_quiz['total_score'] ?>
+                                                        </h2>
 
                                                         <form method="post" action="../Academic/system/submitquiz.php">
                                                             <?php
-
+                                                            $db = new MyDB();
                                                             $sql_question = "SELECT * FROM question WHERE quiz_id = '$quiz_id'";
-                                                            $result_question = mysqli_query($conn, $sql_question);
+                                                            $result_question = $db->query($sql_question);
 
-                                                            while ($row_question = mysqli_fetch_assoc($result_question)) {
-                                                            ?>
+                                                            while ($row_question = $result_question->fetchArray(SQLITE3_ASSOC)) {
+                                                                ?>
                                                                 <div class="px-4 mt-2">
-                                                                    <h3 class="text-xl font-bold">Question: <?= $row_question['question_title'] ?></h3>
+                                                                    <h3 class="text-xl font-bold">Question:
+                                                                        <?= $row_question['question_title'] ?>
+                                                                    </h3>
                                                                     <input type="hidden" name="quiz_id" value="<?= $quiz_id ?>">
-                                                                    <input type="hidden" name="question_id[]" value="<?= $row_question['question_id'] ?>">
+                                                                    <input type="hidden" name="question_id[]"
+                                                                        value="<?= $row_question['question_id'] ?>">
                                                                     <label>Select answer:</label>
                                                                     <div class="flex gap-2 mt-1">
-                                                                        <input type="radio" id="answer_<?= $row_question['question_id'] ?>_A" name="answer_<?= $row_question['question_id'] ?>" value="A">
-                                                                        <label for="answer_<?= $row_question['question_id'] ?>_A"><?= $row_question['question_a'] ?></label>
-                                                                        <input type="radio" id="answer_<?= $row_question['question_id'] ?>_B" name="answer_<?= $row_question['question_id'] ?>" value="B">
-                                                                        <label for="answer_<?= $row_question['question_id'] ?>_B"><?= $row_question['question_b'] ?></label>
-                                                                        <input type="radio" id="answer_<?= $row_question['question_id'] ?>_C" name="answer_<?= $row_question['question_id'] ?>" value="C">
-                                                                        <label for="answer_<?= $row_question['question_id'] ?>_C"><?= $row_question['question_c'] ?></label>
-                                                                        <input type="radio" id="answer_<?= $row_question['question_id'] ?>_D" name="answer_<?= $row_question['question_id'] ?>" value="D">
-                                                                        <label for="answer_<?= $row_question['question_id'] ?>_D"><?= $row_question['question_d'] ?></label>
+                                                                        <input type="radio"
+                                                                            id="answer_<?= $row_question['question_id'] ?>_A"
+                                                                            name="answer_<?= $row_question['question_id'] ?>"
+                                                                            value="A">
+                                                                        <label
+                                                                            for="answer_<?= $row_question['question_id'] ?>_A">
+                                                                            <?= $row_question['question_a'] ?>
+                                                                        </label>
+                                                                        <input type="radio"
+                                                                            id="answer_<?= $row_question['question_id'] ?>_B"
+                                                                            name="answer_<?= $row_question['question_id'] ?>"
+                                                                            value="B">
+                                                                        <label
+                                                                            for="answer_<?= $row_question['question_id'] ?>_B">
+                                                                            <?= $row_question['question_b'] ?>
+                                                                        </label>
+                                                                        <input type="radio"
+                                                                            id="answer_<?= $row_question['question_id'] ?>_C"
+                                                                            name="answer_<?= $row_question['question_id'] ?>"
+                                                                            value="C">
+                                                                        <label
+                                                                            for="answer_<?= $row_question['question_id'] ?>_C">
+                                                                            <?= $row_question['question_c'] ?>
+                                                                        </label>
+                                                                        <input type="radio"
+                                                                            id="answer_<?= $row_question['question_id'] ?>_D"
+                                                                            name="answer_<?= $row_question['question_id'] ?>"
+                                                                            value="D">
+                                                                        <label
+                                                                            for="answer_<?= $row_question['question_id'] ?>_D">
+                                                                            <?= $row_question['question_d'] ?>
+                                                                        </label>
                                                                     </div>
                                                                 </div>
-                                                            <?php
+                                                                <?php
                                                             }
                                                             ?>
-                                                            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md mt-4">Submit Quiz</button>
+                                                            <button type="submit"
+                                                                class="px-4 py-2 bg-blue-500 text-white rounded-md mt-4">Submit
+                                                                Quiz</button>
                                                         </form>
                                                     </div>
-                                                <?php
+                                                    <?php
                                                 }
                                                 ?>
                                             </div>

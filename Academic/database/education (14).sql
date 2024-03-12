@@ -1,32 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Mar 11, 2024 at 06:07 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `education`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `assignment`
---
-
 CREATE TABLE `assignment` (
   `assignment_id` int(10) UNSIGNED ZEROFILL NOT NULL,
   `assignment_title` varchar(200) NOT NULL,
@@ -38,11 +9,9 @@ CREATE TABLE `assignment` (
   `user_id` int(6) UNSIGNED ZEROFILL NOT NULL,
   `course_id` int(6) UNSIGNED ZEROFILL NOT NULL,
   `material_id` int(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `assignment`
---
+
 
 INSERT INTO `assignment` (`assignment_id`, `assignment_title`, `description`, `file_attachment`, `start_date`, `due_date`, `total_score`, `user_id`, `course_id`, `material_id`) VALUES
 (0000000002, 'TEST', 'asdasda', 'lesson_65eeb82c05adf.jpg', '2024-03-19 17:00:00', '2024-03-20 00:00:00', 10, 000038, 000027, 10),
@@ -53,11 +22,7 @@ INSERT INTO `assignment` (`assignment_id`, `assignment_title`, `description`, `f
 (0000000007, 'DATE', 'asdas', 'assignment_65eec28f957f0.jpg', '2024-03-11 08:36:31', '2024-04-01 18:36:00', 10, 000038, 000027, 10),
 (0000000008, '555555555555555', '77777777777777777', 'assignment_65ef3929be753.pdf', '2024-03-11 17:02:33', '2024-03-21 00:04:00', 5, 000038, 000027, 10);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `attempts`
---
 
 CREATE TABLE `attempts` (
   `attempts_id` int(5) UNSIGNED ZEROFILL NOT NULL,
@@ -66,13 +31,9 @@ CREATE TABLE `attempts` (
   `endtime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `quiz_id` int(11) UNSIGNED ZEROFILL NOT NULL,
   `student_id` int(11) UNSIGNED ZEROFILL NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
--- --------------------------------------------------------
 
---
--- Table structure for table `course`
---
 
 CREATE TABLE `course` (
   `course_id` int(10) UNSIGNED ZEROFILL NOT NULL,
@@ -83,11 +44,8 @@ CREATE TABLE `course` (
   `semester` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `course_image` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) 
 
---
--- Dumping data for table `course`
---
 
 INSERT INTO `course` (`course_id`, `course_name`, `course_description`, `sec_id`, `credits`, `semester`, `year`, `course_image`) VALUES
 (0000000022, 'Science', 'วิทยาศาสตร์ (Science) เป็นการศึกษาและทำค้นคว้าทางวิทยาศาสตร์ที่เน้นการเรียนรู้และเข้าใจเกี่ยวกับโลกและสิ่งต่าง ๆ ในทางทั่วไป โดยการใช้วิธีการทางวิทยาศาสตร์ เป็นกลุ่มวิชาที่แตกต่างกันออกไปอย่างมากและมีหลายสาขาที่ศึกษาเนื้อหาที่แตกต่างกันไป', 1, 1, 1, 1, 'course_65e6be86e1dc8.jpg'),
@@ -96,20 +54,13 @@ INSERT INTO `course` (`course_id`, `course_name`, `course_description`, `sec_id`
 (0000000026, 'ENGLISH', 'ENGLISH', 1, 1, 1, 1, 'course_65edcb7feb1bc.jpg'),
 (0000000027, 'Physics', 'ASDASDADADASDASDASSDAS', 1, 1, 1, 1, 'course_65eeb537da54f.jpg');
 
--- --------------------------------------------------------
 
---
--- Table structure for table `faculty`
---
 
 CREATE TABLE `faculty` (
   `faculty_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_thai_520_w2 NOT NULL,
   `faculty_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_thai_520_w2 DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `faculty`
---
 
 INSERT INTO `faculty` (`faculty_id`, `faculty_name`) VALUES
 ('china', 'ศิลป์-จีน\r\n'),
@@ -119,21 +70,14 @@ INSERT INTO `faculty` (`faculty_id`, `faculty_name`) VALUES
 ('math', 'ศิลป์-คำนวน'),
 ('sma', 'วิทย์-คณิต');
 
--- --------------------------------------------------------
 
---
--- Table structure for table `material`
---
 
 CREATE TABLE `material` (
   `material_id` int(5) NOT NULL,
   `material_name` varchar(255) NOT NULL,
   `course_id` int(6) UNSIGNED ZEROFILL NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `material`
---
 
 INSERT INTO `material` (`material_id`, `material_name`, `course_id`) VALUES
 (1, 'Material', 000026),
@@ -146,11 +90,7 @@ INSERT INTO `material` (`material_id`, `material_name`, `course_id`) VALUES
 (11, 'Quiz', 000027),
 (12, 'Anouncement', 000027);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `question`
---
 
 CREATE TABLE `question` (
   `question_id` int(5) UNSIGNED ZEROFILL NOT NULL,
@@ -159,13 +99,9 @@ CREATE TABLE `question` (
   `answer` varchar(255) NOT NULL,
   `score` int(10) NOT NULL,
   `quiz_id` int(11) UNSIGNED ZEROFILL NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
--- --------------------------------------------------------
 
---
--- Table structure for table `quiz`
---
 
 CREATE TABLE `quiz` (
   `quiz_id` int(5) UNSIGNED ZEROFILL NOT NULL,
@@ -177,22 +113,15 @@ CREATE TABLE `quiz` (
   `total_score` int(10) NOT NULL,
   `teacher_id` int(11) UNSIGNED ZEROFILL NOT NULL,
   `course_id` int(11) UNSIGNED ZEROFILL NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
--- --------------------------------------------------------
 
---
--- Table structure for table `role`
---
 
 CREATE TABLE `role` (
   `role_id` varchar(255) NOT NULL,
   `role_name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `role`
---
 
 INSERT INTO `role` (`role_id`, `role_name`) VALUES
 ('academic', 'academic'),
@@ -200,11 +129,7 @@ INSERT INTO `role` (`role_id`, `role_name`) VALUES
 ('teacher', 'teacher'),
 ('user', 'user');
 
--- --------------------------------------------------------
 
---
--- Table structure for table `student`
---
 
 CREATE TABLE `student` (
   `student_id` int(6) UNSIGNED ZEROFILL NOT NULL,
@@ -214,11 +139,8 @@ CREATE TABLE `student` (
   `gpa` float NOT NULL,
   `total_credit` int(10) NOT NULL,
   `role` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `student`
---
 
 INSERT INTO `student` (`student_id`, `user_id`, `faculty`, `year`, `gpa`, `total_credit`, `role`) VALUES
 (000018, 000033, 'sma', 0, 0, 0, 'student'),
@@ -227,11 +149,7 @@ INSERT INTO `student` (`student_id`, `user_id`, `faculty`, `year`, `gpa`, `total
 (000021, 000036, 'math', 0, 0, 0, 'student'),
 (000022, 000039, 'math', 0, 0, 0, 'student');
 
--- --------------------------------------------------------
 
---
--- Table structure for table `student_subject`
---
 
 CREATE TABLE `student_subject` (
   `attend_id` int(6) NOT NULL,
@@ -241,11 +159,8 @@ CREATE TABLE `student_subject` (
   `semester` int(6) NOT NULL,
   `year` int(6) NOT NULL,
   `grade` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `student_subject`
---
 
 INSERT INTO `student_subject` (`attend_id`, `student_id`, `course_id`, `sec`, `semester`, `year`, `grade`) VALUES
 (1, 000020, 000022, 0, 1, 0, 0),
@@ -257,11 +172,7 @@ INSERT INTO `student_subject` (`attend_id`, `student_id`, `course_id`, `sec`, `s
 (7, 000018, 000027, 0, 1, 0, 0),
 (8, 000019, 000027, 0, 1, 0, 0);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `submission`
---
 
 CREATE TABLE `submission` (
   `submission_id` int(10) UNSIGNED ZEROFILL NOT NULL,
@@ -271,24 +182,17 @@ CREATE TABLE `submission` (
   `send_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `score` int(10) NOT NULL,
   `status` enum('submited','unsubmited') DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
--- --------------------------------------------------------
 
---
--- Table structure for table `teacher`
---
 
 CREATE TABLE `teacher` (
   `teacher_id` int(6) UNSIGNED ZEROFILL NOT NULL,
   `user_id` int(6) UNSIGNED ZEROFILL NOT NULL,
   `faculty` varchar(200) NOT NULL,
   `role` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `teacher`
---
 
 INSERT INTO `teacher` (`teacher_id`, `user_id`, `faculty`, `role`) VALUES
 (000002, 000011, '', 'teacher'),
@@ -299,11 +203,7 @@ INSERT INTO `teacher` (`teacher_id`, `user_id`, `faculty`, `role`) VALUES
 (000007, 000024, '', 'teacher'),
 (000008, 000038, '', 'teacher');
 
--- --------------------------------------------------------
 
---
--- Table structure for table `teacher_subject`
---
 
 CREATE TABLE `teacher_subject` (
   `teaches_id` int(6) NOT NULL,
@@ -311,11 +211,8 @@ CREATE TABLE `teacher_subject` (
   `course_id` int(10) UNSIGNED ZEROFILL NOT NULL,
   `sec` int(2) NOT NULL,
   `year` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `teacher_subject`
---
 
 INSERT INTO `teacher_subject` (`teaches_id`, `teacher_id`, `course_id`, `sec`, `year`) VALUES
 (56, 000006, 0000000024, 0, 0),
@@ -330,11 +227,7 @@ INSERT INTO `teacher_subject` (`teaches_id`, `teacher_id`, `course_id`, `sec`, `
 (65, 000006, 0000000022, 1, 1),
 (66, 000007, 0000000022, 1, 1);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `topic`
---
 
 CREATE TABLE `topic` (
   `topic_id` int(10) UNSIGNED ZEROFILL NOT NULL,
@@ -344,11 +237,8 @@ CREATE TABLE `topic` (
   `date_upload` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `topic_file` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `user_id` int(6) UNSIGNED ZEROFILL NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) 
 
---
--- Dumping data for table `topic`
---
 
 INSERT INTO `topic` (`topic_id`, `topic_title`, `topic_description`, `material_id`, `date_upload`, `topic_file`, `user_id`) VALUES
 (0000000002, 'english 1', '11111', 2, '2024-03-10 17:21:50', '', 000038),
@@ -360,11 +250,7 @@ INSERT INTO `topic` (`topic_id`, `topic_title`, `topic_description`, `material_i
 (0000000008, 'Hi', 'Hello world', 12, '2024-03-11 07:40:48', 'lesson_65eeb58064b3c.pdf', 000038),
 (0000000009, 'english 2', 'ADASDASASASDASDA', 8, '2024-03-11 07:54:05', 'lesson_65eeb89d36162.pdf', 000038);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `user`
---
 
 CREATE TABLE `user` (
   `user_id` int(6) UNSIGNED ZEROFILL NOT NULL,
@@ -377,11 +263,8 @@ CREATE TABLE `user` (
   `phonenum` varchar(10) NOT NULL,
   `profile_picture` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) 
 
---
--- Dumping data for table `user`
---
 
 INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `email`, `password`, `dob`, `gender`, `phonenum`, `profile_picture`, `role`) VALUES
 (000009, '111', '11', '111', '111', '2024-03-11', '111', '111', '111', 'student'),
@@ -415,293 +298,4 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `email`, `password`, `do
 (000038, 'admin', 'admin', '123456', 'aaa', '0001-01-01', 'male', '0830942407', 'profile_65eb236bd4f18.sPkGlUjpXsL_JcRPxYdm', 'academic'),
 (000039, 'rain', 'rain', 'rain', '8wr2yEL7ML', '0001-01-01', 'male', '0830942407', 'profile_65ec74e16be3b.avif', 'student');
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `assignment`
---
-ALTER TABLE `assignment`
-  ADD PRIMARY KEY (`assignment_id`),
-  ADD KEY `acourse_id` (`course_id`),
-  ADD KEY `auser_id` (`user_id`),
-  ADD KEY `amaterial_id` (`material_id`);
-
---
--- Indexes for table `attempts`
---
-ALTER TABLE `attempts`
-  ADD PRIMARY KEY (`attempts_id`),
-  ADD KEY `aquiz_id` (`quiz_id`),
-  ADD KEY `astudent_id` (`student_id`);
-
---
--- Indexes for table `course`
---
-ALTER TABLE `course`
-  ADD PRIMARY KEY (`course_id`);
-
---
--- Indexes for table `faculty`
---
-ALTER TABLE `faculty`
-  ADD PRIMARY KEY (`faculty_id`);
-
---
--- Indexes for table `material`
---
-ALTER TABLE `material`
-  ADD PRIMARY KEY (`material_id`),
-  ADD KEY `mcourse_id` (`course_id`);
-
---
--- Indexes for table `question`
---
-ALTER TABLE `question`
-  ADD PRIMARY KEY (`question_id`),
-  ADD KEY `qquiz` (`quiz_id`);
-
---
--- Indexes for table `quiz`
---
-ALTER TABLE `quiz`
-  ADD PRIMARY KEY (`quiz_id`),
-  ADD KEY `qteacher_id` (`teacher_id`),
-  ADD KEY `qcourse_id` (`course_id`);
-
---
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`role_id`);
-
---
--- Indexes for table `student`
---
-ALTER TABLE `student`
-  ADD PRIMARY KEY (`student_id`),
-  ADD KEY `suser_id` (`user_id`),
-  ADD KEY `srole` (`role`),
-  ADD KEY `sfaculty` (`faculty`);
-
---
--- Indexes for table `student_subject`
---
-ALTER TABLE `student_subject`
-  ADD PRIMARY KEY (`attend_id`),
-  ADD KEY `aastudent` (`student_id`),
-  ADD KEY `aacourse_id` (`course_id`);
-
---
--- Indexes for table `submission`
---
-ALTER TABLE `submission`
-  ADD PRIMARY KEY (`submission_id`),
-  ADD KEY `sassignment_id` (`assignment_id`),
-  ADD KEY `sstudent_id` (`student_id`);
-
---
--- Indexes for table `teacher`
---
-ALTER TABLE `teacher`
-  ADD PRIMARY KEY (`teacher_id`),
-  ADD KEY `tuser_id` (`user_id`),
-  ADD KEY `trole` (`role`);
-
---
--- Indexes for table `teacher_subject`
---
-ALTER TABLE `teacher_subject`
-  ADD PRIMARY KEY (`teaches_id`),
-  ADD KEY `tteacher_id` (`teacher_id`),
-  ADD KEY `tcourse_id` (`course_id`);
-
---
--- Indexes for table `topic`
---
-ALTER TABLE `topic`
-  ADD PRIMARY KEY (`topic_id`),
-  ADD KEY `tmaterial_id` (`material_id`),
-  ADD KEY `ttuser_id` (`user_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`),
-  ADD KEY `role` (`role`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `assignment`
---
-ALTER TABLE `assignment`
-  MODIFY `assignment_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `attempts`
---
-ALTER TABLE `attempts`
-  MODIFY `attempts_id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `course`
---
-ALTER TABLE `course`
-  MODIFY `course_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- AUTO_INCREMENT for table `material`
---
-ALTER TABLE `material`
-  MODIFY `material_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `question`
---
-ALTER TABLE `question`
-  MODIFY `question_id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `quiz`
---
-ALTER TABLE `quiz`
-  MODIFY `quiz_id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `student`
---
-ALTER TABLE `student`
-  MODIFY `student_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
-
---
--- AUTO_INCREMENT for table `student_subject`
---
-ALTER TABLE `student_subject`
-  MODIFY `attend_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `submission`
---
-ALTER TABLE `submission`
-  MODIFY `submission_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `teacher`
---
-ALTER TABLE `teacher`
-  MODIFY `teacher_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `teacher_subject`
---
-ALTER TABLE `teacher_subject`
-  MODIFY `teaches_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
-
---
--- AUTO_INCREMENT for table `topic`
---
-ALTER TABLE `topic`
-  MODIFY `topic_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `assignment`
---
-ALTER TABLE `assignment`
-  ADD CONSTRAINT `acourse_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
-  ADD CONSTRAINT `amaterial_id` FOREIGN KEY (`material_id`) REFERENCES `material` (`material_id`),
-  ADD CONSTRAINT `auser_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `attempts`
---
-ALTER TABLE `attempts`
-  ADD CONSTRAINT `aquiz_id` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`),
-  ADD CONSTRAINT `astudent_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`);
-
---
--- Constraints for table `material`
---
-ALTER TABLE `material`
-  ADD CONSTRAINT `mcourse_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`);
-
---
--- Constraints for table `question`
---
-ALTER TABLE `question`
-  ADD CONSTRAINT `qquiz` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`);
-
---
--- Constraints for table `quiz`
---
-ALTER TABLE `quiz`
-  ADD CONSTRAINT `qcourse_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
-  ADD CONSTRAINT `qteacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`);
-
---
--- Constraints for table `student`
---
-ALTER TABLE `student`
-  ADD CONSTRAINT `sfaculty` FOREIGN KEY (`faculty`) REFERENCES `faculty` (`faculty_id`),
-  ADD CONSTRAINT `srole` FOREIGN KEY (`role`) REFERENCES `role` (`role_id`),
-  ADD CONSTRAINT `suser_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `student_subject`
---
-ALTER TABLE `student_subject`
-  ADD CONSTRAINT `aacourse_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
-  ADD CONSTRAINT `aastudent` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`);
-
---
--- Constraints for table `submission`
---
-ALTER TABLE `submission`
-  ADD CONSTRAINT `sassignment_id` FOREIGN KEY (`assignment_id`) REFERENCES `assignment` (`assignment_id`),
-  ADD CONSTRAINT `sstudent_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`);
-
---
--- Constraints for table `teacher`
---
-ALTER TABLE `teacher`
-  ADD CONSTRAINT `trole` FOREIGN KEY (`role`) REFERENCES `role` (`role_id`),
-  ADD CONSTRAINT `tuser_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `teacher_subject`
---
-ALTER TABLE `teacher_subject`
-  ADD CONSTRAINT `tcourse_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
-  ADD CONSTRAINT `tteacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`);
-
---
--- Constraints for table `topic`
---
-ALTER TABLE `topic`
-  ADD CONSTRAINT `tmaterial_id` FOREIGN KEY (`material_id`) REFERENCES `material` (`material_id`),
-  ADD CONSTRAINT `ttuser_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `role` FOREIGN KEY (`role`) REFERENCES `role` (`role_id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

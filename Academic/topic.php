@@ -1,5 +1,12 @@
 <?php include 'connectdatabase.php';
 session_start();
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,16 +44,21 @@ session_start();
                             <div class="mx-auto bg-white p-8 border rounded-md shadow-md w-full">
                                 <h2 class="text-2xl font-semibold mb-6">Post Page</h2>
                                 <div class="flex flex-col lg:flex-row items-center gap-4  justify-center w-full">
-                                    <div class="flex flex-col justify-center border rounded-md border-grey gap-6 w-full lg:w-3/4 h-full">
+                                    <div
+                                        class="flex flex-col justify-center border rounded-md border-grey gap-6 w-full lg:w-3/4 h-full">
                                         <div class="flex p-4 bg-white rounded-3xl w-full h-fit">
                                             <!-- icon -->
                                             <div class="bg-[#136C94] rounded-full w-20 h-20 flex justify-center">
-                                                <svg class="w-16 h-16 mt-2 text-white justify-center" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13c-2.8-.8-4.7-1-8-1a1 1 0 0 0-1 1v11c0 .6.5 1 1 1 3.2 0 5 .2 8 1m0-13c2.8-.8 4.7-1 8-1 .6 0 1 .5 1 1v11c0 .6-.5 1-1 1-3.2 0-5 .2-8 1" />
+                                                <svg class="w-16 h-16 mt-2 text-white justify-center" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="M12 6v13m0-13c-2.8-.8-4.7-1-8-1a1 1 0 0 0-1 1v11c0 .6.5 1 1 1 3.2 0 5 .2 8 1m0-13c2.8-.8 4.7-1 8-1 .6 0 1 .5 1 1v11c0 .6-.5 1-1 1-3.2 0-5 .2-8 1" />
                                                 </svg>
                                             </div>
 
                                             <?php
+                                            $db = new MyDB();
                                             if (isset($_GET['topic_id'])) {
                                                 $assignment_id = $_GET['topic_id'];
 
@@ -55,29 +67,34 @@ session_start();
                                                 INNER JOIN user ON assignment.user_id = user.user_id 
                                                 WHERE assignment.assignment_id = '$assignment_id'";
 
-                                                $result = mysqli_query($conn, $sql);
+                                                $result_user = $db->query($sql);
 
-                                                while ($row = mysqli_fetch_array($result)) {
-                                            ?>
+                                                while ($row = $result_user->fetchArray(SQLITE3_ASSOC)) {
+                                                    ?>
                                                     <div class="w-full">
                                                         <div>
-                                                            <h1 class="text-[#136C94] text-3xl px-10 pt-3"><?= $row['assignment_title'] ?></h1>
+                                                            <h1 class="text-[#136C94] text-3xl px-10 pt-3">
+                                                                <?= $row['assignment_title'] ?>
+                                                            </h1>
                                                         </div>
                                                         <div>
-                                                            <h2 class="text-gray-600 text-base px-10 pt-3 pb-2"><?= $row['firstname'] . ' ' . $row['lastname'] ?></h2>
+                                                            <h2 class="text-gray-600 text-base px-10 pt-3 pb-2">
+                                                                <?= $row['firstname'] . ' ' . $row['lastname'] ?>
+                                                            </h2>
                                                         </div>
                                                         <div>
                                                             <hr class="border-[#17A7CE] pt-3">
                                                         </div>
 
                                                         <div>
-                                                            <a href="../Academic/system/assignmentfile/<?= $row['file_attachment'] ?>" target="_blank" alt="<?= $row['file_attachment'] ?>">Read</a>
+                                                            <a href="../Academic/system/assignmentfile/<?= $row['file_attachment'] ?>"
+                                                                target="_blank" alt="<?= $row['file_attachment'] ?>">Read</a>
                                                             <p class="text-xl text-gray-900 px-10 mb-3">
                                                                 <?= $row['description'] ?>
                                                             </p>
                                                         </div>
                                                     </div>
-                                            <?php
+                                                    <?php
                                                 }
                                             } else {
                                                 // Handle the case when 'assignment_id' is not present in the URL
@@ -86,35 +103,7 @@ session_start();
                                             ?>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col justify-center self-start  border rounded-md border-grey gap-6 w-full lg:w-1/4 h-full">
-                                        <div class="flex flex-col justify-center bg-white rounded-md shadow-lg p-6 w-full h-full">
-                                            <div class="flex justify-between">
-                                                <span class="text-[#17A7CE] text-left text-2xl ">งานของฉัน</span>
-                                                <span class="text-[#17A7CE] text-left text-sm  mt-2">status</span>
-                                            </div>
-                                            <div class="mt-4">
-                                                <input type="file" name="assignmentfile" id="assignmentfile" class="bg-[#17A7CE] text-white  flex w-full px-4 py-2.5 rounded-md cursor-pointer hover:bg-blue-800 transition duration-300">
-                                            </div>
 
-                                            <div class="w-full mt-4 ">
-                                                <div class="flex w-full px-4">
-                                                    <button type="submit" id="submit" class="w-full bg-[#17A7CE] text-white h-[50px] rounded-lg hover:bg-blue-800 transition duration-300">
-                                                        <h1 class="text-white text-2xl">ส่งงาน</h1>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="w-full mt-4">
-                                                <div class="flex w-full px-4 ">
-                                                    <button type="reset" id="cancle" onclick="cancleUpload()" class="w-full border-4 h-[50px] border-gray-200 rounded-lg hover:bg-gray-200">
-                                                        <h1 class="text-gray-400 text-2xl ">ยกเลิกการส่ง</h1>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
                                 </div>
 
 

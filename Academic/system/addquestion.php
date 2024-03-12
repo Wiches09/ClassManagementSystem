@@ -1,6 +1,14 @@
 <?php
 // เชื่อมต่อฐานข้อมูล
 include_once 'connectdatabase.php.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
+$db = new MyDB();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // รับค่าจากฟอร์ม
@@ -18,17 +26,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $question_c = $choices[$i][2]; // C
         $question_d = $choices[$i][3]; // D
 
-
         $sql = "INSERT INTO question (question_title, answer, quiz_id, question_a, question_b, question_c, question_d)
                 VALUES ('$question_title', '$answer', '$quiz_id', '$question_a', '$question_b', '$question_c', '$question_d')";
 
-        if (mysqli_query($conn, $sql)) {
+        $result = $db->exec($sql);
+
+        if ($result) {
             echo "Records inserted successfully.";
         } else {
-            echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+            echo "ERROR: Could not able to execute $sql. " . $db->lastErrorMsg();
         }
     }
 
     // ปิดการเชื่อมต่อฐานข้อมูล
-    mysqli_close($conn);
+    $db->close();
 }
+?>

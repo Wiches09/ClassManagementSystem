@@ -1,6 +1,14 @@
 <?php
 session_start();
 include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
+$db = new MyDB();
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,10 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dueDateTime = $assignDate . ' ' . $assignTime;
 
     $materialQuery = "SELECT material_id FROM material WHERE material_name = 'ASSIGNMENT' AND course_id = '$course_id'";
-    $materialResult = mysqli_query($conn, $materialQuery);
+    $materialResult = $db->query($materialQuery);
 
     if ($materialResult) {
-        $materialRow = mysqli_fetch_assoc($materialResult);
+        $materialRow = $materialResult->fetchArray(SQLITE3_ASSOC);
         $material_id = $materialRow['material_id'];
 
         // Prepare SQL statement to insert data into the assignment table
@@ -34,14 +42,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$assignTitle', '$assignDescription','$assignFile', CURRENT_TIMESTAMP(), '$dueDateTime', '$assignScore', '$user_id', '$course_id', '$material_id')";
 
         // Execute SQL query
-        if (mysqli_query($conn, $sql)) {
+        if ($db->exec($sql)) {
             echo "Assignment added successfully.";
         } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            echo "Error: " . $sql . "<br>" . $db->lastErrorMsg();
         }
     }
 }
 
 // Close the database connection
-mysqli_close($conn);
+$db->close();
 ?>

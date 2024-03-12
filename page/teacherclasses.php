@@ -6,6 +6,13 @@ include 'connectdatabase.php';
 if (!isset($_SESSION['login'])) {
   header("Location: ./login.php");
 }
+class MyDB extends SQLite3
+{
+  function __construct()
+  {
+    $this->open('../Academic/database/education.db');
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,14 +46,16 @@ if (!isset($_SESSION['login'])) {
       <!-- class display -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 mx-auto">
         <?php
+        $db = new MyDB();
         $teacher_id = $_SESSION['teacher_id'];
         $sql = "SELECT * FROM teacher_subject 
-INNER JOIN course ON course.course_id = teacher_subject.course_id
-INNER JOIN teacher ON teacher.teacher_id = teacher_subject.teacher_id
-INNER JOIN user ON user.user_id = teacher.user_id
-WHERE teacher_subject.teacher_id =  $teacher_id";
-        $result = mysqli_query($conn, $sql);
-        while ($row = mysqli_fetch_assoc($result)) {
+                INNER JOIN course ON course.course_id = teacher_subject.course_id
+                INNER JOIN teacher ON teacher.teacher_id = teacher_subject.teacher_id
+                INNER JOIN user ON user.user_id = teacher.user_id
+                WHERE teacher_subject.teacher_id = $teacher_id";
+        $result = $db->query($sql);
+
+        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
           ?>
           <div
             class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-500 hover:border-red-700">

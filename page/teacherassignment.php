@@ -5,6 +5,13 @@ include 'connectdatabase.php';
 if (!isset($_SESSION['login'])) {
   header("Location: ./login.php");
 }
+class MyDB extends SQLite3
+{
+  function __construct()
+  {
+    $this->open('../Academic/database/education.db');
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,13 +67,16 @@ if (!isset($_SESSION['login'])) {
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
                     <option value="empty" selected> เลือกวิชา</option>
                     <?php
+                    $db = new MyDB();
                     $teacher_id = $_SESSION['teacher_id'];
                     $sql = "SELECT * FROM teacher_subject
-                                                INNER JOIN course ON course.course_id = teacher_subject.course_id
-                                                WHERE teacher_id = $teacher_id";
-                    $result = mysqli_query($conn, $sql);
+        INNER JOIN course ON course.course_id = teacher_subject.course_id
+        WHERE teacher_id = $teacher_id";
 
-                    while ($row = mysqli_fetch_assoc($result)) {
+                    $result = $db->query($sql);
+
+
+                    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                       echo '<option value="' . $row['course_id'] . '">' . $row['course_name'] . '</option>';
                     }
                     ?>
@@ -131,15 +141,13 @@ if (!isset($_SESSION['login'])) {
         </div>
       </div>
       <?php
+      $db = new MyDB();
       $user_id = $_SESSION['user_id'];
-      $sql = "SELECT * FROM assignment
-      WHERE user_id = $user_id ";
-      $result = mysqli_query($conn, $sql);
+      $sql = "SELECT * FROM assignment WHERE user_id = $user_id";
+      $result = $db->query($sql);
 
-
-      if (mysqli_num_rows($result) > 0) {
-
-        while ($row = mysqli_fetch_assoc($result)) {
+      if ($result) {
+        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
           ?>
           <a href="userassignmentpage.php?assignment_id=<?= $row['assignment_id'] ?>">
             <div class="bg-white shadow-md rounded-lg p-4 my-4">

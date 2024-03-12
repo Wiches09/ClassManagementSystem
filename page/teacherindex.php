@@ -6,6 +6,13 @@ if (!isset($_SESSION['login'])) {
     header("Location: ./login.php");
     exit();
 }
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,11 +40,12 @@ if (!isset($_SESSION['login'])) {
                     <!-- user img -->
                     <div class="py-4 w-80 h-80 bg-gray-900 mb-8 rounded-full overflow-hidden">
                         <?php
+                        $db = new MyDB();
                         $user_id = $_SESSION["user_id"];
                         $role = $_SESSION["role"];
                         $sql = "SELECT * FROM user WHERE role = '$role' and user_id = $user_id";
-                        $result = mysqli_query($conn, $sql);
-                        $row = mysqli_fetch_array($result);
+                        $result = $db->query($sql);
+                        $row = $result->fetchArray(SQLITE3_ASSOC);
                         ?>
                         <img class="w-full h-full object-cover"
                             src="../Academic/system/profilepictures/<?= $row['profile_picture'] ?>"
@@ -82,15 +90,17 @@ if (!isset($_SESSION['login'])) {
 
                     <div class="grid grid-cols-2 col-span-2 grid-rows-2  py-4 gap-5 w-full max-h-64">
                         <?php
+                        $db = new MyDB();
                         $teacher_id = $_SESSION['teacher_id'];
                         $sql = "SELECT * FROM teacher_subject 
-            INNER JOIN course ON course.course_id = teacher_subject.course_id
-            INNER JOIN teacher ON teacher.teacher_id = teacher_subject.teacher_id
-            INNER JOIN user ON user.user_id = teacher.user_id
-            WHERE teacher_subject.teacher_id =  $teacher_id";
+                                INNER JOIN course ON course.course_id = teacher_subject.course_id
+                                INNER JOIN teacher ON teacher.teacher_id = teacher_subject.teacher_id
+                                INNER JOIN user ON user.user_id = teacher.user_id
+                                WHERE teacher_subject.teacher_id = $teacher_id";
 
-                        $result = mysqli_query($conn, $sql);
-                        while ($row = mysqli_fetch_assoc($result)) {
+                        $result = $db->query($sql);
+
+                        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                             ?>
                             <div class="flex py-4 gap-5 w-full max-h-64">
                                 <a href="course_teacherpage.php?course_id=<?= $row['course_id'] ?>"
@@ -111,7 +121,7 @@ if (!isset($_SESSION['login'])) {
                         ?>
                     </div>
                 </div>
-           </div>
+            </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>

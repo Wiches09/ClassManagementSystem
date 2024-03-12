@@ -1,6 +1,14 @@
 <?php
 include 'connectdatabase.php';
 session_start();
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
+$db = new MyDB();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // รับข้อมูลจากฟอร์ม
@@ -14,21 +22,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $teacher_id = $_SESSION['teacher_id'];
     $course_id = $_POST['role'];
 
-    $materialQuery = "SELECT material_id FROM material WHERE material_name = 'Quiz' AND course_id = '$course_id'";
-    $materialResult = mysqli_query($conn, $materialQuery);
+    $materialQuery = "SELECT material_id FROM material WHERE material_name = 'Quiz' AND course_id = ?";
+    $materialResult = $pdo->prepare($materialQuery);
+    $materialResult->execute([$course_id]);
 
     // เพิ่มข้อมูลลงในตาราง quiz
     if ($materialResult) {
-        $materialRow = mysqli_fetch_assoc($materialResult);
+        $materialRow = $materialResult->fetch(PDO::FETCH_ASSOC);
         $material_id = $materialRow['material_id'];
 
-
         $sql = "INSERT INTO quiz (title, description, file_attachment, start_date, due_date, total_score, teacher_id, course_id, material_id)
-        VALUES ('$title', '$description', '$file_attachment', '$start_date', '$due_date', '$total_score', '$teacher_id', '$course_id', '$material_id')";
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        if (mysqli_query($conn, $sql)) {
-            $quiz_id = mysqli_insert_id($conn);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$title, $description, $file_attachment, $start_date, $due_date, $total_score, $teacher_id, $course_id, $material_id]);
 
+        if ($stmt) {
+            $quiz_id = $pdo->lastInsertId();
 
             if (isset($_POST['question_title']) && isset($_POST['choices']) && isset($_POST['answers'])) {
                 $question_titles = $_POST['question_title'];
@@ -39,17 +49,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     foreach ($question_titles as $key => $question_title) {
                         if (isset($question_titles[$key]) && isset($choices[$key]) && isset($answers[$key])) {
-                            $question_title = mysqli_real_escape_string($conn, $question_title);
-                            $answer = mysqli_real_escape_string($conn, $answers[$key]);
-                            $choice_a = mysqli_real_escape_string($conn, $choices[$key][0] ?? '');
-                            $choice_b = mysqli_real_escape_string($conn, $choices[$key][1] ?? '');
-                            $choice_c = mysqli_real_escape_string($conn, $choices[$key][2] ?? '');
-                            $choice_d = mysqli_real_escape_string($conn, $choices[$key][3] ?? '');
+                            $question_title = $question_titles[$key];
+                            $answer = $answers[$key];
+                            $choice_a = $choices[$key][0] ?? '';
+                            $choice_b = $choices[$key][1] ?? '';
+                            $choice_c = $choices[$key][2] ?? '';
+                            $choice_d = $choices[$key][3] ?? '';
                             $sql_question = "INSERT INTO question (question_title, answer, quiz_id, question_a, question_b, question_c, question_d)
-                             VALUES ('$question_title', '$answer', '$quiz_id', '$choice_a', '$choice_b', '$choice_c', '$choice_d')";
-                            mysqli_query($conn, $sql_question);
+                             VALUES (?, ?, ?, ?, ?, ?, ?)";
+                            $stmt_question = $pdo->prepare($sql_question);
+                            $stmt_question->execute([$question_title, $answer, $quiz_id, $choice_a, $choice_b, $choice_c, $choice_d]);
                         } else {
-
                             echo "Error: Missing question data.";
                         }
                     }
@@ -62,9 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo "Quiz created successfully.";
         } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            echo "Error: " . $pdo->errorInfo()[2];
         }
-
-        mysqli_close($conn);
     }
 }
+?>

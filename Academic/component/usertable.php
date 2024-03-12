@@ -1,5 +1,12 @@
 <?php
 include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 
 
@@ -13,16 +20,19 @@ include 'connectdatabase.php';
                 <div class="flex flex-row md:flex-row items-center mb-2 justify-between">
                     <div class="text-xl font-semibold mb-2 md:mb-0 md:mr-2">
                         <span>Student</span>
-                        <span class="p-1 rounded text-xs md:text-sm font-semibold bg-blue-500/10 text-blue-500 leading-none">
+                        <span
+                            class="p-1 rounded text-xs md:text-sm font-semibold bg-blue-500/10 text-blue-500 leading-none">
                             <?php
-                            $sql = "SELECT COUNT(*) AS student_count FROM `user` WHERE `role` = 'student'";
-                            $result = mysqli_query($conn, $sql);
-                            $row = mysqli_fetch_assoc($result);
-                            echo $row['student_count'];
+                            $db = new MyDB();
+                            $sql = "SELECT COUNT(*) AS student_count FROM user WHERE role = 'student'";
+                            $result = $db->querySingle($sql);
+                            echo $result;
+
                             ?>
                         </span>
                     </div>
-                    <a href="../Academic/showstudent.php" class="py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
+                    <a href="../Academic/showstudent.php"
+                        class="py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
                 </div>
 
                 <div class="flex flex-col justify-center items-center text-xs md:text-sm overflow-x-auto">
@@ -37,10 +47,11 @@ include 'connectdatabase.php';
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM `user` WHERE `role` = 'student' LIMIT 8";
-                            $result = mysqli_query($conn, $sql);
+                            $db = new MyDB();
+                            $sql = "SELECT * FROM user WHERE role = 'student' LIMIT 8";
+                            $result = $db->query($sql);
 
-                            while ($row = mysqli_fetch_array($result)) {
+                            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                                 echo "<tr>";
                                 echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
                                 echo "<td class='border p-2'>" . $row['firstname'] . "</td>";
@@ -48,6 +59,7 @@ include 'connectdatabase.php';
                                 echo "<td class='border p-2 font-bold text-blue-500'>" . $row['role'] . "</td>";
                                 echo "</tr>";
                             }
+
                             ?>
                         </tbody>
                     </table>
@@ -59,17 +71,18 @@ include 'connectdatabase.php';
                 <div class="flex flex-row md:flex-row items-center mb-2 justify-between">
                     <div class="text-xl font-semibold mb-2 md:mb-0 md:mr-2  ">
                         <span>Teacher</span>
-                        <span class="p-1 rounded text-xs md:text-sm font-semibold bg-red-500/10 text-red-500 leading-none">
+                        <span
+                            class="p-1 rounded text-xs md:text-sm font-semibold bg-red-500/10 text-red-500 leading-none">
                             <?php
-                            $sql = "SELECT COUNT(*) AS teacher_count FROM `user` WHERE `role` = 'teacher'";
-                            $result = mysqli_query($conn, $sql);
-                            $row = mysqli_fetch_assoc($result);
-                            echo $row['teacher_count'];
+                            $sql = "SELECT COUNT(*) AS teacher_count FROM user WHERE role = 'teacher'";
+                            $result = $db->querySingle($sql);
+                            echo $result;
                             ?>
                         </span>
 
                     </div>
-                    <a href="../Academic/showteacher.php" class="justify-self-end py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
+                    <a href="../Academic/showteacher.php"
+                        class="justify-self-end py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
 
                 </div>
                 <div class="flex flex-col justify-center items-center text-xs md:text-sm overflow-x-auto">
@@ -84,10 +97,11 @@ include 'connectdatabase.php';
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM `user` WHERE `role` = 'teacher' LIMIT 8";
-                            $result = mysqli_query($conn, $sql);
+                            $db = new MyDB();
+                            $sql = "SELECT * FROM user WHERE role = 'teacher' LIMIT 8";
+                            $result = $db->query($sql);
 
-                            while ($row = mysqli_fetch_array($result)) {
+                            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                                 echo "<tr>";
                                 echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
                                 echo "<td class='border p-2'>" . $row['firstname'] . "</td>";
@@ -105,16 +119,20 @@ include 'connectdatabase.php';
                 <div class="flex flex-row md:flex-row items-center mb-2 justify-between">
                     <div class="text-xl font-semibold mb-2 md:mb-0 md:mr-2  ">
                         <span>Academic</span>
-                        <span class="p-1 rounded text-xs md:text-sm font-semibold bg-emerald-500/10 text-emerald-500 leading-none">
+                        <span
+                            class="p-1 rounded text-xs md:text-sm font-semibold bg-emerald-500/10 text-emerald-500 leading-none">
                             <?php
-                            $sql = "SELECT COUNT(*) AS user_count FROM `user` WHERE `role` = 'academic'";
-                            $result = mysqli_query($conn, $sql);
-                            $row = mysqli_fetch_assoc($result);
-                            echo $row['user_count'];
+                            $db = new MyDB();
+                            $sql = "SELECT COUNT(*) AS user_count FROM user WHERE role = 'academic'";
+                            $result = $db->querySingle($sql);
+
+                            echo $result;
+
                             ?>
                         </span>
                     </div>
-                    <a href="../Academic/showacademic.php" class="justify-self-end py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
+                    <a href="../Academic/showacademic.php"
+                        class="justify-self-end py-1 px-5 me-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">more</a>
 
                 </div>
                 <div class="flex flex-col justify-center items-center text-xs md:text-sm overflow-x-auto">
@@ -129,10 +147,11 @@ include 'connectdatabase.php';
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM `user` WHERE `role` = 'academic' LIMIT 8";
-                            $result = mysqli_query($conn, $sql);
+                            $db = new MyDB();
+                            $sql = "SELECT * FROM user WHERE role = 'academic' LIMIT 8";
+                            $result = $db->query($sql);
 
-                            while ($row = mysqli_fetch_array($result)) {
+                            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                                 echo "<tr>";
                                 echo "<td class='border p-2'>" . $row['user_id'] . "</td>";
                                 echo "<td class='border p-2'>" . $row['firstname'] . "</td>";

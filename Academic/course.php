@@ -1,4 +1,11 @@
 <?php include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,22 +42,28 @@
                                 <h2 class="text-2xl font-semibold mb-6">Course</h2>
                                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 mx-auto">
                                     <?php
+                                    $db = new MyDB();
                                     $sql = "SELECT * FROM course ORDER BY course_id DESC";
-                                    $result = mysqli_query($conn, $sql);
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                    ?>
-                                        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-500 hover:border-red-700">
+                                    $result = $db->query($sql);
+
+                                    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                                        ?>
+                                        <div
+                                            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-500 hover:border-red-700">
                                             <a href="coursepage.php?course_id=<?= $row['course_id'] ?>">
-                                                <img src="../Academic/system/imagecourse/<?= $row['course_image'] ?>" class="w-full max-w-96 max-h-96 h-60">
+                                                <img src="../Academic/system/imagecourse/<?= $row['course_image'] ?>"
+                                                    class="w-full max-w-96 max-h-96 h-60">
 
                                                 <div class="p-5 flex flex-col">
                                                     <div>
                                                         <a href="#">
-                                                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                                            <h5
+                                                                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                                                 <?= $row['course_name'] ?>
                                                             </h5>
                                                         </a>
-                                                        <p class="mb-3 font-normal md:text-base text-xs text-gray-700 dark:text-gray-400">
+                                                        <p
+                                                            class="mb-3 font-normal md:text-base text-xs text-gray-700 dark:text-gray-400">
                                                             <?= $row['course_description'] ?>
                                                         </p>
                                                     </div>
@@ -59,7 +72,7 @@
                                                 </div>
                                             </a>
                                         </div>
-                                    <?php
+                                        <?php
                                     }
                                     mysqli_close($conn);
                                     ?>

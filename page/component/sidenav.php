@@ -10,7 +10,7 @@ if ($role === 'teacher') {
 } elseif ($role === 'student') {
   $homeLink = "../page/studentindex.php";
   $classLink = "../page/studentclasses.php";
-  $assignLink = "../page/userassignmentpage.php";
+  $assignLink = "../page/studentassignment.php";
 } else {
 
 }

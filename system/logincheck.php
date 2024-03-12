@@ -1,14 +1,27 @@
 <?php
 include 'connectdatabase.php';
 session_start();
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 
-$email = mysqli_real_escape_string($conn, $_POST['email']);
-$password = mysqli_real_escape_string($conn, $_POST['password']);
+$db = new MyDB();
+if (!$db) {
+    echo $db->lastErrorMsg();
+} else {
+    echo "Opened database successfully<br>";
+}
+
+$email = $_POST['email'];
+$password = $_POST['password'];
 
 $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-
+$ret = $db->query($sql);
+$row = $ret->fetchArray(SQLITE3_ASSOC);
 if ($row) {
     session_regenerate_id();
     $_SESSION["user_id"] = $row['user_id'];
@@ -21,16 +34,11 @@ if ($row) {
     $_SESSION["profile_picture"] = $row['profile_picture'];
     $_SESSION["login"] = true;
 
-    // add default pic for no profile image user but not finish yet
-    // if (empty($_SESSION["profile_picture"])) {
-    //     echo "<script>console.log('no pic');</script>";
-    // }
-
     switch ($_SESSION["role"]) {
         case 'student':
             $studentQuery = "SELECT student_id FROM student WHERE user_id = '{$row['user_id']}'";
-            $studentResult = mysqli_query($conn, $studentQuery);
-            $studentRow = mysqli_fetch_assoc($studentResult);
+            $studentResult = $db->query($studentQuery);
+            $studentRow = $studentResult->fetchArray(SQLITE3_ASSOC);
 
             if ($studentRow) {
                 $_SESSION["student_id"] = $studentRow['student_id'];
@@ -40,16 +48,14 @@ if ($row) {
             break;
         case 'teacher':
             $teacherQuery = "SELECT teacher_id FROM teacher WHERE user_id = '{$row['user_id']}'";
-            $teacherResult = mysqli_query($conn, $teacherQuery);
-            $teacherRow = mysqli_fetch_assoc($teacherResult);
+            $teacherResult = $db->query($teacherQuery);
+            $teacherRow = $teacherResult->fetchArray(SQLITE3_ASSOC);
 
             if ($teacherRow) {
                 $_SESSION["teacher_id"] = $teacherRow['teacher_id'];
                 header("location: ../page/teacherindex.php");
                 break;
             }
-
-
         case 'academic':
             header("location: ../Academic/dashboard.php");
             break;
@@ -62,5 +68,5 @@ if ($row) {
     echo "<script> window.location = '../page/login.php'; </script>";
 }
 
-
-$conn->close();
+$db->close();
+?>

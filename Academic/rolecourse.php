@@ -1,4 +1,11 @@
 <?php include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,10 +43,14 @@
                             <div class="mx-auto bg-white p-8 border rounded-md shadow-md w-full">
                                 <h2 class="text-2xl font-semibold mb-6">Add Role</h2>
 
-                                <form action="../Academic/system/addselectcourse.php" method="POST" class="space-y-4" id="roleForm">
+                                <form action="../Academic/system/addselectcourse.php" method="POST" class="space-y-4"
+                                    id="roleForm">
                                     <div class="mb-4">
-                                        <label for="role" class="block text-sm font-medium text-gray-600">Select Role</label>
-                                        <select id="role" name="category" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" onchange="toggleFields()">
+                                        <label for="role" class="block text-sm font-medium text-gray-600">Select
+                                            Role</label>
+                                        <select id="role" name="category"
+                                            class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                                            onchange="toggleFields()">
 
                                             <option value="empty" selected>Choose Role</option>
                                             <option value="teacher">Teacher</option>
@@ -48,13 +59,17 @@
                                     </div>
 
                                     <div class="mb-4">
-                                        <label for="course" class="block text-sm font-medium text-gray-600">Select course</label>
-                                        <select id="course" name="course" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
-                                            <option value="empty"> Choose Course</option> <?php
-                                                                                            $sql = "SELECT * FROM course";
-                                                                                            $result = mysqli_query($conn, $sql);
-                                                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                                            ?>
+                                        <label for="course" class="block text-sm font-medium text-gray-600">Select
+                                            course</label>
+                                        <select id="course" name="course"
+                                            class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+                                            <option value="empty"> Choose Course</option>
+                                            <?php
+                                            $db = new MyDB();
+                                            $sql = "SELECT * FROM course";
+                                            $result = $db->query($sql);
+                                            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                                                ?>
 
                                                 <option value=<?= $row['course_id'] ?>> <?= $row['course_name'] ?></option>
 
@@ -62,13 +77,17 @@
                                         </select>
                                     </div>
                                     <div class="mb-4 hidden" id="studentField">
-                                        <label for="faculty" class="block text-sm font-medium text-gray-600">Select Faculty</label>
-                                        <select id="faculty" name="faculty" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
-                                            <option value="empty"> Choose Faculty</option> <?php
-                                                                                            $sql = "SELECT * FROM faculty";
-                                                                                            $result = mysqli_query($conn, $sql);
-                                                                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                                                            ?>
+                                        <label for="faculty" class="block text-sm font-medium text-gray-600">Select
+                                            Faculty</label>
+                                        <select id="faculty" name="faculty"
+                                            class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+                                            <option value="empty"> Choose Faculty</option>
+                                            <?php
+                                            $db = new MyDB();
+                                            $sql = "SELECT * FROM faculty";
+                                            $result = $db->query($sql);
+                                            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                                                ?>
 
                                                 <option value=<?= $row['faculty_id'] ?>> <?= $row['faculty_name'] ?></option>
 
@@ -76,42 +95,57 @@
                                         </select>
                                     </div>
                                     <div class="mb-4 hidden" id="studentsectionField">
-                                        <label for="section" class="block text-sm font-medium text-gray-600">Section</label>
-                                        <input type="text" id="section" name="section" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                        <label for="section"
+                                            class="block text-sm font-medium text-gray-600">Section</label>
+                                        <input type="text" id="section" name="section"
+                                            class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
                                     </div>
                                     <div class="mb-4 hidden" id="teachersectionField">
-                                        <label for="section" class="block text-sm font-medium text-gray-600">Section</label>
-                                        <input type="text" id="section" name="section" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                        <label for="section"
+                                            class="block text-sm font-medium text-gray-600">Section</label>
+                                        <input type="text" id="section" name="section"
+                                            class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
                                     </div>
 
                                     <div class="mb-4 hidden" id="semesterField">
-                                        <label for="semester" class="block text-sm font-medium text-gray-600">Semester</label>
-                                        <input type="number" id="semester" name="semester" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                        <label for="semester"
+                                            class="block text-sm font-medium text-gray-600">Semester</label>
+                                        <input type="number" id="semester" name="semester"
+                                            class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
                                     </div>
 
                                     <div class="mb-6 hidden" id="studentyearField">
                                         <label for=" year" class="block text-sm font-medium text-gray-600">Year</label>
-                                        <input type="number" id="year" name="year" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                        <input type="number" id="year" name="year"
+                                            class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
                                     </div>
                                     <div class="mb-6 hidden" id="teacheryearField">
                                         <label for=" year" class="block text-sm font-medium text-gray-600">Year</label>
-                                        <input type="number" id="year" name="year" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" >
+                                        <input type="number" id="year" name="year"
+                                            class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
                                     </div>
                                     <div class="mb-6 hidden" id="teacherField">
-                                        <label for="teacher" class="block text-sm font-medium text-gray-600">Teacher</label>
+                                        <label for="teacher"
+                                            class="block text-sm font-medium text-gray-600">Teacher</label>
                                         <?php
+                                        $db = new MyDB();
                                         $sql = "SELECT * FROM teacher INNER JOIN user ON teacher.user_id = user.user_id";
-                                        $result = mysqli_query($conn, $sql);
+                                        $result = $db->query($sql);
 
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                        ?>
-                                            <input type="checkbox" class="text-white" name="teacher_id[]" value="<?= $row['teacher_id'] ?>" id="<?= $row['firstname'] . $row['lastname'] ?>">
-                                            <label class="text-gray-600" for="<?= $row['firstname'] . $row['lastname'] ?>"><?= $row['firstname'] . ' ' . $row['lastname'] ?></label><br>
-                                        <?php
+                                        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                                            ?>
+                                            <input type="checkbox" class="text-white" name="teacher_id[]"
+                                                value="<?= $row['teacher_id'] ?>"
+                                                id="<?= $row['firstname'] . $row['lastname'] ?>">
+                                            <label class="text-gray-600" for="<?= $row['firstname'] . $row['lastname'] ?>">
+                                                <?= $row['firstname'] . ' ' . $row['lastname'] ?>
+                                            </label><br>
+                                            <?php
                                         }
                                         ?>
                                     </div>
-                                    <button type="submit" class="w-full bg-[#f84525] text-white p-2 rounded-md hover:bg-[#f82525] focus:outline-none">Submit</button>
+                                    <button type="submit"
+                                        class="w-full bg-[#f84525] text-white p-2 rounded-md hover:bg-[#f82525] focus:outline-none">Submit</button>
                                 </form>
                             </div>
                         </div>

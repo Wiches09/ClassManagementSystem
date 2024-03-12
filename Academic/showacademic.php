@@ -59,10 +59,11 @@
                             <div class="all-user">
                                 <tbody>
                                     <?php
+                                    $db = new MyDB();
                                     $sql_user = "SELECT * FROM `user` WHERE `role` = 'academic'";
-                                    $result_user = mysqli_query($conn, $sql_user);
+                                    $result_user = $db->query($sql_user);
 
-                                    while ($row = mysqli_fetch_array($result_user)) {
+                                    while ($row = $result_user->fetchArray(SQLITE3_ASSOC)) {
                                         echo "<tr>";
                                         echo "<td class='border p-1'>" . $row['user_id'] . "</td>";
                                         echo "<td class='border p-1'>" . $row['firstname'] . "</td>";
