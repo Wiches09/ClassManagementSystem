@@ -1,4 +1,11 @@
 <?php include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +25,7 @@
 
 
 </head>
+
 <body class="text-gray-800 font-inter">
     <!--sidenav -->
     <div id="sidenav-container"></div>
@@ -32,14 +40,17 @@
         <!-- Content -->
         <div class="p-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2 w-full">
+                <div
+                    class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2 w-full">
                     <div class="flex justify-between mb-4 items-start">
-                            <select id="role" name="category" class="mt-1 p-2 border rounded-md focus:outline-none focus:border-blue-500" onchange="redirectPage()">
-                                <option value="all">All user</option>
-                                <option value="student">Student</option>
-                                <option value="teacher" selected>Teacher</option>
-                                <option value="academic">Academic</option>
-                            </select>
+                        <select id="role" name="category"
+                            class="mt-1 p-2 border rounded-md focus:outline-none focus:border-blue-500"
+                            onchange="redirectPage()">
+                            <option value="all">All user</option>
+                            <option value="student">Student</option>
+                            <option value="teacher" selected>Teacher</option>
+                            <option value="academic">Academic</option>
+                        </select>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full border border-collapse border-2">
@@ -59,10 +70,11 @@
                             <div class="all-user">
                                 <tbody>
                                     <?php
+                                    $db = new MyDB();
                                     $sql_user = "SELECT * FROM `user` WHERE `role` = 'teacher'";
-                                    $result_user = mysqli_query($conn, $sql_user);
+                                    $result_user = $db->query($sql_user);
 
-                                    while ($row = mysqli_fetch_array($result_user)) {
+                                    while ($row = $result_user->fetchArray(SQLITE3_ASSOC)) {
                                         echo "<tr>";
                                         echo "<td class='border p-1'>" . $row['user_id'] . "</td>";
                                         echo "<td class='border p-1'>" . $row['firstname'] . "</td>";
@@ -87,10 +99,10 @@
                                 </tbody>
                             </div>
                         </table>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
 
 
@@ -116,7 +128,7 @@
                     break;
             }
         }
-    </script>  
+    </script>
 </body>
 
 </html>

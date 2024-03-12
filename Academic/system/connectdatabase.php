@@ -1,4 +1,3 @@
-
 <?php
 $servername = "localhost";
 $username = "root";
@@ -13,5 +12,13 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 // echo "Connected successfully";
+
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('fwp-db-file.db');
+    }
+}
 
 ?>

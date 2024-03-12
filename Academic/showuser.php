@@ -1,4 +1,11 @@
 <?php include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,9 +23,10 @@
     <link href="style.css" rel="stylesheet">
     <title>Admin Panel</title>
 </head>
+
 <body class="text-gray-800 font-inter">
     <!--sidenav -->
-    <div id="sidenav-container"></div>  
+    <div id="sidenav-container"></div>
     <div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>
     <!-- end sidenav -->
 
@@ -30,9 +38,12 @@
         <!-- Content -->
         <div class="p-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2 w-full">
+                <div
+                    class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2 w-full">
                     <div class="flex justify-between mb-4 items-start">
-                        <select id="role" name="category" class="mt-1 p-2 border rounded-md focus:outline-none focus:border-blue-500" onchange="redirectPage()">
+                        <select id="role" name="category"
+                            class="mt-1 p-2 border rounded-md focus:outline-none focus:border-blue-500"
+                            onchange="redirectPage()">
                             <option value="all" selected>All user</option>
                             <option value="student">Student</option>
                             <option value="teacher">Teacher</option>
@@ -56,7 +67,8 @@
                             </thead>
                             <div class="all-user">
                                 <tbody>
-                                <?php
+                                    <?php
+                                    $db = new MyDB();
                                     $sql_user = "SELECT * FROM `user` ORDER BY 
                                         CASE 
                                             WHEN role = 'academic' THEN 1 
@@ -64,9 +76,9 @@
                                             WHEN role = 'teacher' THEN 3 
                                             ELSE 4 
                                         END";
-                                    $result_user = mysqli_query($conn, $sql_user);
+                                    $result_user = $db->query($sql_user);
 
-                                    while ($row = mysqli_fetch_array($result_user)) {
+                                    while ($row = $result_user->fetchArray(SQLITE3_ASSOC)) {
                                         echo "<tr>";
                                         echo "<td class='border p-1'>" . $row['user_id'] . "</td>";
                                         echo "<td class='border p-1'>" . $row['firstname'] . "</td>";
@@ -91,10 +103,10 @@
                                 </tbody>
                             </div>
                         </table>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
 
 
@@ -120,7 +132,7 @@
                     break;
             }
         }
-    </script>  
+    </script>
 </body>
 
 </html>

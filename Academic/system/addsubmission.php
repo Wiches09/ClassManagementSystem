@@ -5,6 +5,7 @@ session_start();
 if (isset($_GET['assignment_id'])) {
     $assignment_id = $_GET['assignment_id'];
     $user_id = $_SESSION['user_id'];
+    $student_id = $_SESSION['student_id'];
 
     if (is_uploaded_file($_FILES['assignmentfile']['tmp_name'])) {
         $assignmentfile = 'course_' . uniqid() . "." . pathinfo(basename($_FILES['assignmentfile']['name']), PATHINFO_EXTENSION);
@@ -30,7 +31,7 @@ if (isset($_GET['assignment_id'])) {
         }
     } else {
         $insertSubmissionQuery = "INSERT INTO submission (assignment_id, student_id, submit_file, send_date, score, status) 
-                                VALUES ('$assignment_id', '$user_id', '$assignmentfile', CURRENT_TIMESTAMP, '0', 'submitted')";
+                                VALUES ('$assignment_id', '$student_id', '$assignmentfile', CURRENT_TIMESTAMP, '0', 'submitted')";
         $insertResult = mysqli_query($conn, $insertSubmissionQuery);
 
         if ($insertResult) {

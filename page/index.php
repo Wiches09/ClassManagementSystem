@@ -6,6 +6,13 @@ if (!isset($_SESSION['login'])) {
   header("Location: ./login.php");
   exit();
 }
+class MyDB extends SQLite3
+{
+  function __construct()
+  {
+    $this->open('../Academic/database/education.db');
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,11 +40,12 @@ if (!isset($_SESSION['login'])) {
           <!-- user img -->
           <div class="py-4 w-80 h-80 bg-gray-900 mb-8 rounded-full overflow-hidden">
             <?php
+            $db = new MyDB();
             $user_id = $_SESSION["user_id"];
             $role = $_SESSION["role"];
-            $sql = "SELECT * FROM user WHERE role = '$role' and user_id = $user_id";
-            $result = mysqli_query($conn, $sql);
-            $row = mysqli_fetch_array($result);
+            $sql = "SELECT * FROM user WHERE role = '$role' AND user_id = $user_id";
+            $result = $db->query($sql);
+            $row = $result->fetchArray(SQLITE3_ASSOC);
             ?>
             <img class="w-full h-full object-cover"
               src="../Academic/system/profilepictures/<?= $row['profile_picture'] ?>" alt="Profile Image" />
@@ -88,11 +96,13 @@ if (!isset($_SESSION['login'])) {
 
             <!-- fetch class from db and show -->
             <?php
+            $db = new MyDB();
             $user_id = $_SESSION["user_id"];
             $role = $_SESSION['role'];
 
             if ($role == 'student') {
               // Fetch user's classes
+            
               $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
               FROM teacher t
               INNER JOIN user ON t.user_id = user.user_id
@@ -149,16 +159,16 @@ if (!isset($_SESSION['login'])) {
 
 
 
-            $result = mysqli_query($conn, $sql);
-            $result2 = mysqli_query($conn, $sql2);
+            $result = $db->query($sql);
+            $result2 = $db->query($sql2);
 
-            $row2 = mysqli_fetch_assoc($result2);
-            $dummy = mysqli_fetch_assoc($result2);
+            $row2 = $result2->fetchArray(SQLITE3_ASSOC);
+            $dummy = $result2->fetchArray(SQLITE3_ASSOC);
             $count = 0;
 
 
             // Display user's classes with course names, still bug
-            while ($dummy && $row = mysqli_fetch_assoc($result)) {
+            while ($dummy && $row = $result->fetchArray(SQLITE3_ASSOC)) {
               $count += 1;
               echo '
                 <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
@@ -178,7 +188,7 @@ if (!isset($_SESSION['login'])) {
           </div>
         </div>
 
-        
+
 
       </div>
     </div>

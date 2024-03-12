@@ -1,5 +1,13 @@
 <?php include 'connectdatabase.php';
 session_start();
+
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,17 +61,18 @@ session_start();
 
                                             <div class="flex flex-col w-full ml-4">
                                                 <?php
+                                                $db = new MyDB();
                                                 if (isset($_GET['assignment_id'])) {
                                                     $assignment_id = $_GET['assignment_id'];
 
                                                     $sql = "SELECT assignment.*, user.firstname, user.lastname 
-                                                        FROM assignment 
-                                                        INNER JOIN user ON assignment.user_id = user.user_id 
-                                                        WHERE assignment.assignment_id = '$assignment_id'";
+                                                            FROM assignment 
+                                                            INNER JOIN user ON assignment.user_id = user.user_id 
+                                                            WHERE assignment.assignment_id = '$assignment_id'";
 
-                                                    $result = mysqli_query($conn, $sql);
+                                                    $result = $db->query($sql);
 
-                                                    while ($row = mysqli_fetch_array($result)) {
+                                                    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                                                         ?>
                                                         <div class="w-full">
                                                             <h1 class="text-[#136C94] text-3xl px-4 pt-2">
@@ -135,7 +144,7 @@ session_start();
                                     <?php
                                                     }
                                                 } else {
-
+                                                    // else what?
                                                 }
                                                 ?>
 

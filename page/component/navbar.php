@@ -2,6 +2,13 @@
 session_start();
 // var_dump($_SESSION);
 include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 <div class="py-2 px-6 bg-[#111827] flex items-center shadow-md shadow-black/5 fixed w-full top-0 left-0 z-30">
     <button type="button" class="lg:hidden text-lg text-white font-semibold sidebar-toggle">
@@ -79,11 +86,12 @@ include 'connectdatabase.php';
                 <div class="flex-shrink-0 w-10 h-10 relative">
                     <div class="p-1 bg-white rounded-full focus:outline-none focus:ring">
                         <?php
+                        $db = new MyDB();
                         $academic = $_SESSION["role"];
                         $user_id = $_SESSION["user_id"];
                         $sql = "SELECT * FROM user WHERE role = '$academic' and user_id = $user_id";
-                        $result = mysqli_query($conn, $sql);
-                        while ($row = mysqli_fetch_array($result)) {
+                        $result = $db->query($sql);
+                        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                             ?>
                             <img class="w-8 h-8 rounded-full"
                                 src="../Academic/system/profilepictures/<?= $row['profile_picture'] ?>"

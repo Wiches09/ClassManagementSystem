@@ -1,5 +1,14 @@
 <?php
 include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
+$db = new MyDB();
+
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
 $email = $_POST['email'];
@@ -10,6 +19,7 @@ $role = $_POST['role'];
 $faculty = $_POST['faculty'];
 
 $password = generateRandomPassword(10);
+
 function generateRandomPassword($length)
 {
     $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -29,35 +39,39 @@ if (is_uploaded_file($_FILES['profile_picture']['tmp_name'])) {
 }
 
 $sql = "INSERT INTO `user` (firstname, lastname, email, password, dob, gender, phonenum, profile_picture, role)
-        VALUES ('$firstname', '$lastname', '$email', '$password', '$dob', '$gender', '$phonenum', '$profile_picture', '$role')";
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-$result = mysqli_query($conn, $sql);
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$firstname, $lastname, $email, $password, $dob, $gender, $phonenum, $profile_picture, $role]);
 
-if ($result) {
-    $user_id = mysqli_insert_id($conn);
+if ($stmt) {
+    $user_id = $pdo->lastInsertId();
 
     if ($role === 'student') {
-        $insertStudentSql = "INSERT INTO student (user_id, role, gpa, faculty) VALUES ($user_id, 'student', 0, '$faculty')";
-        mysqli_query($conn, $insertStudentSql);
+        $insertStudentSql = "INSERT INTO student (user_id, role, gpa, faculty) VALUES (?, 'student', 0, ?)";
+        $stmtStudent = $pdo->prepare($insertStudentSql);
+        $stmtStudent->execute([$user_id, $faculty]);
 
-        $updateUserSql = "UPDATE user SET role = 'student' WHERE user_id = $user_id";
-        mysqli_query($conn, $updateUserSql);
+        $updateUserSql = "UPDATE user SET role = 'student' WHERE user_id = ?";
+        $stmtUpdateUser = $pdo->prepare($updateUserSql);
+        $stmtUpdateUser->execute([$user_id]);
     } elseif ($role === 'teacher') {
-        $insertTeacherSql = "INSERT INTO teacher (user_id, role) VALUES ($user_id, 'teacher')";
-        mysqli_query($conn, $insertTeacherSql);
+        $insertTeacherSql = "INSERT INTO teacher (user_id, role) VALUES (?, 'teacher')";
+        $stmtTeacher = $pdo->prepare($insertTeacherSql);
+        $stmtTeacher->execute([$user_id]);
 
-        $updateUserSql = "UPDATE user SET role = 'teacher' WHERE user_id = $user_id";
-        mysqli_query($conn, $updateUserSql);
+        $updateUserSql = "UPDATE user SET role = 'teacher' WHERE user_id = ?";
+        $stmtUpdateUser = $pdo->prepare($updateUserSql);
+        $stmtUpdateUser->execute([$user_id]);
     } else {
         echo "<script>alert('Invalid role');</script>";
         exit();
     }
 
     echo "<script>alert('Data saved successfully.');</script>";
-    echo "<script> window.location = '../course.php'; </script>";
+    echo "<script>window.location = '../course.php';</script>";
 } else {
     echo "<script>alert('Failed to save data.');</script>";
-    echo mysqli_error($conn);
+    echo $stmt->errorInfo()[2];
 }
-
-mysqli_close($conn);
+?>

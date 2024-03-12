@@ -6,6 +6,13 @@ if (!isset($_SESSION['login'])) {
   header("Location: ./login.php");
   exit();
 }
+class MyDB extends SQLite3
+{
+  function __construct()
+  {
+    $this->open('../Academic/database/education.db');
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,121 +71,49 @@ if (!isset($_SESSION['login'])) {
       <div class="grid grid-rows-3 gap-2 w-full h-full rounded-2xl">
 
         <!-- class -->
-        <div class="w-full h-full">
-          <div class="grid grid-cols-2">
-
-            <div>
-              <h1 class="text-3xl text-gray-900">ชั้นเรียนของฉัน</h1>
-            </div>
-
-            <div class="flex justify-end">
-              <a href="classes.php" class="flex text-2xl text-[#136C94]">ดูชั้นเรียนทั้งหมด
-                <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none"
-                  viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m7 16 4-4-4-4m6 8 4-4-4-4" />
-                </svg>
-              </a>
-            </div>
-
+        <div class="grid grid-cols-2">
+          <div class="lg:w-1/2">
+            <h1 class="text-3xl text-gray-900">ชั้นเรียนของฉัน</h1>
           </div>
 
+          <div class="lg:w-1/2 flex justify-end">
+            <a href="classes.php" class="flex text-2xl text-[#136C94]">ดูชั้นเรียนทั้งหมด
+              <svg class="w-10 h-10 text-gray-800 dark:text-[#136C94]" aria-hidden="true" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m7 16 4-4-4-4m6 8 4-4-4-4" />
+              </svg>
+            </a>
+          </div>
 
-          <div class="grid grid-cols-2 grid-rows-2  py-4 gap-5 w-full max-h-64">
-
-            <!-- fetch class from db and show -->
+          <div class="grid grid-cols-2 col-span-2 grid-rows-2  py-4 gap-5 w-full max-h-64">
             <?php
-            $user_id = $_SESSION["user_id"];
-            $role = $_SESSION['role'];
-
-            if ($role == 'student') {
-              // Fetch user's classes
-              $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
-              FROM teacher t
-              INNER JOIN user ON t.user_id = user.user_id
-              INNER JOIN teacher_subject ON teacher_subject.teacher_id = t.teacher_id
-              WHERE teacher_subject.course_id IN (
-                SELECT s.course_id
-                FROM student_subject s
-                WHERE s.student_id = (
-                  SELECT st.student_id
-                  FROM student st
-                  INNER JOIN user ON user.user_id = st.user_id
-                  WHERE user.user_id = $user_id
-                )
-              )";
-
-              // Fetch course names for the user's classes
-              $sql2 = "SELECT c.course_name
-              FROM course c
-              INNER JOIN student_subject ON student_subject.course_id = c.course_id 
-              WHERE student_subject.student_id = (
-                SELECT st.student_id
-                FROM student st
-                INNER JOIN user ON user.user_id = st.user_id
-                WHERE user.user_id = $user_id
-              )";
-
-            } else {
-              $sql = "SELECT user.firstname, user.lastname, user.user_id, t.teacher_id
-              FROM teacher t
-              INNER JOIN user ON t.user_id = user.user_id
-              INNER JOIN teacher_subject ON teacher_subject.teacher_id = t.teacher_id
-              WHERE teacher_subject.course_id IN (
-                SELECT ts.course_id
-                FROM teacher_subject ts
-                WHERE ts.teacher_id = (
-                  SELECT t.teacher_id
-                  FROM teacher t
-                  INNER JOIN user ON user.user_id = t.user_id
-                  WHERE user.user_id = $user_id))
-                
-              ";
-
-              $sql2 = "SELECT c.course_name
-              FROM course c
-              INNER JOIN teacher_subject ON teacher_subject.course_id = c.course_id 
-              WHERE teacher_subject.teacher_id = (
-                SELECT t.teacher_id
-                FROM teacher t
-                INNER JOIN user ON user.user_id = t.user_id
-                WHERE user.user_id = $user_id
-              )";
-
-            }
-
-
-
+            $student_id = $_SESSION['student_id'];
+            $sql = "SELECT * FROM student_subject 
+            INNER JOIN course ON course.course_id = student_subject.course_id
+            
+            WHERE student_subject.student_id =  $student_id";
             $result = mysqli_query($conn, $sql);
-            $result2 = mysqli_query($conn, $sql2);
+            while ($row = mysqli_fetch_assoc($result)) {
+              ?>
+              <div class="flex py-4 gap-5 w-full max-h-64">
+                <a href="course_studentpage.php?course_id=<?= $row['course_id'] ?>"
+                  class="hover:ring-4 ring-white rounded-md w-full">
+                  <div id="class1" class="w-full bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
+                    <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">
+                      <?php echo $row['course_name']; ?>
+                    </h1>
+                    <p class="text-l p-3 text-gray-600">
 
-            $row2 = mysqli_fetch_assoc($result2);
-            $dummy = mysqli_fetch_assoc($result2);
-            $count = 0;
-
-
-            while ($dummy && $row = mysqli_fetch_assoc($result)) {
-              $count += 1;
-              echo '
-                <a href="class-page.php" class="hover:ring-4 ring-white rounded-md">
-                  <div id="class1" class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
-                    <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">' . $row2['course_name'] . '</h1>
-                    <p class="text-l p-3 text-gray-600">' . $row["firstname"] . " " . $row["lastname"] . '</p>
+                    </p>
                   </div>
-                </a>';
-              if ($count >= 4) {
-                break;
-              }
+                </a>
+              </div>
+              <?php
             }
-
-            // var_dump($row2);
-            // var_dump($row);
             ?>
           </div>
         </div>
-
-        
-
       </div>
     </div>
   </div>

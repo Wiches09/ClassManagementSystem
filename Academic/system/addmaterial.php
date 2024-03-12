@@ -1,6 +1,14 @@
 <?php
 include 'connectdatabase.php';
 session_start();
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
+$db = new MyDB();
 
 $course_id = $_GET['course_id'];
 $postrole = $_POST['postrole'];
@@ -21,20 +29,20 @@ if (is_uploaded_file($_FILES['lessonFile']['tmp_name'])) {
 
 if ($postrole === 'material') {
     $sql = "INSERT INTO `material` (material_name, course_id) VALUES ('$materialname', '$course_id')";
-    $result = mysqli_query($conn, $sql);
+    $result = $db->exec($sql);
 
     if (!$result) {
-        echo "Failed to insert material: " . mysqli_error($conn);
+        echo "Failed to insert material: " . $db->lastErrorMsg();
         exit;
     }
 } elseif ($postrole === 'post') {
     $sql = "INSERT INTO `topic` (topic_title, topic_description, material_id, date_upload, topic_file, user_id) 
             VALUES ('$lessonTitle', '$lessonContent', '$material_id', CURRENT_TIMESTAMP, '$lessonFileimage', '$user_id')";
 
-    $result = mysqli_query($conn, $sql);
+    $result = $db->exec($sql);
 
     if (!$result) {
-        echo "Failed to insert post: " . mysqli_error($conn);
+        echo "Failed to insert post: " . $db->lastErrorMsg();
         exit;
     }
 }
@@ -55,3 +63,4 @@ if ($role === 'student') {
 echo "Data inserted successfully.";
 // echo "<script>window.location = '../coursepage.php?course_id=$course_id';</script>";
 echo "<script>location.reload(true);</script>";
+?>

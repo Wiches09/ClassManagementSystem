@@ -5,6 +5,13 @@ include 'connectdatabase.php';
 if (!isset($_SESSION['login'])) {
   header("Location: ./login.php");
 }
+class MyDB extends SQLite3
+{
+  function __construct()
+  {
+    $this->open('../Academic/database/education.db');
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -83,11 +90,13 @@ if (!isset($_SESSION['login'])) {
             </div>
 
             <?php
+            // $db = new MyDB();
             $sql = 'SELECT course.course_name
             FROM course
             WHERE course.course_id = 22';
-            $result = mysqli_query($conn, $sql);
+            $result = $db->query($sql);
             $row = mysqli_fetch_array($result);
+            $row = $result->fetchArray(SQLITE3_ASSOC);
 
             echo '<h1 class="text-gray-900 text-left p-10 pt-[10px] text-3xl text-ellipsis overflow-x-hidden ...">' .
               $row['course_name']
@@ -395,6 +404,7 @@ if (!isset($_SESSION['login'])) {
 
                 <!-- member -->
                 <?php
+                $db = new MyDB();
                 $user_id = $_SESSION["user_id"];
                 $role = $_SESSION["role"];
                 $sql = "SELECT u.firstname, u.lastname, u.profile_picture
@@ -443,6 +453,7 @@ if (!isset($_SESSION['login'])) {
                     <hr class="border-[#17A7CE]" />
                   </div>
                   <?php
+                  $db = new MyDB();
                   $user_id = $_SESSION["user_id"];
                   $role = $_SESSION["role"];
                   $sql = "SELECT u.firstname, u.lastname, u.profile_picture

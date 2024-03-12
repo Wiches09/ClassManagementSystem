@@ -1,7 +1,15 @@
 <?php
-session_start(); // เรียกใช้ session ที่เริ่มต้นไว้แล้ว
-
+session_start(); // Start session
 include 'connectdatabase.php';
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
+
+$db = new MyDB();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $quiz_id = $_POST['quiz_id'];
@@ -10,12 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $total_score = 0;
     $answered_questions = array();
 
-    // ตรวจสอบคำตอบของข้อแรกก่อนที่จะทำการเพิ่มคะแนน
+    // Check the answer for the first question before adding scores
     $first_question_id = $_POST['question_id'][0];
     $first_question_answer = $_POST['answer_' . $first_question_id];
-    $sql_first_question = "SELECT * FROM question WHERE question_id = '$first_question_id'";
-    $result_first_question = mysqli_query($conn, $sql_first_question);
-    $row_first_question = mysqli_fetch_assoc($result_first_question);
+    $sql_first_question = "SELECT * FROM question WHERE question_id = ?";
+    $stmt_first_question = $pdo->prepare($sql_first_question);
+    $stmt_first_question->execute([$first_question_id]);
+    $row_first_question = $stmt_first_question->fetch();
 
     if ($first_question_answer == $row_first_question['answer']) {
         $total_score += 1;
@@ -25,24 +34,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($_POST as $key => $value) {
         if (strpos($key, 'answer_') !== false) {
             $question_id = substr($key, strpos($key, "_") + 1);
-            $answer = mysqli_real_escape_string($conn, $value);
-            $sql_question = "SELECT * FROM question WHERE question_id = '$question_id'";
-            $result_question = mysqli_query($conn, $sql_question);
-            $row_question = mysqli_fetch_assoc($result_question);
+            $answer = $value;
+            $sql_question = "SELECT * FROM question WHERE question_id = ?";
+            $stmt_question = $pdo->prepare($sql_question);
+            $stmt_question->execute([$question_id]);
+            $row_question = $stmt_question->fetch();
 
             if (!empty($answer) && !in_array($question_id, $answered_questions)) {
                 if ($answer == $row_question['answer']) {
-                    $total_score += 1; // เพิ่มคะแนนเมื่อคำตอบถูกต้อง
+                    $total_score += 1; // Increase score if answer is correct
                 }
                 $answered_questions[] = $question_id;
             }
         }
     }
 
-    // ตรวจสอบว่าผู้ใช้ตอบคำถามทุกข้อหรือไม่
-    $sql_total_questions = "SELECT COUNT(*) AS total_questions FROM question WHERE quiz_id = '$quiz_id'";
-    $result_total_questions = mysqli_query($conn, $sql_total_questions);
-    $row_total_questions = mysqli_fetch_assoc($result_total_questions);
+    // Check if the user has answered all questions
+    $sql_total_questions = "SELECT COUNT(*) AS total_questions FROM question WHERE quiz_id = ?";
+    $stmt_total_questions = $pdo->prepare($sql_total_questions);
+    $stmt_total_questions->execute([$quiz_id]);
+    $row_total_questions = $stmt_total_questions->fetch();
     $total_questions = $row_total_questions['total_questions'];
 
     if (count($answered_questions) < $total_questions) {
@@ -51,15 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $starttime = date('Y-m-d H:i:s');
         $endtime = date('Y-m-d H:i:s');
         $sql_attempts = "INSERT INTO attempts (total_score, starttime, endtime, quiz_id, student_id) 
-                             VALUES ('$total_score', '$starttime', '$endtime', '$quiz_id', '$user_id')";
-
-        if (mysqli_query($conn, $sql_attempts)) {
-            $_SESSION['quiz_submitted'] = true; // เก็บค่า session เพื่อบ่งชี้ว่าผู้ใช้ได้ทำการส่งคำตอบแล้ว
+                             VALUES (?, ?, ?, ?, ?)";
+        $stmt_attempts = $pdo->prepare($sql_attempts);
+        if ($stmt_attempts->execute([$total_score, $starttime, $endtime, $quiz_id, $user_id])) {
+            $_SESSION['quiz_submitted'] = true; // Set session variable to indicate that the quiz has been submitted
             echo "Quiz submitted successfully.";
         } else {
-            echo "Error: " . $sql_attempts . "<br>" . mysqli_error($conn);
+            echo "Error: " . $sql_attempts;
         }
     }
-
-    mysqli_close($conn);
 }
+?>

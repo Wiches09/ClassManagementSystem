@@ -6,6 +6,13 @@ include 'connectdatabase.php';
 if (!isset($_SESSION['login'])) {
     header("Location: ./login.php");
 }
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('../Academic/database/education.db');
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,12 +48,13 @@ if (!isset($_SESSION['login'])) {
             <!-- class display -->
             <div class="flex flex-col justify-center self-center gap-6 mb-6 mx-auto w-2/3">
                 <?php
+                $db = new MyDB();
                 $user_id = $_SESSION['user_id'];
                 $sql = "SELECT * FROM user WHERE user_id = $user_id";
-                $result = mysqli_query($conn, $sql);
+                $result = $db->query($sql);
 
-                if (mysqli_num_rows($result) > 0) {
-                    $row = mysqli_fetch_assoc($result);
+                if ($result) {
+                    $row = $result->fetchArray(SQLITE3_ASSOC);
                     ?>
                     <div class="flex flex-col w-full">
                         <div class="bg-white shadow-md rounded-lg p-4">
