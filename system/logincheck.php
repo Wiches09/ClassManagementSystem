@@ -2,8 +2,8 @@
 include 'connectdatabase.php';
 session_start();
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+$email = mysqli_real_escape_string($conn, $_POST['email']);
+$password = mysqli_real_escape_string($conn, $_POST['password']);
 
 $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
 $result = mysqli_query($conn, $sql);
@@ -28,9 +28,25 @@ if ($row) {
 
     switch ($_SESSION["role"]) {
         case 'student':
+            $studentQuery = "SELECT student_id FROM student WHERE user_id = '{$row['user_id']}'";
+            $studentResult = mysqli_query($conn, $studentQuery);
+            $studentRow = mysqli_fetch_assoc($studentResult);
+
+            if ($studentRow) {
+                $_SESSION["student_id"] = $studentRow['student_id'];
+            }
+
             header("location: ../page/index.php");
             break;
         case 'teacher':
+            $teacherQuery = "SELECT teacher_id FROM teacher WHERE user_id = '{$row['user_id']}'";
+            $teacherResult = mysqli_query($conn, $teacherQuery);
+            $teacherRow = mysqli_fetch_assoc($teacherResult);
+
+            if ($teacherRow) {
+                $_SESSION["teacher_id"] = $teacherRow['teacher_id'];
+            }
+
             header("location: ../page/index.php");
             break;
         case 'academic':
@@ -42,7 +58,6 @@ if ($row) {
     }
 } else {
     echo "<script>alert('รหัสผ่าน หรือ ชื่อผู้ใช้งานไม่ตรงกัน');</script>";
-    // header("location: ../page/login.php");
     echo "<script> window.location = '../page/login.php'; </script>";
 }
 

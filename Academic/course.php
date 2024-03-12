@@ -39,38 +39,29 @@
                                     $result = mysqli_query($conn, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                     ?>
-                                        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-500 hover:border-red-700">
                                             <a href="coursepage.php?course_id=<?= $row['course_id'] ?>">
                                                 <img src="../Academic/system/imagecourse/<?= $row['course_image'] ?>" class="w-full max-w-96 max-h-96 h-60">
+
+                                                <div class="p-5 flex flex-col">
+                                                    <div>
+                                                        <a href="#">
+                                                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                                                <?= $row['course_name'] ?>
+                                                            </h5>
+                                                        </a>
+                                                        <p class="mb-3 font-normal md:text-base text-xs text-gray-700 dark:text-gray-400">
+                                                            <?= $row['course_description'] ?>
+                                                        </p>
+                                                    </div>
+
+
+                                                </div>
                                             </a>
-                                            <div class="p-5 flex flex-col">
-                                                <div>
-                                                    <a href="#">
-                                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                                            <?= $row['course_name'] ?>
-                                                        </h5>
-                                                    </a>
-                                                    <p class="mb-3 font-normal md:text-base text-xs text-gray-700 dark:text-gray-400">
-                                                        <?= $row['course_description'] ?>
-                                                    </p>
-                                                </div>
-
-                                                <div class="items-end">
-                                                    <!-- Use JavaScript to navigate to the URL with course_id -->
-                                                    <button onclick="redirectTocoursepage(<?= $row['course_id'] ?>)" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                                                        Readmore
-                                                    </button>
-
-                                                    <!-- Main modal -->
-
-                                                </div>
-                                            </div>
                                         </div>
                                     <?php
-
                                     }
                                     mysqli_close($conn);
-
                                     ?>
                                 </div>
                             </div>
@@ -107,10 +98,10 @@
             }
         }
 
-        function redirectTocoursepage(courseId) {
 
-            var url = 'coursepage.php?course_id=' + courseId;
 
+        function redirectToCoursePage(courseId) {
+            var url = 'coursepage.php?course_id=' + (courseId + 4);
             window.location.href = url;
         }
     </script>
