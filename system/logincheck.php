@@ -45,15 +45,16 @@ if ($row) {
 
             if ($teacherRow) {
                 $_SESSION["teacher_id"] = $teacherRow['teacher_id'];
+                header("location: ../page/teacherindex.php");
+                break;
             }
 
-            header("location: ../page/index.php");
-            break;
+
         case 'academic':
             header("location: ../Academic/dashboard.php");
             break;
         default:
-            header("location: ../page/index.php");
+            header("location: ../page/studentindex.php");
             break;
     }
 } else {

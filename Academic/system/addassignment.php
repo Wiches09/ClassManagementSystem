@@ -27,7 +27,6 @@ if ($materialResult) {
     $materialRow = mysqli_fetch_assoc($materialResult);
     $material_id = $materialRow['material_id'];
 
-    // Insert into the assignment table
     $insertAssignmentQuery = "INSERT INTO assignment (assignment_title, description, file_attachment, start_date, due_date, total_score, user_id, course_id, material_id) 
                         VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?)";
     $stmtAssignment = mysqli_prepare($conn, $insertAssignmentQuery);
@@ -38,7 +37,6 @@ if ($materialResult) {
         if (mysqli_stmt_execute($stmtAssignment)) {
             $assignment_id = mysqli_insert_id($conn);
 
-            // Get all students enrolled in the course
             $getStudentsQuery = "SELECT student_id FROM student_subject WHERE course_id = '$course_id'";
             $studentsResult = mysqli_query($conn, $getStudentsQuery);
 
@@ -46,7 +44,6 @@ if ($materialResult) {
                 while ($studentRow = mysqli_fetch_assoc($studentsResult)) {
                     $student_id = $studentRow['student_id'];
 
-                    // Insert into the submission table for each student
                     $insertSubmissionQuery = "INSERT INTO submission (assignment_id, student_id, submit_file, send_date, score, status) 
                                         VALUES (?, ?, '', '', 0, 'unsubmited')";
                     $stmtSubmission = mysqli_prepare($conn, $insertSubmissionQuery);

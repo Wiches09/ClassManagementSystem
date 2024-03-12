@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <style>
+    .container {
+      width: 50%;
+      margin-top: 10%;
+      border: 1px solid black;
+      padding: 1%;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="box">
+        <label for="text" id="FirstName">ชื่อ: </label>
+        <input type="text" />
+      </div>
+      <div class="box">
+        <label for="text" id="LastName">นามสกุล: </label>
+        <input type="text" />
+      </div>
+      <div class="box">
+        <select class="custom-select" id="country">
+          <option value="00" id="con" selected>--------- ประเทศ ---------</option>
+          <option value="ไทย" id="thai">ไทย</option>
+          <option value="เวียดนาม"id="veit">เวียดนาม</option>
+          <option value="ลาว" id="laos">ลาว</option>
+          <option value="มาเลย์เซีย" id="maly">มาเลย์เซีย</option>
+          <option value="สิงค์โปร์" id="sing">สิงค์โปร์</option>
+          <option value="ฟิลิปปินส์" id="phi">ฟิลิปปินส์</option>
+          <option value="เมียร์มาร์" id="may">เมียร์มาร์</option>
+          <option value="กัมภูชา" id="cam">กัมภูชา</option>
+          <option value="บรูไน" id="bru">บรูไน</option>
+        </select>
+      </div>
+      <br />
+      <div class="box">
+        <button
+          type="button"
+          onclick="get()"
+          class="btn btn-danger"
+          id="button"
+        >
+          เปลื่ยนภาษา
+        </button>
+      </div>
+    </div>
+    <script src="1.js"></script>
+  </body>
+</html>

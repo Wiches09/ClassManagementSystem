@@ -1,0 +1,24 @@
+body{
+    width: 100dvw;
+    height: 100dvh;
+    justify-content: center;
+    display: flex;
+
+}
+.contain-form{
+    width: 50%;
+    margin-top: 7%;
+    padding: 2%;
+    height: 70%;
+
+    border-style: solid ;
+    border-width: 1px;
+    border-radius: 2%;
+
+}
+.form-check{
+    margin-top: 2%;
+}
+#button{
+    margin-top: 2%;
+}

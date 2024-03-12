@@ -1,0 +1,57 @@
+body{
+    width: 100dvw;
+    margin: 0;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+.container{
+    width: 50%;
+    
+        justify-content: center;
+        align-items: center;
+   
+}
+.button{
+    justify-content: center;
+        align-items: center;
+        display: flex;
+        margin-top: 3%;
+}
+.chart{
+    margin: 10%;
+    padding: 2%;
+    border: solid 1px white;
+}
+.chart1{
+    background-color: aqua;
+    padding: 3%;
+    margin-top: 3%;
+    width: 10%;
+}
+.chart2{
+    background-color: aqua;
+    padding: 3%;
+    margin-top: 3%;
+    width: 10%;
+}
+.chart3{
+    background-color: aqua;
+    padding: 3%;
+    margin-top: 3%;
+    width: 10%;
+}
+.chart4{
+    background-color: aqua;
+    padding: 3%;
+    margin-top: 3%;
+    width: 10%;
+}
+.chart5{
+    background-color: aqua;
+    padding: 3%;
+    margin-top: 3%;
+    width: 10%;
+}

@@ -139,6 +139,7 @@ session_start();
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <button data-modal-target="crud-modal-assignment" data-modal-toggle="crud-modal-assignment" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 mt-8 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                                                         Add Assignments
                                                     </button>
@@ -197,6 +198,11 @@ session_start();
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <a href="regquiz.php" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 mt-8 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                        Add Quiz
+                                                    </a>
+
 
 
                                                 </div>
@@ -306,31 +312,40 @@ session_start();
                                                 <?php
                                                 $course_id = $_GET['course_id'];
                                                 $sql = "(
-                                                SELECT topic.topic_id, topic.topic_title, topic.topic_description, topic.material_id, topic.date_upload, topic.topic_file, topic.user_id, user.firstname, user.lastname, user.profile_picture, material.material_name
-                                                FROM topic
-                                                INNER JOIN user ON topic.user_id = user.user_id
-                                                INNER JOIN material ON topic.material_id = material.material_id
-                                                WHERE material.course_id = '$course_id'
-                                            )
-                                            UNION
-                                            (
-                                                SELECT assignment.assignment_id, assignment.assignment_title, assignment.description, assignment.material_id, assignment.start_date AS date_upload, assignment.file_attachment AS topic_file, assignment.user_id, user.firstname, user.lastname, user.profile_picture, material.material_name
-                                                FROM assignment
-                                                INNER JOIN user ON assignment.user_id = user.user_id
-                                                INNER JOIN material ON assignment.material_id = material.material_id
-                                                WHERE material.course_id = '$course_id'
-                                            )
-                                            ORDER BY date_upload DESC";
+    SELECT topic.topic_id, topic.topic_title, topic.topic_description, topic.material_id, topic.date_upload, topic.topic_file, topic.user_id, user.firstname, user.lastname, user.profile_picture, material.material_name
+    FROM topic
+    INNER JOIN user ON topic.user_id = user.user_id
+    INNER JOIN material ON topic.material_id = material.material_id
+    WHERE material.course_id = '$course_id'
+)
+UNION
+(
+    SELECT assignment.assignment_id, assignment.assignment_title, assignment.description, assignment.material_id, assignment.start_date AS date_upload, assignment.file_attachment AS topic_file, assignment.user_id, user.firstname, user.lastname, user.profile_picture, material.material_name
+    FROM assignment
+    INNER JOIN user ON assignment.user_id = user.user_id
+    INNER JOIN material ON assignment.material_id = material.material_id
+    WHERE material.course_id = '$course_id'
+)
+UNION
+(
+    SELECT quiz.quiz_id, quiz.title, quiz.description, quiz.file_attachment, quiz.start_date AS date_upload, null AS topic_file, quiz.teacher_id AS user_id, null AS firstname, null AS lastname, null AS profile_picture, material.material_name
+    FROM quiz
+    INNER JOIN material ON quiz.material_id = material.material_id
+    WHERE material.course_id = '$course_id'
+)
+ORDER BY date_upload DESC";
                                                 $result = mysqli_query($conn, $sql);
 
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     $borderColor = ($row['topic_id'] !== null) ? '#FF0000' : '#17A7CE';
 
-
-                                                    $link = ($row['material_name'] === 'Assignment')
-                                                        ? "assignmentpage.php?assignment_id={$row['topic_id']}"
-                                                        : "topic.php?topic_id={$row['topic_id']}";
-
+                                                    if ($row['material_name'] === 'Quiz') {
+                                                        $link = "quizpage.php?quiz_id={$row['topic_id']}";
+                                                    } elseif ($row['material_name'] === 'Assignment') {
+                                                        $link = "assignmentpage.php?assignment_id={$row['topic_id']}";
+                                                    } else {
+                                                        $link = "topic.php?topic_id={$row['topic_id']}";
+                                                    }
                                                 ?>
                                                     <a href="<?= $link ?>" onclick="">
 

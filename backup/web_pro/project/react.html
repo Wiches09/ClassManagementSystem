@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/pop.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0%;
+        padding: 0%;
+      }
+    </style>
+  </head>
+
+  <body class="flex flex-col w-full min-h-screen">
+    <div id="navbar-container"></div>
+    <div class="bg-[#820300] flex-1 relative flex flex-col text-white px-10">
+      <div
+        class="flex flex-col items-center justify-center mt-8 py-8 z-10 w-full h-full pb-8 bg-white mx-auto"
+      >
+        <div class="text-center text-4xl pt-24 text-black">
+          React
+          <img
+            src="image/react-removebg-preview.png"
+            class="mt-8 w-1/2 mx-auto rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col md:flex-row items-center justify-center mt-8 py-8 z-10 w-full my-8 h-full border-gray-950 border mx-auto rounded-lg shadow-lg"
+      >
+        <p class="text-xl md:px-24 px-4 text-white">
+          React ถูกพัฒนาขึ้นโดย Facebook
+          และถูกนำมาใช้งานอย่างเป็นทางการตั้งแต่ปี 2011 การพัฒนา React
+          เกิดขึ้นจากการที่แต่เดิมทาง Facebook
+          ต้องเผชิญกับปัญหาในการอัปเดตมุมมองของ UI เมื่อมีการปฏิสัมพันธ์ใดๆ
+          จากผู้ใช้งานที่ไม่สามารถทำได้แบบเรียลไทม์เช่นในปัจจุบัน ตัวอย่างเช่น
+          หากเราทำการกดถูกใจโพสต์บน Facebook
+          ไอคอนรูปถูกใจจะแสดงฐานะถูกใจได้ในทันที
+          โดยการเปลี่ยนสีไอคอนที่กดไปแล้วเป็นสีแดง ซึ่งย้อนกลับไปในตอนนั้น
+          การแสดงผลที่เกิดจากคำสั่งพวกนี้จะเปลี่ยนแปลงได้
+          ต้องอาศัยการโหลดทั้งหน้าใหม่ซ้ำ
+          ซึ่งส่งผลเสียทั้งแง่ของระยะเวลาในการแสดงผลและประสบการณ์ของผู้ใช้งาน
+          React
+          จึงได้รับการออกแบบมาเพื่อแก้ปัญหาการทำงานของระบบให้เกิดการแสดงผลอย่างเป็นพลวัต
+          คือสามารถอัปเดตการเปลี่ยนแปลงได้ทันทีเมื่อเกิดคำสั่งใหม่บนระบบ
+          หรือพูดง่ายๆ ก็คือ React
+          ช่วยให้นักพัฒนาอัปเดตเฉพาะองค์ประกอบที่ต้องเปลี่ยนการแสดงผลในหน้านั้นได้ทันที
+          โดยที่ไม่ต้องทำการโหลดซ้ำใหม่ทั้งหน้าให้เสียเวลา
+        </p>
+      </div>
+      <div class="bg-black mx-auto w-full rounded-lg shadow-lg">
+        <pre
+          class="pt-4"
+        > Exmaple Code React <code class="language">               
+          import React, { useState } from 'react';
+
+          function ExampleComponent() {
+            
+            const [count, setCount] = useState(0);
+
+            const handleIncrement = () => {
+              setCount(count + 1);
+            };
+
+            return (
+              <div>
+                <h1>Hello, React!</h1>
+                <p>Count: {count}</p>
+                <button onClick={handleIncrement}>Increment</button>
+              </div>
+            );
+          }
+
+
+          export default ExampleComponent;
+                </code>
+            </pre>
+      </div>
+      <div
+        class="flex flex-col md:flex-row items-center justify-center mt-8 py-8 z-10 w-full my-8 h-full border-gray-950 border mx-auto rounded-lg shadow-lg"
+      >
+        <div class="text-xl px-4 md:px-24 text-white">
+          <p>
+            React เป็นหนึ่งใน JavaScript libraries ที่ใช้สำหรับการสร้าง User
+            Interfaces (UI) แบบเรียลไทม์ (real-time) โดยเฉพาะในแง่ของ Single
+            Page Applications (SPA)
+            ซึ่งเป็นแนวทางการสร้างเว็บแอปพลิเคชันที่มีประสิทธิภาพสูง
+            ดังนั้นมีหลายด้านที่ทำให้ React เป็น framework ที่น่าสนใจ
+            ต่อไปนี้คือข้อดีบางประการของ React:
+          </p>
+          <br />
+          <ul class="list-disc pl-8">
+            <li>
+              เทรนด์เว็บไซต์เริ่มกลายเป็น API - เว็บไซต์ในปัจจุบันมี API
+              กันเยอะมาก (เว็บใหญ่ ๆ เช่น Facebook, Google, Twitter etc. ก็มี
+              API ครบกันหมดแล้ว) เพราะฉะนั้นถ้าวันนี้เรายังทำเว็บที่คุยกับ API
+              ไม่ได้ เราจะเสียเปรียบมากในอนาคตครับ
+            </li>
+            <br />
+            <li>
+              Concept เข้าใจง่าย – เรียนรู้ตัว React เองง่ายมาก
+              และเครื่องมือที่ช่วยเรียนรู้เยอะมาก ๆ
+            </li>
+            <br />
+            <li>
+              คนใช้เยอะ หาโค้ดให้ศึกษาง่าย – มี Best Practice
+              จากเว็บไซต์จริงเยอะแยะมากมายให้ศึกษา เพราะเว็บใหญ่ก็ใช้กันเยอะ
+              ลองดูได้ที่ ลิสต์เว็บที่ใช้ React บางส่วน
+            </li>
+            <br />
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Container EiEi -->
+    </div>
+    <footer class="bg-[#161A30] shadow w-full mt-auto">
+      <div id="footer-container"></div>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script type="module" src="component.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script>
+      function handleClick() {
+        var mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.toggle("hidden");
+      }
+    </script>
+  </body>
+</html>

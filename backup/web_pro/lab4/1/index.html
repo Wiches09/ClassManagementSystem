@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <Link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">value : 1</span>
+            </div>
+            <input type="text" class="form-control" id="value1" aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="plus">
+            <span> + </span>
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">value : 2</span>
+            </div>
+            <input type="text" class="form-control" id="value2" aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="plus">
+            <span> = </span>
+        </div>
+
+        <div class="result1" id="result1"></div>
+    </div>
+    <div class="button">
+        <button type="button" onclick="calculate()" class="btn btn-primary">Calculate</button>
+    </div>
+
+    <div class="result21">
+        <span>Result</span>
+
+        <dl id="result2">
+        </dl>
+
+    </div>
+</body>
+<script>
+    console.log("Calculate");
+    function calculate() {
+        var value1 = document.getElementById("value1").value;
+        var value2 = document.getElementById("value2").value;
+        var result = parseInt(value1) + parseInt(value2);
+        console.log(result);
+        document.getElementById("result1").innerHTML = result.toString();
+
+        var final = value1 + "+" + value2 + "=" + document.getElementById("result1").innerHTML;
+        let ol = document.createElement("dt");
+        let txt = document.createTextNode(final);
+        ol.appendChild(txt);
+        document.getElementById("result2").appendChild(ol);
+
+    }
+</script>
+
+</html>

@@ -111,7 +111,7 @@ session_start();
                             </div><?php
                                                     }
                                                 } else {
-                                                    // echo "<p class='text-red-500'>Assignment ID is missing.</p>";
+                                                    
                                                 }
                                     ?>
 
