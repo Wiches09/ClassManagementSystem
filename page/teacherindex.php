@@ -65,7 +65,7 @@ if (!isset($_SESSION['login'])) {
             <div class="grid grid-rows-3 gap-2 w-full h-full rounded-2xl">
 
                 <!-- class -->
-                <div class="flex flex-col lg:flex-row w-full h-full">
+                <div class="grid grid-cols-2">
                     <div class="lg:w-1/2">
                         <h1 class="text-3xl text-gray-900">ชั้นเรียนของฉัน</h1>
                     </div>
@@ -80,7 +80,7 @@ if (!isset($_SESSION['login'])) {
                         </a>
                     </div>
 
-                    <div class="grid grid-cols-2 grid-rows-2  py-4 gap-5 w-full max-h-64">
+                    <div class="grid grid-cols-2 col-span-2 grid-rows-2  py-4 gap-5 w-full max-h-64">
                         <?php
                         $teacher_id = $_SESSION['teacher_id'];
                         $sql = "SELECT * FROM teacher_subject 
@@ -93,10 +93,10 @@ if (!isset($_SESSION['login'])) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             ?>
                             <div class="flex py-4 gap-5 w-full max-h-64">
-                                <a href="course_teacherpage.php?course_id=<?= $row['course_id'] ?>">
-                                    class="hover:ring-4 ring-white rounded-md">
+                                <a href="course_teacherpage.php?course_id=<?= $row['course_id'] ?>"
+                                    class="hover:ring-4 ring-white rounded-md w-full">
                                     <div id="class1"
-                                        class="bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
+                                        class="w-full bg-gradient-to-l from-[#FEFF86] to-[#17A7CE] rounded-md shadow-md">
                                         <h1 class="text-xl p-3 text-ellipsis overflow-x-hidden ... text-white">
                                             <?php echo $row['course_name']; ?>
                                         </h1>
@@ -111,26 +111,7 @@ if (!isset($_SESSION['login'])) {
                         ?>
                     </div>
                 </div>
-
-
-
-                <!-- calendar -->
-                <div class="w-full h-full">
-                    <div class="p-4 pb-10">
-                        <hr class="border-gray-800">
-                    </div>
-                    <div>
-                        <?php
-                        if ($_SESSION['role'] == 'student') {
-                            echo '<h1 class="text-3xl text-gray-900 pb-5">ตารางเรียน</h1>';
-                        }
-                        ?>
-                    </div>
-                    <div class="p-4 bg-white">calendar</div>
-
-                </div>
-
-            </div>
+           </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>

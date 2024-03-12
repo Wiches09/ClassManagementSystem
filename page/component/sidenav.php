@@ -10,7 +10,7 @@ if ($role === 'teacher') {
 } elseif ($role === 'student') {
   $homeLink = "../page/studentindex.php";
   $classLink = "../page/studentclasses.php";
-  $assignLink = "../page/studentassignment.php";
+  $assignLink = "../page/userassignmentpage.php";
 } else {
 
 }
@@ -20,7 +20,7 @@ if ($role === 'teacher') {
 
 
 <div class="fixed left-0 top-0 w-64 h-full bg-[#111827] text-white p-4 z-50 sidebar-menu transition-transform">
-  <a href="#" class="flex items-center pb-4 border-b border-b-gray-800">
+  <a href="<?php echo $homeLink; ?>" class="flex items-center pb-4 border-b border-b-gray-800">
     <h2 class="font-bold text-2xl">
       HOW TO <span class="bg-[#f84525] text-white px-2 rounded-md">LEARN</span>
     </h2>
@@ -60,7 +60,7 @@ if ($role === 'teacher') {
     <hr>
 
     <li class="mb-1 mt-2 group">
-      <a href=""
+      <a href="../page/setting.php"
         class="flex font-semibold items-center py-2 px-4 text-white hover:bg-gray-950 hover:text-white rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-white">
         <i class="bx bx-bell mr-3 text-lg"></i>
         <span class="text-sm">การตั้งค่า</span>

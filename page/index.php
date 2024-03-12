@@ -178,23 +178,7 @@ if (!isset($_SESSION['login'])) {
           </div>
         </div>
 
-        <!-- calendar -->
-        <div class="w-full h-full">
-          <div class="p-4 pb-10">
-            <hr class="border-gray-800">
-          </div>
-          <div>
-            <?php
-            if ($_SESSION['role'] == 'student') {
-              echo '<h1 class="text-3xl text-gray-900 pb-5">ตารางเรียน</h1>';
-            } else if ($_SESSION['role'] == 'teacher') {
-              echo '<h1 class="text-3xl text-gray-900 pb-5">ตารางสอน</h1>';
-            }
-            ?>
-          </div>
-          <div class="p-4 bg-white">calendar</div>
-
-        </div>
+        
 
       </div>
     </div>
